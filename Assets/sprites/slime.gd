@@ -32,11 +32,12 @@ func _physics_process(delta: float) -> void:
 		player.hurt(attack)
 		position.x  += 20
 		speed -= 10
+		print("oof1")
 	if ray_cast_right.is_colliding():
 		player.hurt(attack)
 		position.x -= 20
 		speed -= 10
-		
+		print("oof2")
 func _ready() -> void:
 	add_to_group("enemies")
 	hpprog()
