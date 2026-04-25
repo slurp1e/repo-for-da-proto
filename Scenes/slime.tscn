@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://c4u2r7aaq8xce"]
+
+[ext_resource type="Script" uid="uid://dgq7nkgf6et4e" path="res://Assets/sprites/slime.gd" id="1_jokqx"]
+[ext_resource type="Texture2D" uid="uid://dwt0ok8blex2c" path="res://Assets/sprites/slime_green.png" id="2_swwnm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aiwxb"]
+atlas = ExtResource("2_swwnm")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_paq7w"]
+atlas = ExtResource("2_swwnm")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4si1"]
+atlas = ExtResource("2_swwnm")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gljc"]
+atlas = ExtResource("2_swwnm")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vblni"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aiwxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_paq7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4si1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gljc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swwnm"]
+size = Vector2(12, 13.5)
+
+[node name="slime" type="Node2D" unique_id=1601816520]
+script = ExtResource("1_jokqx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=336867363]
+position = Vector2(0, -7)
+sprite_frames = SubResource("SpriteFrames_vblni")
+autoplay = "default"
+frame_progress = 0.41416794
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583905419]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_swwnm")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1243890134]
+offset_top = -33.0
+offset_right = 4.0
+offset_bottom = -6.0
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=395370644]
+position = Vector2(3, -2)
+target_position = Vector2(-9, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1107866718]
+position = Vector2(-3, -2)
+target_position = Vector2(9, 0)
+
+[node name="Timer" type="Timer" parent="." unique_id=388592653]
+
+[connection signal="child_entered_tree" from="RayCastLeft" to="." method="_on_ray_cast_left_child_entered_tree"]
