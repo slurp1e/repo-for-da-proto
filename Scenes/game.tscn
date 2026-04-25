@@ -5,7 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://c8ifgux1thd50" path="res://Scenes/damage.tscn" id="2_i6g32"]
 [ext_resource type="PackedScene" uid="uid://cvt7csfirfhuj" path="res://Scenes/Player.tscn" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://dsu5ycni8mcg0" path="res://Scenes/world.tscn" id="3_wowpa"]
-[ext_resource type="PackedScene" uid="uid://ds50vil1wuiix" path="res://Scenes/typing.tscn" id="4_3dryh"]
+[ext_resource type="Script" uid="uid://c6fhyqsvlptii" path="res://Script/typing.gd" id="6_h4fw4"]
+[ext_resource type="AudioStream" uid="uid://btuhnuet6mima" path="res://Assets/music/HitSound.mp3" id="7_v158k"]
+[ext_resource type="AudioStream" uid="uid://d2g65dmiac5ba" path="res://Assets/music/MissAttack.wav" id="8_h4fw4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qxrlw"]
 texture = ExtResource("1_ebmjs")
@@ -170,14 +172,72 @@ zoom = Vector2(4, 4)
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" unique_id=716100530]
+script = ExtResource("6_h4fw4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D/CanvasLayer" unique_id=22584742]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -80.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "sample"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/CanvasLayer" unique_id=404931583]
+custom_minimum_size = Vector2(0, 30)
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -35.0
+offset_right = -20.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="Camera2D/CanvasLayer" unique_id=2072377569]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(100, 40)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 4
+alignment = 1
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="Camera2D/CanvasLayer" unique_id=44429766]
+stream = ExtResource("7_v158k")
+
+[node name="MissSound" type="AudioStreamPlayer2D" parent="Camera2D/CanvasLayer" unique_id=1914364398]
+stream = ExtResource("8_h4fw4")
+
 [node name="world" parent="." unique_id=926810274 instance=ExtResource("3_wowpa")]
 position = Vector2(-34, 5)
-
-[node name="Typing" parent="." unique_id=859888721 instance=ExtResource("4_3dryh")]
-position = Vector2(-61, 55)
 
 [node name="Player" parent="." unique_id=1751091898 instance=ExtResource("2_qxrlw")]
 unique_name_in_owner = true
 position = Vector2(0, -5)
 
 [node name="damage" parent="." unique_id=1866181887 instance=ExtResource("2_i6g32")]
+position = Vector2(0, 54)

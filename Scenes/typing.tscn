@@ -4,21 +4,3 @@
 
 [node name="Typing" type="Node2D" unique_id=859888721]
 script = ExtResource("1_oawdw")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=2123731522]
-offset_left = -35.0
-offset_top = -1.0
-offset_right = 34.0
-offset_bottom = 39.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1736888615]
-offset_left = -35.0
-offset_top = -40.0
-offset_right = 33.0
-alignment = 1
-
-[node name="LineEdit" type="LineEdit" parent="." unique_id=1589617507]
-offset_left = -35.0
-offset_top = -40.0
-offset_right = 33.5
-alignment = 1
