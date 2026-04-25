@@ -35,7 +35,7 @@ func wait(seconds: float) -> void:
 func camera_size() -> Rect2:
 	var cam: Camera2D= get_viewport().get_camera_2d()
 	var camsize: Vector2 =  get_viewport_rect().size * cam.zoom
-	var top_left: Vector2= cam.global_position - camsize/2 
+	var top_left: Vector2= cam.global_position - camsize/2
 	return Rect2(top_left, camsize)
 func spawn_enemies() -> void:
 	var rect: Rect2 = camera_size()

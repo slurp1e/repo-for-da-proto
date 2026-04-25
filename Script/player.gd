@@ -1,7 +1,7 @@
 extends Node2D
 @onready var game: Node2D = $".."
 @onready var label: Label = $"../GameManager/Label"
-
+var atk: int = 10
 var hp: int= 50
 func health():
 	return hp
@@ -19,7 +19,7 @@ func closest_enemy() -> Node2D:
 func attack() -> void: 
 	var enemy: Node2D = closest_enemy()
 	if enemy:
-		enemy.take_dmg(5)
+		enemy.take_dmg(atk)
 	print("shoot")
 
 

@@ -8,7 +8,7 @@ extends Node2D
 @onready var ray_cast_right: RayCast2D = $RayCastRight
 
 
-var speed:int = 100
+var speed:int = 50
 var hp: int= 40
 var attack: int = 5
 
@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		player.hurt(attack)
 		position.x  += 20
 		speed -= 10
-		print("oof1")
+		
 	if ray_cast_right.is_colliding():
 		player.hurt(attack)
 		position.x -= 20

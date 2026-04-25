@@ -40,16 +40,21 @@ func highlight(text: String = " ") -> void:
 	var typed: String  = $LineEdit.text 
 	var target: String = word[current_index]
 	var result: String = ""
-	 
-	for i: int in range(target.length()):
-		if i < typed.length():
-			if i < typed.length() and typed[i] == target[i]:
-				result += "[color=green]" + word[current_index][i] +"[/color]"
-			else:
-				result += "[color=red]" + word[current_index][i] + "[/color]"
+	for j in range(word.size()):
+		var current_word: String = word[j]
+		
+		if j == current_index:
+			for i: int in range(target.length()):
+				if i < typed.length():
+					if typed[i] == current_word[i]: 
+						result += "[color=green]" + current_word[i] +"[/color]"
+					else:
+						result += "[color=red]" + current_word[i] + "[/color]"
+				else:
+					result += "[tornado radius= 10lallllllll freq= 10]" + current_word[i] + "[/tornado]"	
 		else:
-			result += target[i]	
-				
+			result += "[color= white]" + current_word + "[/color]"	
+		result +=" "	
 	$RichTextLabel.text = result
 			
 		

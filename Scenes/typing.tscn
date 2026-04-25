@@ -8,7 +8,7 @@ script = ExtResource("1_oawdw")
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=2123731522]
 offset_left = -35.0
 offset_top = -1.0
-offset_right = 34.0
+offset_right = 260.0
 offset_bottom = 39.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1736888615]

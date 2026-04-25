@@ -42,6 +42,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swwnm"]
 size = Vector2(12, 13.5)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swwnm"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aiwxb"]
+bg_color = Color(0.98039216, 0.105882354, 0.015686275, 1)
+
 [node name="slime" type="Node2D" unique_id=1601816520]
 script = ExtResource("1_jokqx")
 
@@ -56,9 +62,13 @@ position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_swwnm")
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1243890134]
-offset_top = -33.0
-offset_right = 4.0
-offset_bottom = -6.0
+offset_left = -11.0
+offset_top = -15.0
+offset_right = 13.0
+offset_bottom = -9.0
+theme_override_styles/background = SubResource("StyleBoxFlat_swwnm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aiwxb")
+show_percentage = false
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=395370644]
 position = Vector2(3, -2)
