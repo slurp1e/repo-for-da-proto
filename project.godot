@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="adsf"
-run/main_scene="uid://668036r4e18n"
+run/main_scene="uid://lv6a03qaidcq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[audio]
+
+driver/enable_input=true
 
 [physics]
 
