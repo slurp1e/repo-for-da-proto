@@ -123,11 +123,12 @@ func check_word() -> void:
 	total_words += 1
 	
 	if typed == word[current_index]:
+		var typed_word: String = word[current_index]
 		perfect_words += 1
-		var _damage: int = calculate_word_damage(word[current_index])
+		var damage: int = calculate_word_damage(typed_word)
 		# Player is sibling of UILayer (this node's parent)
-		get_parent().get_parent().get_node("Player").attack()
-		play_success_feedback()
+		get_parent().get_parent().get_node("Player").attack(damage)
+		play_success_feedback(damage)
 	else:
 		# Player is sibling of UILayer
 		get_parent().get_parent().get_node("Player").hurt(5)
@@ -141,7 +142,7 @@ func check_word() -> void:
 		generate_words()
 		render_words()
 
-func play_success_feedback() -> void:
+func play_success_feedback(damage: int) -> void:
 	# Play success sound
 	if hit_sound:
 		print("HitSound exists: ", hit_sound)
@@ -158,7 +159,7 @@ func play_success_feedback() -> void:
 	color_flash(hit_flash_color)
 	
 	# Damage number popup
-	var damage: int = calculate_word_damage(word[current_index - 1])
+	
 	show_damage_popup(damage, hit_flash_color)
 	
 	print("SUCCESS! Damage dealt")
@@ -228,11 +229,12 @@ func show_damage_popup(damage: int, color: Color) -> void:
 	label.text = str(damage)
 	label.add_theme_font_size_override("font_size", 32)
 	label.modulate = color
-	
+	label.z_index = 100
 	# Position at LineEdit location (bottom center area)
-	var line_edit_pos: Vector2 = $LineEdit.global_position
-	label.global_position = line_edit_pos + Vector2(0, -50)
+	label.position = $LineEdit.position + Vector2(0,-50)
+	add_child(label)
 	
+	print("someshi", $LineEdit.global_position, "fixed nuh", $LineEdit.position)
 	# Add to UILayer (parent of this script)
 	get_parent().add_child(label)
 	

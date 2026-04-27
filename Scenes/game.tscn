@@ -159,6 +159,7 @@ offset_top = -37.0
 offset_right = 22.0
 offset_bottom = -14.0
 text = "50/50"
+metadata/_edit_use_anchors_ = true
 
 [node name="TileMap" type="TileMap" parent="." unique_id=259648244]
 tile_set = SubResource("TileSet_wrm1d")
@@ -189,9 +190,10 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 4
 bbcode_enabled = true
-text = "sample"
+text = "Start Typing Newger"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/CanvasLayer" unique_id=404931583]
 custom_minimum_size = Vector2(0, 30)
@@ -208,6 +210,7 @@ grow_vertical = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="LineEdit" type="LineEdit" parent="Camera2D/CanvasLayer" unique_id=2072377569]
 modulate = Color(1, 1, 1, 0)
@@ -225,6 +228,7 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 4
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="Camera2D/CanvasLayer" unique_id=44429766]
 stream = ExtResource("7_v158k")
@@ -240,4 +244,5 @@ unique_name_in_owner = true
 position = Vector2(0, -5)
 
 [node name="damage" parent="." unique_id=1866181887 instance=ExtResource("2_i6g32")]
+z_index = 7
 position = Vector2(0, 54)

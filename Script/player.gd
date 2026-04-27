@@ -16,13 +16,18 @@ func closest_enemy() -> Node2D:
 			radius = d
 			closest = i
 	return closest
-func attack() -> void: 
+func attack(damage: int) -> void: 
 	var enemy: Node2D = closest_enemy()
 	if enemy:
-		enemy.take_dmg(5)
+		facing(enemy)
+		enemy.take_dmg(damage)
 	print("shoot")
 
-
+func facing(enemy: Node2D) -> void: #currently not working lololol
+	if not enemy:
+		return
+	var directioning: Vector2 = enemy.global_position - global_position
+	rotation = directioning.angle()
 func hurt(amount: int) -> void:
 	hp -= amount
 	print("you missed lol")
