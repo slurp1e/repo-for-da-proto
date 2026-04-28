@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://r52axfgastdh" path="res://Script/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bgxmocdwfw7oj" path="res://Assets/sprites/knight.png" id="1_v0iea"]
+[ext_resource type="Script" uid="uid://e6snwg5yuog7" path="res://Scenes/axis.gd" id="3_5ixxa"]
+[ext_resource type="Texture2D" uid="uid://begn0xwy0hocn" path="res://Assets/sprites/left-arrow.png" id="4_nn08x"]
+[ext_resource type="Script" uid="uid://10m4ekrb25tb" path="res://Scenes/sprite_2d.gd" id="5_52ee3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cvnsp"]
 atlas = ExtResource("1_v0iea")
@@ -54,3 +57,14 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=332542437]
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_3smsa")
+
+[node name="Axis" type="Node2D" parent="." unique_id=809624893]
+position = Vector2(0, 3)
+script = ExtResource("3_5ixxa")
+
+[node name="Sprite2D" type="Sprite2D" parent="Axis" unique_id=1736205570]
+position = Vector2(-5.684342e-14, -15.999999)
+rotation = 1.5707964
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("4_nn08x")
+script = ExtResource("5_52ee3")

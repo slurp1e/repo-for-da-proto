@@ -79,7 +79,7 @@ func get_word_difficulty(w: String) -> String:
 
 func calculate_word_damage(w: String) -> int:
 	# Damage scales with word length
-	return int(ceil(w.length() * 1.5))
+	return int(ceil(w.length() * 3.5))
 
 func highlight(text: String = " ") -> void:
 	var typed: String = $LineEdit.text 

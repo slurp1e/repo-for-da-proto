@@ -1,8 +1,9 @@
 extends Node2D
 @onready var game: Node2D = $".."
 @onready var label: Label = $"../GameManager/Label"
+@onready var axis: Node2D = $Axis
 
-var hp: int= 50
+var hp: int= 10000
 func health():
 	return hp
 
@@ -19,15 +20,12 @@ func closest_enemy() -> Node2D:
 func attack(damage: int) -> void: 
 	var enemy: Node2D = closest_enemy()
 	if enemy:
-		facing(enemy)
+		axis.look_at(enemy.global_position) #arrow rotation, arrow a placeholder :)
+		axis.rotation += PI/2
 		enemy.take_dmg(damage)
 	print("shoot")
 
-func facing(enemy: Node2D) -> void: #currently not working lololol
-	if not enemy:
-		return
-	var directioning: Vector2 = enemy.global_position - global_position
-	rotation = directioning.angle()
+
 func hurt(amount: int) -> void:
 	hp -= amount
 	print("you missed lol")
