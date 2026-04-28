@@ -5,9 +5,38 @@
 [ext_resource type="PackedScene" uid="uid://c8ifgux1thd50" path="res://Scenes/damage.tscn" id="2_i6g32"]
 [ext_resource type="PackedScene" uid="uid://cvt7csfirfhuj" path="res://Scenes/Player.tscn" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://dsu5ycni8mcg0" path="res://Scenes/world.tscn" id="3_wowpa"]
+[ext_resource type="Script" uid="uid://cgtqqhm7tvlda" path="res://Scenes/menu.gd" id="5_1phco"]
 [ext_resource type="Script" uid="uid://c6fhyqsvlptii" path="res://Script/typing.gd" id="6_h4fw4"]
+[ext_resource type="Shader" uid="uid://duk148sftkxf8" path="res://Assets/Shader Materials/blur.gdshader" id="6_nb51f"]
+[ext_resource type="FontFile" uid="uid://dtfvbwq2i8a1c" path="res://Assets/fonts/PressStart2P-Regular.ttf" id="7_nnt18"]
 [ext_resource type="AudioStream" uid="uid://btuhnuet6mima" path="res://Assets/music/HitSound.mp3" id="7_v158k"]
+[ext_resource type="StyleBox" uid="uid://bq40gw4m00kks" path="res://Assets/UI/Ui Button Resource/Normal Button.tres" id="8_ewbju"]
 [ext_resource type="AudioStream" uid="uid://d2g65dmiac5ba" path="res://Assets/music/MissAttack.wav" id="8_h4fw4"]
+[ext_resource type="StyleBox" uid="uid://dik448saxw88i" path="res://Assets/UI/Ui Button Resource/Pressed Button.tres" id="9_85qyi"]
+[ext_resource type="StyleBox" uid="uid://ur6jaodn2lo2" path="res://Assets/UI/Ui Button Resource/Hover.tres" id="10_iivbl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v158k"]
+bg_color = Color(0.050980393, 0.05490196, 0.101960786, 1)
+border_width_top = 4
+border_color = Color(0.47843137, 0.47843137, 0.6039216, 1)
+corner_detail = 20
+shadow_color = Color(0.47843137, 0.47843137, 0.6039216, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h4fw4"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5yvi"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rku1e"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rfjv2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7nbq1"]
+shader = ExtResource("6_nb51f")
+shader_parameter/lod = 1.516
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qxrlw"]
 texture = ExtResource("1_ebmjs")
@@ -148,8 +177,402 @@ texture = ExtResource("1_ebmjs")
 [sub_resource type="TileSet" id="TileSet_wrm1d"]
 sources/0 = SubResource("TileSetAtlasSource_qxrlw")
 
+[sub_resource type="Animation" id="Animation_exi56"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Pause Menu/Blur:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.516, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_7t8sx"]
+resource_name = "blur animation"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Pause Menu/Blur:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.516, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mg4q0"]
+_data = {
+&"RESET": SubResource("Animation_exi56"),
+&"blur animation": SubResource("Animation_7t8sx")
+}
+
 [node name="game" type="Node2D" unique_id=1159277670]
 script = ExtResource("1_wrm1d")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=716100530]
+script = ExtResource("6_h4fw4")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=1147704666]
+custom_minimum_size = Vector2(0, 80)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v158k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=277509648]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=1391497116]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_h4fw4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button" unique_id=1510305692]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -29.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button/VBoxContainer" unique_id=1873500863]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "⚔"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button/VBoxContainer" unique_id=2043493218]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "BATTLE"
+horizontal_alignment = 1
+
+[node name="Button2" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=41144178]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_o5yvi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button2" unique_id=225262371]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -29.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button2/VBoxContainer" unique_id=1802216637]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🏪"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button2/VBoxContainer" unique_id=1133671835]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "SHOP"
+horizontal_alignment = 1
+
+[node name="Button3" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=798388292]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_rku1e")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button3" unique_id=728333701]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -29.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button3/VBoxContainer" unique_id=799890713]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "📖"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button3/VBoxContainer" unique_id=1079060506]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "SKILL TREE"
+horizontal_alignment = 1
+
+[node name="Button4" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=936289364]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_rfjv2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button4" unique_id=1095865375]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -29.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button4/VBoxContainer" unique_id=50145628]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "📊"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button4/VBoxContainer" unique_id=1731041242]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "STATS"
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer" unique_id=22584742]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -216.0
+offset_right = 100.0
+offset_bottom = -156.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "Start Typing Newger"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=404931583]
+custom_minimum_size = Vector2(0, 30)
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -171.0
+offset_right = -20.0
+offset_bottom = -141.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 12
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer" unique_id=2072377569]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(100, 40)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -256.0
+offset_right = 50.0
+offset_bottom = -216.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 4
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=44429766]
+stream = ExtResource("7_v158k")
+
+[node name="MissSound" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=1914364398]
+stream = ExtResource("8_h4fw4")
+
+[node name="PauseMenuButton" type="Button" parent="CanvasLayer" unique_id=1970657793]
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -53.0
+offset_top = -2.0
+offset_right = -3.0
+offset_bottom = 78.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenuButton" unique_id=2131180401]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -29.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PauseMenuButton/VBoxContainer" unique_id=1385577014]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "⚙"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/PauseMenuButton/VBoxContainer" unique_id=198451591]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "MENU"
+horizontal_alignment = 1
+
+[node name="Pause Menu" type="Control" parent="CanvasLayer" unique_id=1706872065 node_paths=PackedStringArray("pause_button", "pause_panel")]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_1phco")
+pause_button = NodePath("../PauseMenuButton")
+pause_panel = NodePath(".")
+
+[node name="Blur" type="ColorRect" parent="CanvasLayer/Pause Menu" unique_id=1866759044]
+material = SubResource("ShaderMaterial_7nbq1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -556.0
+offset_top = -304.0
+offset_right = 556.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="ColorRect" parent="CanvasLayer/Pause Menu" unique_id=1714191582]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -200.0
+offset_right = 175.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.050980393, 0.05490196, 0.101960786, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pause Menu/TextureRect" unique_id=672134444]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="Resume" type="Button" parent="CanvasLayer/Pause Menu/TextureRect/VBoxContainer" unique_id=1931842997]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "RESUME"
+
+[node name="Restart" type="Button" parent="CanvasLayer/Pause Menu/TextureRect/VBoxContainer" unique_id=1820229754]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "RESTART
+"
+
+[node name="Menu" type="Button" parent="CanvasLayer/Pause Menu/TextureRect/VBoxContainer" unique_id=1858499427]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "MENU"
+
+[node name="ExitGame" type="Button" parent="CanvasLayer/Pause Menu/TextureRect/VBoxContainer" unique_id=1877552876]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "EXIT GAME"
 
 [node name="GameManager" type="Node" parent="." unique_id=1291856890]
 
@@ -173,69 +596,6 @@ zoom = Vector2(4, 4)
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" unique_id=716100530]
-script = ExtResource("6_h4fw4")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D/CanvasLayer" unique_id=22584742]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -80.0
-offset_right = 100.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 4
-bbcode_enabled = true
-text = "Start Typing Newger"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/CanvasLayer" unique_id=404931583]
-custom_minimum_size = Vector2(0, 30)
-anchors_preset = -1
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -35.0
-offset_right = -20.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="LineEdit" type="LineEdit" parent="Camera2D/CanvasLayer" unique_id=2072377569]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(100, 40)
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -50.0
-offset_top = -100.0
-offset_right = 50.0
-offset_bottom = -80.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 4
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="HitSound" type="AudioStreamPlayer2D" parent="Camera2D/CanvasLayer" unique_id=44429766]
-stream = ExtResource("7_v158k")
-
-[node name="MissSound" type="AudioStreamPlayer2D" parent="Camera2D/CanvasLayer" unique_id=1914364398]
-stream = ExtResource("8_h4fw4")
-
 [node name="world" parent="." unique_id=926810274 instance=ExtResource("3_wowpa")]
 position = Vector2(-34, 5)
 
@@ -246,3 +606,11 @@ position = Vector2(0, -5)
 [node name="damage" parent="." unique_id=1866181887 instance=ExtResource("2_i6g32")]
 z_index = 7
 position = Vector2(0, 54)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1920025159]
+libraries/ = SubResource("AnimationLibrary_mg4q0")
+
+[connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/Resume" to="CanvasLayer/Pause Menu" method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/Restart" to="CanvasLayer/Pause Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/Menu" to="CanvasLayer/Pause Menu" method="_on_menu_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/ExitGame" to="CanvasLayer/Pause Menu" method="_on_exit_game_pressed"]
