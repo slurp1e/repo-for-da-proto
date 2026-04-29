@@ -1,18 +1,35 @@
 extends Node2D
 var player: CharacterBody2D
-
+@export var resource: EnemyResource
 @onready var bar: ProgressBar = $ProgressBar
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var AtkArea: Area2D = $AtkArea 
 
-@onready var ray_cast_left: RayCast2D = $RayCastLeft
-@onready var ray_cast_right: RayCast2D = $RayCastRight
-
-
-var speed:int = 50
-var hp: int= 40
-var attack: int = 5
+var can_attack: bool = true 
+var speed:int
+var hp: int
+var attack
 var velocity: Vector2 = Vector2.ZERO
 var knockback: Vector2 = Vector2.ZERO
+var resistance: int
+func _ready() -> void:
+	AtkArea.body_entered.connect(hitting)
+	add_to_group("enemies")
+	print("ngerrrrr", resource)
+	if resource:
+		resistance = resource.resistance
+		hp = resource.hp
+		speed= resource.speed
+		attack = resource.atk
+		animated_sprite_2d.sprite_frames = resource.frames
+		animated_sprite_2d.play("Idle")
+	hpprog()
+func hitting(body) -> void:
+	if body == player and can_attack:
+		can_attack = false
+		player.hurt(attack)
+		enemy_knockback(player.global_position, resistance)
+		can_attack = true 
 func hpprog()-> void:
 	bar.max_value=hp
 	bar.value = hp
@@ -36,16 +53,4 @@ func _physics_process(delta: float) -> void:
 	else:
 		animated_sprite_2d.flip_h = false
 
-	if ray_cast_left.is_colliding():
-		player.hurt(attack)
-		enemy_knockback(player.global_position, 200.0) #200 placeholder
-		speed *= 0.85
-		print("oof1")
-	if ray_cast_right.is_colliding():
-		player.hurt(attack)
-		enemy_knockback(player.global_position, 200.0)
-		speed *= 0.85
-		print("oof2")
-func _ready() -> void:
-	add_to_group("enemies")
-	hpprog()
+	

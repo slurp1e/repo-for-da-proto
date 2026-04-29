@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://dcojlwtrj2m70"]
+
+[ext_resource type="Texture2D" uid="uid://dwt0ok8blex2c" path="res://Assets/sprites/slime_green.png" id="1_56kpw"]
+[ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="1_x5xrw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01h65"]
+atlas = ExtResource("1_56kpw")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4b3v"]
+atlas = ExtResource("1_56kpw")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wqkk"]
+atlas = ExtResource("1_56kpw")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cuolh"]
+atlas = ExtResource("1_56kpw")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r6crh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01h65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4b3v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wqkk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cuolh")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 6.0
+}]
+
+[resource]
+script = ExtResource("1_x5xrw")
+frames = SubResource("SpriteFrames_r6crh")
+hp = 20
+speed = 50
+atk = 5
+resistance = 200
+metadata/_custom_type_script = "uid://wiax4ijfm8vp"

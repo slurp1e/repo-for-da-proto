@@ -127,11 +127,11 @@ func check_word() -> void:
 		perfect_words += 1
 		var damage: int = calculate_word_damage(typed_word)
 		# Player is sibling of UILayer (this node's parent)
-		get_parent().get_parent().get_node("Player").attack(damage)
+		get_parent().get_node("Player").attack(damage)
 		play_success_feedback(damage)
 	else:
 		# Player is sibling of UILayer
-		get_parent().get_parent().get_node("Player").hurt(5)
+		get_parent().get_node("Player").hurt(5)
 		play_miss_feedback()
 	
 	current_index += 1

@@ -2,11 +2,11 @@ extends Node2D
 @onready var game: Node2D = $".."
 @onready var label: Label = $"../GameManager/Label"
 @onready var axis: Node2D = $Axis
+var max_hp: int = 10000
+var hp: int = max_hp
 
-var hp: int= 10000
-func health():
-	return hp
-
+func _ready() -> void:
+	label.text = str(hp) + "/" + str(max_hp)
 func closest_enemy() -> Node2D:
 	var enemies: Array = get_tree().get_nodes_in_group("enemies")
 	var closest: Node2D = null
@@ -29,7 +29,7 @@ func attack(damage: int) -> void:
 func hurt(amount: int) -> void:
 	hp -= amount
 	print("you missed lol")
-	label.text = str(hp) + "\\50"
+	label.text = str(hp) + "/" + str(max_hp)
 	if hp<=0:
 		die()
 

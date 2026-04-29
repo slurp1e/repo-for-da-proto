@@ -40,7 +40,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swwnm"]
-size = Vector2(12, 13.5)
+size = Vector2(6.53125, 5.5234375)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swwnm"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -55,10 +55,11 @@ script = ExtResource("1_jokqx")
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_vblni")
 autoplay = "default"
-frame_progress = 0.41416794
+frame_progress = 0.99015945
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583905419]
-position = Vector2(0, -2)
+[node name="AtkArea" type="Area2D" parent="." unique_id=1365178048]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AtkArea" unique_id=1583905419]
 shape = SubResource("RectangleShape2D_swwnm")
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1243890134]
@@ -70,14 +71,4 @@ theme_override_styles/background = SubResource("StyleBoxFlat_swwnm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_aiwxb")
 show_percentage = false
 
-[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=395370644]
-position = Vector2(3, -2)
-target_position = Vector2(-9, 0)
-
-[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1107866718]
-position = Vector2(-3, -2)
-target_position = Vector2(9, 0)
-
 [node name="Timer" type="Timer" parent="." unique_id=388592653]
-
-[connection signal="child_entered_tree" from="RayCastLeft" to="." method="_on_ray_cast_left_child_entered_tree"]

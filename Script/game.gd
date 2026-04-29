@@ -3,6 +3,7 @@ extends Node2D
 @onready var player: CharacterBody2D = %Player
 
 var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
+var Skele_boss: EnemyResource = preload("res://Resource/Skele_boss.tres")
 var rounds: int = 1
 @onready var world: Node2D = $world
 var wave: int = 1
@@ -21,11 +22,12 @@ func round_up() -> void:
 		rounds+=1
 		wave = 1 
 		print("wave:", wave, " - ", "round: ", rounds)
-var spawn_rate: int = roundi((rounds*wave*1.5))
 func _process(_delta: float) -> void:
 	wave_up()
 	round_up()
 	
+func spawn_rate() -> int: 
+	return roundi((rounds*wave*1.5))
 func _ready()-> void:
 	randomize()
 	spawn_enemies()
@@ -43,11 +45,11 @@ func spawn_enemies() -> void:
 	var rect: Rect2 = camera_size()
 	var margin: int = 100
 	
-	for i: int in range(spawn_rate):
+	for i: int in range(spawn_rate()):
 		var e: Node2D = enemy_2D.instantiate()
-		
-		world.add_child(e)
 		e.player = $Player
+		e.resource = Skele_boss
+		world.add_child(e)
 		e.global_position = Vector2(randf_range(rect.position.x - margin, rect.end.x + margin),
 		randf_range(rect.position.y - margin, rect.end.y + margin))
 		print(e.global_position)
