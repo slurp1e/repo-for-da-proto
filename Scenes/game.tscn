@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://d2g65dmiac5ba" path="res://Assets/music/MissAttack.wav" id="8_h4fw4"]
 [ext_resource type="StyleBox" uid="uid://dik448saxw88i" path="res://Assets/UI/Ui Button Resource/Pressed Button.tres" id="9_85qyi"]
 [ext_resource type="StyleBox" uid="uid://ur6jaodn2lo2" path="res://Assets/UI/Ui Button Resource/Hover.tres" id="10_iivbl"]
+[ext_resource type="PackedScene" uid="uid://cmer3pxh4awhv" path="res://Scenes/healthbar.tscn" id="11_nb51f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v158k"]
 bg_color = Color(0.050980393, 0.05490196, 0.101960786, 1)
@@ -574,20 +575,12 @@ theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "EXIT GAME"
 
-[node name="Accuracy" type="Label" parent="CanvasLayer" unique_id=526599299]
-offset_left = 1055.0
-offset_top = 440.0
-offset_right = 1123.0
-offset_bottom = 463.0
-
-[node name="GameManager" type="Node" parent="." unique_id=1291856890]
-
-[node name="Label" type="Label" parent="GameManager" unique_id=1358623619]
-offset_left = -21.0
-offset_top = -37.0
-offset_right = 22.0
-offset_bottom = -14.0
-metadata/_edit_use_anchors_ = true
+[node name="Healthbar" parent="CanvasLayer" unique_id=1234881885 instance=ExtResource("11_nb51f")]
+offset_left = 16.0
+offset_top = 31.000002
+offset_right = 256.0
+offset_bottom = 35.0
+scale = Vector2(2.144876, 4.9448757)
 
 [node name="TileMap" type="TileMap" parent="." unique_id=259648244]
 tile_set = SubResource("TileSet_wrm1d")
@@ -604,9 +597,10 @@ editor_draw_drag_margin = true
 [node name="world" parent="." unique_id=926810274 instance=ExtResource("3_wowpa")]
 position = Vector2(-34, 5)
 
-[node name="Player" parent="." unique_id=1751091898 instance=ExtResource("2_qxrlw")]
+[node name="Player" parent="." unique_id=1751091898 node_paths=PackedStringArray("healthbar") instance=ExtResource("2_qxrlw")]
 unique_name_in_owner = true
 position = Vector2(0, -5)
+healthbar = NodePath("../CanvasLayer/Healthbar")
 
 [node name="damage" parent="." unique_id=1866181887 instance=ExtResource("2_i6g32")]
 z_index = 7

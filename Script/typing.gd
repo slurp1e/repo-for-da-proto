@@ -1,5 +1,5 @@
 extends CanvasLayer
-@onready var accuracy: Label = $Accuracy
+@onready var accuracy: Label = $Accuracy if has_node("Accuracy") else null
 var word_list: Array= []
 
 var word: Array = []
@@ -159,7 +159,8 @@ func check_word() -> void:
 		current_index = 0 
 		generate_words()
 		render_words()
-	accuracy.text = "Accu: " + str(snapped(get_accuracy(), 0.1)) + "%"
+	if accuracy:
+		accuracy.text = "Accu: " + str(snapped(get_accuracy(), 0.1)) + "%"
 func play_success_feedback(damage: int) -> void:
 	# Play success sound
 	if hit_sound:
@@ -250,9 +251,7 @@ func show_damage_popup(damage: int, color: Color) -> void:
 	label.z_index = 100
 	# Position at LineEdit location (bottom center area)
 	label.position = $LineEdit.position + Vector2(0,-50)
-	add_child(label)
 	
-	print("someshi", $LineEdit.global_position, "fixed nuh", $LineEdit.position)
 	# Add to UILayer (parent of this script)
 	get_parent().add_child(label)
 	

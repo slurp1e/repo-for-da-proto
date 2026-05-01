@@ -45,5 +45,4 @@ frames = SubResource("SpriteFrames_x5xrw")
 hp = 20
 speed = 50
 atk = 5
-resistance = 150
-metadata/_custom_type_script = "uid://wiax4ijfm8vp"
+resistance = 200

@@ -1,12 +1,23 @@
-extends Node2D
-@onready var game: Node2D = $".."
-@onready var label: Label = $"../GameManager/Label"
-@onready var axis: Node2D = $Axis
+extends CharacterBody2D
+
+@export var healthbar: ProgressBar
 var max_hp: int = 10000
-var hp: int = max_hp
+var hp: int = 10000
+
+@onready var game: Node = $".."
+@onready var axis: Node2D = $Axis
 
 func _ready() -> void:
-	label.text = str(hp) + "/" + str(max_hp)
+	hp = max_hp
+	if not healthbar:
+		healthbar = get_tree().root.find_child("Healthbar", true, false)
+
+	if healthbar:
+		healthbar.init_health(max_hp)
+		print("Healthbar initialized")
+	else:
+		print("Warning: Healthbar not found")
+
 func closest_enemy() -> Node2D:
 	var enemies: Array = get_tree().get_nodes_in_group("enemies")
 	var closest: Node2D = null
@@ -17,20 +28,22 @@ func closest_enemy() -> Node2D:
 			radius = d
 			closest = i
 	return closest
-func attack(damage: int) -> void: 
+
+func attack(damage: int) -> void:
 	var enemy: Node2D = closest_enemy()
 	if enemy:
-		axis.look_at(enemy.global_position) #arrow rotation, arrow a placeholder :)
-		axis.rotation += PI/2
+		axis.look_at(enemy.global_position)
+		axis.rotation += PI / 2
 		enemy.take_dmg(damage)
 	print("shoot")
 
-
 func hurt(amount: int) -> void:
 	hp -= amount
+	hp = clamp(hp, 0, max_hp)
 	print("you missed lol")
-	label.text = str(hp) + "/" + str(max_hp)
-	if hp<=0:
+	if healthbar:
+		healthbar.health = hp
+	if hp <= 0:
 		die()
 
 func die() -> void:
