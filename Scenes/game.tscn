@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c8ifgux1thd50" path="res://Scenes/damage.tscn" id="2_i6g32"]
 [ext_resource type="PackedScene" uid="uid://cvt7csfirfhuj" path="res://Scenes/Player.tscn" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://dsu5ycni8mcg0" path="res://Scenes/world.tscn" id="3_wowpa"]
-[ext_resource type="Script" path="res://Scenes/menu.gd" id="5_1phco"]
+[ext_resource type="Script" uid="uid://cgtqqhm7tvlda" path="res://Scenes/menu.gd" id="5_1phco"]
 [ext_resource type="Script" uid="uid://c6fhyqsvlptii" path="res://Script/typing.gd" id="6_h4fw4"]
 [ext_resource type="Shader" uid="uid://duk148sftkxf8" path="res://Assets/Shader Materials/blur.gdshader" id="6_nb51f"]
 [ext_resource type="FontFile" uid="uid://dtfvbwq2i8a1c" path="res://Assets/fonts/PressStart2P-Regular.ttf" id="7_nnt18"]
@@ -573,6 +573,12 @@ theme_override_styles/normal = ExtResource("8_ewbju")
 theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "EXIT GAME"
+
+[node name="Accuracy" type="Label" parent="CanvasLayer" unique_id=526599299]
+offset_left = 1055.0
+offset_top = 440.0
+offset_right = 1123.0
+offset_bottom = 463.0
 
 [node name="GameManager" type="Node" parent="." unique_id=1291856890]
 

@@ -12,7 +12,11 @@ func pause():
 func testEsc():
 	if Input.is_action_just_pressed("Escape (Physical)") and get_tree().paused == false:
 		pause()
+		if pause_panel:
+			pause_panel.visible = true
 	elif Input.is_action_just_pressed("Escape (Physical)") and get_tree().paused == true:
+		if pause_panel:
+			pause_panel.visible = false
 		resume()
 
 func _ready() -> void:

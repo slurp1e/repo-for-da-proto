@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="adsf"
+config/name="little witch adventures"
 run/main_scene="uid://lv6a03qaidcq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"

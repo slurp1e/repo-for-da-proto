@@ -4,6 +4,7 @@ extends Node2D
 
 var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
 var Skele_boss: EnemyResource = preload("res://Resource/Skele_boss.tres")
+var slimes: Array[EnemyResource] = [preload("res://Resource/slime.tres"), preload("res://Resource/red_slime.tres")]
 var rounds: int = 1
 @onready var world: Node2D = $world
 var wave: int = 1
@@ -15,10 +16,22 @@ func wave_up() -> void:
 		waving = true
 		wave+= 1
 		print("wave:", wave, " - ", "round: ", rounds)
-		spawn_enemies()
+		if wave >=3:
+			spawn_boss()
+		else:
+			spawn_enemies()
 		waving = false
+func spawn_boss() -> void:
+	var rect: Rect2 = camera_size()
+	var margin: int = 100
+	var boss = enemy_2D.instantiate()
+	boss.player = player
+	boss.resource = Skele_boss
+	world.add_child(boss)
+	boss.global_position = Vector2(randf_range(rect.position.x - margin, rect.end.x + margin),
+		randf_range(rect.position.y - margin, rect.end.y + margin))
 func round_up() -> void:
-	if wave>=5:
+	if wave>=3:
 		rounds+=1
 		wave = 1 
 		print("wave:", wave, " - ", "round: ", rounds)
@@ -27,7 +40,7 @@ func _process(_delta: float) -> void:
 	round_up()
 	
 func spawn_rate() -> int: 
-	return roundi((rounds*wave*1.5))
+	return roundi((rounds*wave))
 func _ready()-> void:
 	randomize()
 	spawn_enemies()
@@ -38,7 +51,7 @@ func wait(seconds: float) -> void:
 	
 func camera_size() -> Rect2:
 	var cam: Camera2D= get_viewport().get_camera_2d()
-	var camsize: Vector2 =  get_viewport_rect().size * cam.zoom/12
+	var camsize: Vector2 =  get_viewport_rect().size * cam.zoom/11
 	var top_left: Vector2= cam.global_position - camsize/2
 	return Rect2(top_left, camsize)
 func spawn_enemies() -> void:
@@ -48,11 +61,11 @@ func spawn_enemies() -> void:
 	for i: int in range(spawn_rate()):
 		var e: Node2D = enemy_2D.instantiate()
 		e.player = $Player
-		e.resource = Skele_boss
+		e.resource = slimes.pick_random()
 		world.add_child(e)
 		e.global_position = Vector2(randf_range(rect.position.x - margin, rect.end.x + margin),
 		randf_range(rect.position.y - margin, rect.end.y + margin))
-		print(e.global_position)
+		print("enemies at:" , e.global_position)
 		await wait(1.0)
 		print("Enemies alive: ", get_tree().get_nodes_in_group("enemies").size())
 func quit() -> void:

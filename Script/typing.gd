@@ -1,13 +1,10 @@
 extends CanvasLayer
-
-var word_list: Array= ["a", "about", "and", "any", "as", "ask", "at", "back", "be", "but", "by", 
-"can", "come", "do", "down", "end", "few", "find", "for", "go", 
-"group", "have", "he", "help", "home", "house", "how", "I", "if", "in", "into", "it", "large", "last", "late", "lead", "life", "line", "man", "many", "may", "more", "move", "new", "no", "not", "now", "of", "on", "one", "open", "or", "other", "out", "own", "part", "plan", "play", "point", "real", "run", "same", "say", "set", "she", "so", "some", "take", "the", 
-"this", "those", "time", "to", "turn", "up", "use", "want", "we", "what", "who", "with", "work", "you"]
+@onready var accuracy: Label = $Accuracy
+var word_list: Array= []
 
 var word: Array = []
 var current_index: int = 0
-
+var debuff: bool = false
 # Audio players (will be initialized in _ready if they exist)
 var hit_sound: Node  # Can be AudioStreamPlayer or AudioStreamPlayer2D
 var miss_sound: Node
@@ -23,7 +20,17 @@ var flash_duration: float = 0.15
 var shake_intensity: float = 0.05
 var shake_duration: float = 0.05
 
+#load word from a txt file :) 
+func load_words():
+	var file = FileAccess.open("res://Assets/COMMON WORDS LIB/WORD_LIB.txt", FileAccess.READ)
+	while not file.eof_reached():
+		var line = file.get_line().strip_edges()
+		if line !="":
+			word_list.append(line)
+	file.close()
+	print("file size: ", word_list.size())
 func _ready() -> void:
+	load_words()
 	generate_words()
 	render_words()
 	$LineEdit.editable = true
@@ -44,10 +51,19 @@ func _ready() -> void:
 func generate_words() -> void:
 	word.clear()
 	for i: int in range(5):
-		word.append(word_list.pick_random())
+		word.append(word_length())
 	current_index = 0
 
-#
+func word_length() -> String:
+	for i in range(50):
+		var w = word_list.pick_random()
+		if debuff:
+			if w.length() >= 5:
+				return w
+		else:
+			if w.length() <= 5:
+				return w
+	return word_list.pick_random()
 func render_words() -> void:
 	for i: Label in $HBoxContainer.get_children():
 		i.free()
@@ -114,6 +130,8 @@ func _input(event: InputEvent) -> void:
 			$LineEdit.grab_focus()
 			get_viewport().set_input_as_handled()
 			highlight()
+		if event.keycode == KEY_BACKSPACE:
+			$LineEdit.text = ""
 
 func check_word() -> void:
 	var typed: String = $LineEdit.text.strip_edges()
@@ -141,7 +159,7 @@ func check_word() -> void:
 		current_index = 0 
 		generate_words()
 		render_words()
-
+	accuracy.text = "Accu: " + str(snapped(get_accuracy(), 0.1)) + "%"
 func play_success_feedback(damage: int) -> void:
 	# Play success sound
 	if hit_sound:
