@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do5rxgxa4qijb"
-path="res://.godot/imported/UpperTitle Icon.png-325f69801abdd3791ec7acfaed794cdd.ctex"
+uid="uid://10rgv7qo4fop"
+path="res://.godot/imported/rune1.png-cd1f71e458141678bb9d0ec586d32d01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/UpperTitle Icon.png"
-dest_files=["res://.godot/imported/UpperTitle Icon.png-325f69801abdd3791ec7acfaed794cdd.ctex"]
+source_file="res://Assets/Icons/rune1.png"
+dest_files=["res://.godot/imported/rune1.png-cd1f71e458141678bb9d0ec586d32d01.ctex"]
 
 [params]
 

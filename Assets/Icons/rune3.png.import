@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y8fif3ba84u8"
-path="res://.godot/imported/Play Left Icon.png-ddb2daa2e8f5bf2c4d3192e84b41df6b.ctex"
+uid="uid://541wwpcfkuck"
+path="res://.godot/imported/rune3.png-04cd2c7809f9bbcd5e8277abff063660.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/Play Left Icon.png"
-dest_files=["res://.godot/imported/Play Left Icon.png-ddb2daa2e8f5bf2c4d3192e84b41df6b.ctex"]
+source_file="res://Assets/Icons/rune3.png"
+dest_files=["res://.godot/imported/rune3.png-04cd2c7809f9bbcd5e8277abff063660.ctex"]
 
 [params]
 

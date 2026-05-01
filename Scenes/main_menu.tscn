@@ -3,10 +3,15 @@
 [ext_resource type="Script" uid="uid://bmxinkumnrnpc" path="res://Scenes/main_menu.gd" id="1_1ehe0"]
 [ext_resource type="FontFile" uid="uid://dtfvbwq2i8a1c" path="res://Assets/fonts/PressStart2P-Regular.ttf" id="1_48xlc"]
 [ext_resource type="FontFile" uid="uid://djen1id6wvhj7" path="res://Assets/fonts/SpaceGrotesk-VariableFont_wght.ttf" id="2_1ehe0"]
-[ext_resource type="Texture2D" uid="uid://y8fif3ba84u8" path="res://Assets/Icons/Play Left Icon.png" id="4_ce3w2"]
+[ext_resource type="Texture2D" uid="uid://6t5lmauvj8i" path="res://Assets/Icons/witch-hat.png" id="3_m3bi6"]
 [ext_resource type="StyleBox" uid="uid://bq40gw4m00kks" path="res://Assets/UI/Ui Button Resource/Normal Button.tres" id="4_cp0ys"]
 [ext_resource type="StyleBox" uid="uid://dik448saxw88i" path="res://Assets/UI/Ui Button Resource/Pressed Button.tres" id="5_yhxw7"]
 [ext_resource type="StyleBox" uid="uid://ur6jaodn2lo2" path="res://Assets/UI/Ui Button Resource/Hover.tres" id="6_trj04"]
+[ext_resource type="Texture2D" uid="uid://dwccxoyf6u8rn" path="res://Assets/Icons/start.png" id="8_wyh8j"]
+[ext_resource type="Texture2D" uid="uid://6s1wejhl77na" path="res://Assets/Icons/startright.png" id="9_ujyyl"]
+[ext_resource type="Texture2D" uid="uid://b1iphniooke0i" path="res://Assets/Icons/continue.png" id="10_mkpwh"]
+[ext_resource type="Texture2D" uid="uid://boriyhx4wwk1d" path="res://Assets/Icons/settings.png" id="11_4nkqq"]
+[ext_resource type="Texture2D" uid="uid://c7gddqqdvd6gr" path="res://Assets/Icons/Exit.png" id="12_ehtkc"]
 
 [sub_resource type="Gradient" id="Gradient_ce3w2"]
 interpolation_mode = 2
@@ -20,6 +25,9 @@ height = 512
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5n0dv"]
+load_path = "res://.godot/imported/Play Left Icon.png-ddb2daa2e8f5bf2c4d3192e84b41df6b.ctex"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
 content_margin_left = 12.0
@@ -70,46 +78,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.050980393, 0.05490196, 0.101960786, 1)
+color = Color(0.06666667, 0.09411765, 0.15294118, 1)
 
 [node name="HeaderBar" type="ColorRect" parent="CanvasLayer/BlackBackground" unique_id=1367098091]
 custom_minimum_size = Vector2(0, 64)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-color = Color(0.050980393, 0.05490196, 0.101960786, 1)
-
-[node name="HeaderBottom" type="ColorRect" parent="CanvasLayer/BlackBackground/HeaderBar" unique_id=229071888]
-custom_minimum_size = Vector2(0, 4)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -4.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(1, 0.7857031)
+color = Color(0.06666667, 0.09411765, 0.15294118, 1)
+
+[node name="HeaderBottom" type="ColorRect" parent="CanvasLayer/BlackBackground/HeaderBar" unique_id=229071888]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 34.364124
+offset_bottom = 38.364124
+grow_horizontal = 2
 color = Color(0.47843137, 0.47843137, 0.6039216, 1)
-
-[node name="Title Glow" type="Control" parent="CanvasLayer/BlackBackground/HeaderBar" unique_id=677702355]
-anchors_preset = 0
-offset_left = 560.0
-offset_top = 64.0
-offset_right = 560.0
-offset_bottom = 64.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/BlackBackground/HeaderBar/Title Glow" unique_id=580735613]
-layout_mode = 0
-offset_left = -976.0
-offset_top = -115.5
-offset_right = -464.0
-offset_bottom = 396.5
-scale = Vector2(3.8469663, 3.7551816)
-pivot_offset = Vector2(0, 200)
-texture = SubResource("GradientTexture2D_n45e2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/BlackBackground/HeaderBar" unique_id=966281580]
 layout_mode = 1
@@ -122,10 +113,72 @@ grow_vertical = 2
 [node name="Typing Adventure txtl" type="Label" parent="CanvasLayer/BlackBackground/HeaderBar/HBoxContainer" unique_id=1377322638]
 visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
 theme_override_fonts/font = ExtResource("1_48xlc")
 theme_override_font_sizes/font_size = 18
-text = "☠ TYPING ADVENTURE"
+text = "LITTLE WITCH ADVENTURES
+"
+
+[node name="WitchHat" type="Sprite2D" parent="CanvasLayer" unique_id=1869156864]
+modulate = Color(0.5411765, 0.36078432, 1, 1)
+position = Vector2(553.99994, 90.89201)
+rotation = -0.18239136
+scale = Vector2(3.16, 3.16)
+texture = ExtResource("3_m3bi6")
+
+[node name="Title Glow" type="Control" parent="CanvasLayer" unique_id=677702355]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 553.0
+offset_top = 54.0
+offset_right = 553.0
+offset_bottom = 54.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Title Glow" unique_id=580735613]
+layout_mode = 0
+offset_left = -976.0
+offset_top = -115.5
+offset_right = -464.0
+offset_bottom = 396.5
+scale = Vector2(3.8469663, 3.7551816)
+pivot_offset = Vector2(0, 200)
+texture = SubResource("GradientTexture2D_n45e2")
+
+[node name="Title" type="Label" parent="CanvasLayer" unique_id=195945295]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -179.108
+offset_right = 192.0
+offset_bottom = -112.108
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
+theme_override_colors/font_outline_color = Color(0.2901961, 0.2, 0.5019608, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("1_48xlc")
+theme_override_font_sizes/font_size = 32
+text = "LITTLE WITCH
+ADVENTURES"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CanvasLayer" unique_id=1963773900]
+offset_left = 416.0
+offset_top = 222.892
+offset_right = 736.0
+offset_bottom = 246.892
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5764706, 0.56078434, 0.6, 1)
+theme_override_fonts/font = ExtResource("2_1ehe0")
+theme_override_font_sizes/font_size = 18
+text = "Witch Typing Game"
+horizontal_alignment = 1
 
 [node name="CenterContent" type="VBoxContainer" parent="CanvasLayer" unique_id=45049059]
 custom_minimum_size = Vector2(320, 0)
@@ -135,9 +188,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = -70.0
+offset_top = -62.108032
 offset_right = 160.0
-offset_bottom = 70.0
+offset_bottom = 229.89197
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(-160, -200)
@@ -146,32 +199,15 @@ size_flags_vertical = 4
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Title" type="Label" parent="CanvasLayer/CenterContent" unique_id=195945295]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
-theme_override_fonts/font = ExtResource("1_48xlc")
-theme_override_font_sizes/font_size = 31
-text = "TYPING
-ADVENTURE"
-horizontal_alignment = 1
-
-[node name="Subtitle" type="Label" parent="CanvasLayer/CenterContent" unique_id=1963773900]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.47843137, 0.47843137, 0.6039216, 1)
-theme_override_fonts/font = ExtResource("2_1ehe0")
-theme_override_font_sizes/font_size = 18
-text = "ARCANE BATTLE TERMINAL"
-horizontal_alignment = 1
-
 [node name="PlayButton" type="Button" parent="CanvasLayer/CenterContent" unique_id=1904090189]
-custom_minimum_size = Vector2(320, 64)
+custom_minimum_size = Vector2(318.875, 64)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = ExtResource("4_cp0ys")
 theme_override_styles/pressed = ExtResource("5_yhxw7")
 theme_override_styles/hover = ExtResource("6_trj04")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_yhxw7")
-theme_override_styles/focus = SubResource("StyleBoxFlat_trj04")
+theme_override_styles/hover_pressed = ExtResource("6_trj04")
+theme_override_styles/focus = ExtResource("6_trj04")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContent/PlayButton" unique_id=1111335133]
 layout_mode = 1
@@ -185,10 +221,10 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
 theme_override_fonts/font = ExtResource("1_48xlc")
 theme_override_font_sizes/font_size = 20
-text = "PLAY"
+text = "NEW RUN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -204,11 +240,23 @@ offset_top = -19.5
 offset_right = 110.0
 offset_bottom = 20.5
 grow_vertical = 2
-texture = ExtResource("4_ce3w2")
+texture = SubResource("CompressedTexture2D_5n0dv")
 expand_mode = 5
 
+[node name="Start" type="Sprite2D" parent="CanvasLayer/CenterContent/PlayButton/HBoxContainer" unique_id=2058977994]
+modulate = Color(0.5764706, 0.56078434, 0.6, 1)
+position = Vector2(50, 31)
+scale = Vector2(1.0907335, 1.0799994)
+texture = ExtResource("8_wyh8j")
+
+[node name="Startright" type="Sprite2D" parent="CanvasLayer/CenterContent/PlayButton/HBoxContainer" unique_id=26468505]
+modulate = Color(0.5764706, 0.56078434, 0.6, 1)
+position = Vector2(261, 32)
+scale = Vector2(1.09, 1.09)
+texture = ExtResource("9_ujyyl")
+
 [node name="ContinueButtonButton" type="Button" parent="CanvasLayer/CenterContent" unique_id=1053989148]
-custom_minimum_size = Vector2(320, 64)
+custom_minimum_size = Vector2(318.875, 64)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = ExtResource("4_cp0ys")
@@ -229,15 +277,21 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.47843137, 0.47843137, 0.6039216, 1)
+theme_override_colors/font_color = Color(0.5764706, 0.56078434, 0.6, 1)
 theme_override_fonts/font = ExtResource("1_48xlc")
 theme_override_font_sizes/font_size = 20
 text = "CONTINUE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Continue" type="Sprite2D" parent="CanvasLayer/CenterContent/ContinueButtonButton" unique_id=1192064994]
+modulate = Color(0.5764706, 0.56078434, 0.6, 1)
+position = Vector2(50, 32)
+scale = Vector2(1.08, 1.08)
+texture = ExtResource("10_mkpwh")
+
 [node name="SettingsButton" type="Button" parent="CanvasLayer/CenterContent" unique_id=297033693]
-custom_minimum_size = Vector2(320, 64)
+custom_minimum_size = Vector2(318.875, 64)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = ExtResource("4_cp0ys")
@@ -257,16 +311,22 @@ grow_vertical = 2
 [node name="Label2" type="Label" parent="CanvasLayer/CenterContent/SettingsButton/HBoxContainer" unique_id=1932732086]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.47843137, 0.47843137, 0.6039216, 1)
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.5764706, 0.56078434, 0.6, 1)
 theme_override_fonts/font = ExtResource("1_48xlc")
 theme_override_font_sizes/font_size = 20
 text = "SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Settings" type="Sprite2D" parent="CanvasLayer/CenterContent/SettingsButton" unique_id=549464190]
+modulate = Color(0.5764706, 0.56078434, 0.6, 1)
+position = Vector2(50, 32)
+scale = Vector2(1.08, 1.08)
+texture = ExtResource("11_4nkqq")
+
 [node name="QuitButton" type="Button" parent="CanvasLayer/CenterContent" unique_id=220243143]
-custom_minimum_size = Vector2(320, 64)
+custom_minimum_size = Vector2(318.875, 64)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = ExtResource("4_cp0ys")
@@ -287,9 +347,15 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.8784314, 0.24313726, 0.24313726, 1)
+theme_override_colors/font_color = Color(0.5764706, 0.56078434, 0.6, 1)
 theme_override_fonts/font = ExtResource("1_48xlc")
 theme_override_font_sizes/font_size = 20
 text = "QUIT"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Exit" type="Sprite2D" parent="CanvasLayer/CenterContent" unique_id=47448395]
+modulate = Color(0.5764706, 0.56078434, 0.6, 1)
+position = Vector2(50, 260)
+scale = Vector2(1.08, 1.08)
+texture = ExtResource("12_ehtkc")
