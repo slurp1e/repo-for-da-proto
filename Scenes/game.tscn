@@ -4,36 +4,52 @@
 [ext_resource type="Script" uid="uid://u2e05tqquh2m" path="res://Script/game.gd" id="1_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://c8ifgux1thd50" path="res://Scenes/damage.tscn" id="2_i6g32"]
 [ext_resource type="PackedScene" uid="uid://cvt7csfirfhuj" path="res://Scenes/Player.tscn" id="2_qxrlw"]
+[ext_resource type="Texture2D" uid="uid://ditcr3dgv66ht" path="res://Assets/Icons/shop.png" id="3_85qyi"]
 [ext_resource type="PackedScene" uid="uid://dsu5ycni8mcg0" path="res://Scenes/world.tscn" id="3_wowpa"]
 [ext_resource type="Script" uid="uid://cgtqqhm7tvlda" path="res://Scenes/menu.gd" id="5_1phco"]
+[ext_resource type="Texture2D" uid="uid://c5a0rqscy7upm" path="res://Assets/Icons/book.png" id="5_iivbl"]
+[ext_resource type="Texture2D" uid="uid://bs2om3xubcwvu" path="res://Assets/Icons/player.png" id="6_7nbq1"]
 [ext_resource type="Script" uid="uid://c6fhyqsvlptii" path="res://Script/typing.gd" id="6_h4fw4"]
 [ext_resource type="Shader" uid="uid://duk148sftkxf8" path="res://Assets/Shader Materials/blur.gdshader" id="6_nb51f"]
+[ext_resource type="FontFile" uid="uid://djen1id6wvhj7" path="res://Assets/fonts/SpaceGrotesk-VariableFont_wght.ttf" id="7_7nbq1"]
 [ext_resource type="FontFile" uid="uid://dtfvbwq2i8a1c" path="res://Assets/fonts/PressStart2P-Regular.ttf" id="7_nnt18"]
 [ext_resource type="AudioStream" uid="uid://btuhnuet6mima" path="res://Assets/music/HitSound.mp3" id="7_v158k"]
-[ext_resource type="StyleBox" uid="uid://bq40gw4m00kks" path="res://Assets/UI/Ui Button Resource/Normal Button.tres" id="8_ewbju"]
 [ext_resource type="AudioStream" uid="uid://d2g65dmiac5ba" path="res://Assets/music/MissAttack.wav" id="8_h4fw4"]
 [ext_resource type="StyleBox" uid="uid://dik448saxw88i" path="res://Assets/UI/Ui Button Resource/Pressed Button.tres" id="9_85qyi"]
+[ext_resource type="StyleBox" uid="uid://c0tdxlnc5u2qm" path="res://Assets/UI/Ui Button Resource/WordBox.tres" id="9_iivbl"]
 [ext_resource type="StyleBox" uid="uid://ur6jaodn2lo2" path="res://Assets/UI/Ui Button Resource/Hover.tres" id="10_iivbl"]
 [ext_resource type="PackedScene" uid="uid://cmer3pxh4awhv" path="res://Scenes/healthbar.tscn" id="11_nb51f"]
+[ext_resource type="Texture2D" uid="uid://cpyjskb75nrai" path="res://Assets/Icons/menu.png" id="12_iivbl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v158k"]
-bg_color = Color(0.050980393, 0.05490196, 0.101960786, 1)
+bg_color = Color(0.06666667, 0.09411765, 0.15294118, 1)
 border_width_top = 4
-border_color = Color(0.47843137, 0.47843137, 0.6039216, 1)
+border_color = Color(0.050980393, 0.05490196, 0.101960786, 1)
 corner_detail = 20
 shadow_color = Color(0.47843137, 0.47843137, 0.6039216, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h4fw4"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5yvi"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nb51f"]
+bg_color = Color(0.06666667, 0.09411765, 0.15294118, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rku1e"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nnt18"]
+bg_color = Color(0.2901961, 0.2, 0.5019608, 0.54901963)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rfjv2"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nbq1"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+bg_color = Color(0.06666667, 0.09411765, 0.15294118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.050980393, 0.05490196, 0.101960786, 1)
+shadow_color = Color(1, 1, 1, 0.11764706)
+shadow_size = 12
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7nbq1"]
 shader = ExtResource("6_nb51f")
@@ -219,205 +235,179 @@ script = ExtResource("1_wrm1d")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=716100530]
 script = ExtResource("6_h4fw4")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=1147704666]
-custom_minimum_size = Vector2(0, 80)
+[node name="BottomNav" type="PanelContainer" parent="CanvasLayer" unique_id=1147704666]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v158k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/BottomNav" unique_id=277509648]
+layout_mode = 2
+alignment = 1
+
+[node name="Button2" type="Button" parent="CanvasLayer/BottomNav/HBoxContainer" unique_id=41144178]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_h4fw4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nb51f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nnt18")
+
+[node name="Shop" type="Sprite2D" parent="CanvasLayer/BottomNav/HBoxContainer/Button2" unique_id=1838382338]
+position = Vector2(193.5, 25.5)
+texture = ExtResource("3_85qyi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/BottomNav/HBoxContainer/Button2" unique_id=225262371]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.5
+offset_top = 12.0
+offset_right = 24.5
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/BottomNav/HBoxContainer/Button2/VBoxContainer" unique_id=1133671835]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_font_sizes/font_size = 9
+text = "SHOP"
+horizontal_alignment = 1
+
+[node name="Button3" type="Button" parent="CanvasLayer/BottomNav/HBoxContainer" unique_id=798388292]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_h4fw4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nb51f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nnt18")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/BottomNav/HBoxContainer/Button3" unique_id=728333701]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.5
+offset_top = 12.0
+offset_right = 23.5
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/BottomNav/HBoxContainer/Button3/VBoxContainer" unique_id=1079060506]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_font_sizes/font_size = 9
+text = "SKILL TREE"
+horizontal_alignment = 1
+
+[node name="Book" type="Sprite2D" parent="CanvasLayer/BottomNav/HBoxContainer/Button3" unique_id=2044173171]
+position = Vector2(188, 25.5)
+texture = ExtResource("5_iivbl")
+
+[node name="Button4" type="Button" parent="CanvasLayer/BottomNav/HBoxContainer" unique_id=936289364]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_h4fw4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nb51f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nnt18")
+
+[node name="Player2" type="Sprite2D" parent="CanvasLayer/BottomNav/HBoxContainer/Button4" unique_id=2126687946]
+position = Vector2(190, 25.5)
+texture = ExtResource("6_7nbq1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/BottomNav/HBoxContainer/Button4" unique_id=1095865375]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 12.0
+offset_right = 20.0
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/BottomNav/HBoxContainer/Button4/VBoxContainer" unique_id=1731041242]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_font_sizes/font_size = 9
+text = "STATS"
+horizontal_alignment = 1
+
+[node name="WordContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1686973192]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_v158k")
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 90
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=277509648]
+[node name="WordBox" type="PanelContainer" parent="CanvasLayer/WordContainer" unique_id=1675319911]
 layout_mode = 2
-alignment = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_7nbq1")
 
-[node name="Button" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=1391497116]
-custom_minimum_size = Vector2(0, 80)
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/WordContainer/WordBox" unique_id=1504406472]
+z_index = 9
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_h4fw4")
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button" unique_id=1510305692]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -29.5
-offset_right = 20.0
-offset_bottom = 29.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button/VBoxContainer" unique_id=1873500863]
-custom_minimum_size = Vector2(0, 20)
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/WordContainer/WordBox/VBoxContainer" unique_id=1398569961]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "⚔"
-horizontal_alignment = 1
+size_flags_vertical = 3
+theme_override_constants/separation = 0
 
-[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button/VBoxContainer" unique_id=2043493218]
+[node name="TypedLettersLabel" type="Label" parent="CanvasLayer/WordContainer/WordBox/VBoxContainer/HBoxContainer" unique_id=88256447]
 layout_mode = 2
-theme_override_font_sizes/font_size = 9
-text = "BATTLE"
-horizontal_alignment = 1
-
-[node name="Button2" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=41144178]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_o5yvi")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button2" unique_id=225262371]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -29.5
-offset_right = 20.0
-offset_bottom = 29.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button2/VBoxContainer" unique_id=1802216637]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "🏪"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button2/VBoxContainer" unique_id=1133671835]
-layout_mode = 2
-theme_override_font_sizes/font_size = 9
-text = "SHOP"
-horizontal_alignment = 1
-
-[node name="Button3" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=798388292]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_rku1e")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button3" unique_id=728333701]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -29.5
-offset_right = 20.0
-offset_bottom = 29.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button3/VBoxContainer" unique_id=799890713]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "📖"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button3/VBoxContainer" unique_id=1079060506]
-layout_mode = 2
-theme_override_font_sizes/font_size = 9
-text = "SKILL TREE"
-horizontal_alignment = 1
-
-[node name="Button4" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=936289364]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_rfjv2")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/Button4" unique_id=1095865375]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -29.5
-offset_right = 20.0
-offset_bottom = 29.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button4/VBoxContainer" unique_id=50145628]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "📊"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/Button4/VBoxContainer" unique_id=1731041242]
-layout_mode = 2
-theme_override_font_sizes/font_size = 9
-text = "STATS"
-horizontal_alignment = 1
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer" unique_id=22584742]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -216.0
-offset_right = 100.0
-offset_bottom = -156.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 4
-bbcode_enabled = true
-text = "Start Typing Newger"
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=404931583]
-custom_minimum_size = Vector2(0, 30)
-anchors_preset = -1
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -171.0
-offset_right = -20.0
-offset_bottom = -141.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="RemainingLetters" type="Label" parent="CanvasLayer/WordContainer/WordBox/VBoxContainer/HBoxContainer" unique_id=1597673189]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9098039, 0.8784314, 1, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="CanvasLayer" unique_id=2072377569]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(100, 40)
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -50.0
-offset_top = -256.0
-offset_right = 50.0
-offset_bottom = -216.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 4
-alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="Line_Edit" type="LineEdit" parent="CanvasLayer/WordContainer/WordBox/VBoxContainer/HBoxContainer" unique_id=422010745]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9098039, 0.8784314, 1, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 40
+alignment = 2
+
+[node name="Accuracy" type="Label" parent="CanvasLayer/WordContainer/WordBox/VBoxContainer" unique_id=1868723273]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.8784314, 1, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=44429766]
 stream = ExtResource("7_v158k")
@@ -426,16 +416,24 @@ stream = ExtResource("7_v158k")
 stream = ExtResource("8_h4fw4")
 
 [node name="PauseMenuButton" type="Button" parent="CanvasLayer" unique_id=1970657793]
-custom_minimum_size = Vector2(50, 50)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -53.0
-offset_top = -2.0
-offset_right = -3.0
-offset_bottom = 78.0
+offset_left = -54.0
+offset_top = 5.0
+offset_right = -4.0
+offset_bottom = 75.0
 grow_horizontal = 0
+scale = Vector2(1, 0.64)
 size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("9_iivbl")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+
+[node name="Label" type="Sprite2D" parent="CanvasLayer/PauseMenuButton" unique_id=1114914753]
+position = Vector2(25, 34.375)
+scale = Vector2(1, 1.5625)
+texture = ExtResource("12_iivbl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenuButton" unique_id=2131180401]
 layout_mode = 1
@@ -445,24 +443,11 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -20.0
-offset_top = -29.5
+offset_top = 16.0
 offset_right = 20.0
-offset_bottom = 29.5
+offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/PauseMenuButton/VBoxContainer" unique_id=1385577014]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "⚙"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="CanvasLayer/PauseMenuButton/VBoxContainer" unique_id=198451591]
-layout_mode = 2
-theme_override_font_sizes/font_size = 9
-text = "MENU"
-horizontal_alignment = 1
 
 [node name="Pause Menu" type="Control" parent="CanvasLayer" unique_id=1706872065 node_paths=PackedStringArray("pause_button", "pause_panel")]
 process_mode = 3
@@ -509,7 +494,7 @@ offset_right = 175.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.050980393, 0.05490196, 0.101960786, 1)
+color = Color(0.06666667, 0.09411765, 0.15294118, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pause Menu/TextureRect" unique_id=672134444]
 layout_mode = 1
@@ -531,9 +516,9 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
 theme_override_fonts/font = ExtResource("7_nnt18")
-theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/normal = ExtResource("9_iivbl")
 theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "RESUME"
@@ -543,9 +528,9 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
 theme_override_fonts/font = ExtResource("7_nnt18")
-theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/normal = ExtResource("9_iivbl")
 theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "RESTART
@@ -556,9 +541,9 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
 theme_override_fonts/font = ExtResource("7_nnt18")
-theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/normal = ExtResource("9_iivbl")
 theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "MENU"
@@ -568,9 +553,9 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/font_color = Color(0.9607843, 0.78431374, 0.25882354, 1)
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
 theme_override_fonts/font = ExtResource("7_nnt18")
-theme_override_styles/normal = ExtResource("8_ewbju")
+theme_override_styles/normal = ExtResource("9_iivbl")
 theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "EXIT GAME"

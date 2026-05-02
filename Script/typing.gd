@@ -1,62 +1,86 @@
 extends CanvasLayer
-@onready var accuracy: Label = $Accuracy if has_node("Accuracy") else null
-var word_list: Array= []
 
+@onready var typed_label: Label = $WordContainer/WordBox/VBoxContainer/HBoxContainer/TypedLettersLabel
+@onready var remaining_label: Label = $WordContainer/WordBox/VBoxContainer/HBoxContainer/RemainingLetters
+@onready var line_edit: LineEdit = $WordContainer/WordBox/VBoxContainer/HBoxContainer/Line_Edit
+@onready var hit_sound: AudioStreamPlayer2D = $HitSound
+@onready var miss_sound: AudioStreamPlayer2D = $MissSound
+@onready var accuracy_label: Label = $WordContainer/WordBox/VBoxContainer/Accuracy
+
+var word_list: Array = []
 var word: Array = []
 var current_index: int = 0
 var debuff: bool = false
-# Audio players (will be initialized in _ready if they exist)
-var hit_sound: Node  # Can be AudioStreamPlayer or AudioStreamPlayer2D
-var miss_sound: Node
 
 # Tracking stats
 var perfect_words: int = 0
 var total_words: int = 0
 
-# Visual feedback settings
-var hit_flash_color: Color = Color.WHITE
-var miss_flash_color: Color = Color(0xe03e3e)  # Red color for miss
-var flash_duration: float = 0.15
-var shake_intensity: float = 0.05
-var shake_duration: float = 0.05
+# Colors
+const CORRECT  := Color(0x8A5CFFff)
+const WRONG    := Color(0x938f99ff)
+const UNTYPED  := Color(0xE8E0FFff)
+const UPCOMING := Color(0x7A6FA8ff)
 
-#load word from a txt file :) 
-func load_words():
-	var file = FileAccess.open("res://Assets/COMMON WORDS LIB/WORD_LIB.txt", FileAccess.READ)
-	while not file.eof_reached():
-		var line = file.get_line().strip_edges()
-		if line !="":
-			word_list.append(line)
-	file.close()
-	print("file size: ", word_list.size())
+# Visual feedback settings
+var hit_flash_color  := Color.WHITE
+var miss_flash_color := Color(0xe03e3eff)
+var flash_duration   := 0.05
+var shake_intensity  := 1.0
+
+# ─────────────────────────────────────────
+#  INIT
+# ─────────────────────────────────────────
 func _ready() -> void:
 	load_words()
 	generate_words()
-	render_words()
-	$LineEdit.editable = true
-	$LineEdit.modulate.a = 0
-	$LineEdit.text_changed.connect(highlight)
-	$LineEdit.grab_focus()
-	$RichTextLabel.bbcode_enabled = true
-	
-	# Initialize audio players if they exist
-	if has_node("HitSound"):
-		hit_sound = $HitSound
-	if has_node("MissSound"):
-		miss_sound = $MissSound
-	
+
+	if line_edit:
+		line_edit.editable = true
+		line_edit.modulate.a = 0
+		line_edit.text_changed.connect(highlight)
+		line_edit.grab_focus()
+
+	# Force labels visible and opaque
+	if typed_label:
+		typed_label.visible = true
+		typed_label.modulate = Color.WHITE
+	if remaining_label:
+		remaining_label.visible = true
+		remaining_label.modulate = Color.WHITE
+
+	call_deferred("render_words")
 	print("✓ Typing system initialized")
 
-#Generate Random Words From List
+# ─────────────────────────────────────────
+#  WORD LOADING
+# ─────────────────────────────────────────
+func load_words() -> void:
+	var file = FileAccess.open("res://Assets/COMMON WORDS LIB/WORD_LIB.txt", FileAccess.READ)
+	if not file:
+		print("ERROR: Could not open word library file")
+		return
+	while not file.eof_reached():
+		var line = file.get_line().strip_edges()
+		if line != "":
+			word_list.append(line)
+	file.close()
+	print("file size: ", word_list.size())
+
+# ─────────────────────────────────────────
+#  WORD GENERATION
+# ─────────────────────────────────────────
 func generate_words() -> void:
 	word.clear()
-	for i: int in range(5):
-		word.append(word_length())
+	for i in range(3):
+		word.append(_pick_word())
 	current_index = 0
 
-func word_length() -> String:
+func _pick_word() -> String:
+	if word_list.is_empty():
+		return "error"
 	for i in range(50):
-		var w = word_list.pick_random()
+		var w: String = word_list.pick_random()
 		if debuff:
 			if w.length() >= 5:
 				return w
@@ -64,202 +88,190 @@ func word_length() -> String:
 			if w.length() <= 5:
 				return w
 	return word_list.pick_random()
+
+func _refill_words() -> void:
+	while word.size() - current_index < 4:
+		word.append(_pick_word())
+
+# ─────────────────────────────────────────
+#  WORD DISPLAY
+# Since nodes are plain Label (not RichTextLabel),
+# we split display across typed_label and remaining_label:
+# typed_label  = what player typed (colored by correct/wrong)
+# remaining_label = untyped letters of current word + upcoming words
+# We swap label colors based on state rather than per-character
+# ─────────────────────────────────────────
 func render_words() -> void:
-	for i: Label in $HBoxContainer.get_children():
-		i.free()
-	
-	for i: int in range(word.size()):
-		var label: Label = Label.new()
-		label.text = word[i]
-		label.add_theme_font_size_override("font_size", 24)
-		
-		# Color code by difficulty
-		var difficulty = get_word_difficulty(word[i])
-		if i == current_index:
-			match difficulty:
-				"easy": label.modulate = Color.YELLOW_GREEN
-				"medium": label.modulate = Color.YELLOW
-				"hard": label.modulate = Color.RED
-		else:
-			label.modulate = Color.WHITE
-		
-		$HBoxContainer.add_child(label)
+	if word.is_empty() or current_index >= word.size():
+		return
+	update_word_display(word[current_index], "")
 
-func get_word_difficulty(w: String) -> String:
-	if w.length() <= 3:
-		return "easy"
-	elif w.length() <= 6:
-		return "medium"
+func update_word_display(target_word: String, typed: String) -> void:
+	if not typed_label or not remaining_label:
+		print("ERROR: labels still null at display time")
+		return
+
+	# ── typed_label: shows typed portion ──
+	# Color the whole label based on whether typing is correct so far
+	if typed.length() > 0:
+		var expected := target_word.left(typed.length())
+		if typed == expected:
+			# All correct so far
+			typed_label.add_theme_color_override("font_color", CORRECT)
+		else:
+			# Something wrong
+			typed_label.add_theme_color_override("font_color", WRONG)
+		typed_label.text = typed
 	else:
-		return "hard"
+		typed_label.text = ""
+		typed_label.add_theme_color_override("font_color", CORRECT)
 
-func calculate_word_damage(w: String) -> int:
-	# Damage scales with word length
-	return int(ceil(w.length() * 3.5))
+	# ── remaining_label: untyped letters + upcoming words ──
+	# Show remaining letters of current word
+	var remaining := target_word.right(target_word.length() - min(typed.length(), target_word.length()))
+	var display := remaining
 
-func highlight(text: String = " ") -> void:
-	var typed: String = $LineEdit.text 
-	var target: String = word[current_index]
-	var result: String = ""
-	 
-	for i: int in range(target.length()):
-		if i < typed.length():
-			if typed[i] == target[i]:
-				result += "[color=green]" + word[current_index][i] + "[/color]"
-			else:
-				result += "[color=red]" + word[current_index][i] + "[/color]"
-		else:
-			result += target[i]	
-			
-	$RichTextLabel.text = result
-	
-	# Update word list highlighting
-	for i: int in range($HBoxContainer.get_child_count()):
-		var label: Label = $HBoxContainer.get_child(i)
-		if i == current_index:
-			label.modulate = Color.YELLOW
-		else:
-			label.modulate = Color.WHITE
+	# Append next 3 upcoming words dimmed with spaces
+	for i in range(1, 3):
+		var next_index := current_index + i
+		if next_index < word.size():
+			display += "  " + word[next_index]
 
+	remaining_label.text = display
+	remaining_label.add_theme_color_override("font_color", UNTYPED)
+
+func highlight(_text: String = "") -> void:
+	if not line_edit or word.is_empty() or current_index >= word.size():
+		return
+	update_word_display(word[current_index], line_edit.text)
+
+# ─────────────────────────────────────────
+#  INPUT
+# ─────────────────────────────────────────
 func _input(event: InputEvent) -> void:
+	if not line_edit:
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
-		highlight()
 		if event.keycode == KEY_SPACE:
 			check_word()
-			$LineEdit.text = ""
-			$LineEdit.grab_focus()
+			line_edit.text = ""
+			line_edit.grab_focus()
 			get_viewport().set_input_as_handled()
-			highlight()
-		if event.keycode == KEY_BACKSPACE:
-			$LineEdit.text = ""
+			render_words()
 
+# ─────────────────────────────────────────
+#  WORD CHECK
+# ─────────────────────────────────────────
 func check_word() -> void:
-	var typed: String = $LineEdit.text.strip_edges()
-	if current_index >= word.size():
+	if not line_edit or word.is_empty() or current_index >= word.size():
 		return
-	
+
+	var typed := line_edit.text.strip_edges()
 	total_words += 1
-	
+
 	if typed == word[current_index]:
-		var typed_word: String = word[current_index]
 		perfect_words += 1
-		var damage: int = calculate_word_damage(typed_word)
-		# Player is sibling of UILayer (this node's parent)
+		var damage := calculate_word_damage(word[current_index])
 		get_parent().get_node("Player").attack(damage)
 		play_success_feedback(damage)
 	else:
-		# Player is sibling of UILayer
 		get_parent().get_node("Player").hurt(5)
 		play_miss_feedback()
-	
-	current_index += 1
-	$LineEdit.text = ""
-	
-	if current_index == word.size():
-		current_index = 0 
-		generate_words()
-		render_words()
-	if accuracy:
-		accuracy.text = "Accu: " + str(snapped(get_accuracy(), 0.1)) + "%"
-func play_success_feedback(damage: int) -> void:
-	# Play success sound
-	if hit_sound:
-		print("HitSound exists: ", hit_sound)
-		print("HitSound stream: ", hit_sound.stream)
-		print("HitSound volume: ", hit_sound.volume_db)
-		print("HitSound bus: ", hit_sound.bus)
-		hit_sound.play()
-		print("Playing hit sound...")
-	else:
-		print("HitSound is null!")
-	
-	# Screen shake and color flash
-	screen_shake()
-	color_flash(hit_flash_color)
-	
-	# Damage number popup
-	
-	show_damage_popup(damage, hit_flash_color)
-	
-	print("SUCCESS! Damage dealt")
 
-func play_miss_feedback() -> void:
-	# Play miss sound
-	if miss_sound:
-		miss_sound.play()
-	
-	# Screen shake and color flash (smaller shake for miss)
-	screen_shake(2.0)  # Reduced intensity
-	color_flash(miss_flash_color)
-	
-	# Damage number popup for miss
-	show_damage_popup(5, miss_flash_color)
-	
-	print("MISS! Player hurt")
+	current_index += 1
+	_refill_words()
+
+	if current_index > 10:
+		word = word.slice(current_index)
+		current_index = 0
+
+	update_accuracy_label()
+
+# ─────────────────────────────────────────
+#  STATS
+# ─────────────────────────────────────────
+func calculate_word_damage(w: String) -> int:
+	return int(ceil(w.length() * 3.5))
 
 func get_accuracy() -> float:
 	if total_words == 0:
 		return 0.0
 	return float(perfect_words) / float(total_words) * 100.0
 
-# Screen shake effect
+func update_accuracy_label() -> void:
+	if accuracy_label:
+		accuracy_label.text = "Accu: " + str(snapped(get_accuracy(), 0.1)) + "%"
+
+# ─────────────────────────────────────────
+#  FEEDBACK
+# ─────────────────────────────────────────
+func play_success_feedback(damage: int) -> void:
+	if hit_sound:
+		hit_sound.play()
+	else:
+		print("HitSound is null!")
+	screen_shake()
+	color_flash(hit_flash_color)
+	show_damage_popup(damage, hit_flash_color)
+	print("SUCCESS! Damage dealt: ", damage)
+
+func play_miss_feedback() -> void:
+	if miss_sound:
+		miss_sound.play()
+	screen_shake(0.5)
+	color_flash(miss_flash_color)
+	show_damage_popup(5, miss_flash_color)
+	print("MISS! Player hurt")
+
+# ─────────────────────────────────────────
+#  SCREEN SHAKE
+# ─────────────────────────────────────────
 func screen_shake(intensity_multiplier: float = 1.0) -> void:
-	var camera: Camera2D = get_viewport().get_camera_2d()
+	var camera := get_viewport().get_camera_2d()
 	if not camera:
 		return
-	
-	var original_pos: Vector2 = camera.global_position
-	var shake_amount: float = shake_intensity * intensity_multiplier
-	
-	# Shake for the duration
-	for i: int in range(int(shake_duration * 60)):  # Assuming 60 FPS
-		camera.global_position = original_pos + Vector2(
-			randf_range(-shake_amount, shake_amount),
-			randf_range(-shake_amount, shake_amount)
-		)
-		await get_tree().process_frame
-	
-	# Reset camera position
-	camera.global_position = original_pos
+	var shake_amount := shake_intensity * intensity_multiplier
+	var tween := create_tween()
+	for i in range(6):
+		tween.tween_property(camera, "offset",
+			Vector2(randf_range(-shake_amount, shake_amount),
+					randf_range(-shake_amount, shake_amount)), 0.02)
+	tween.tween_property(camera, "offset", Vector2.ZERO, 0.05)
 
-# Color flash effect
+# ─────────────────────────────────────────
+#  COLOR FLASH
+# ─────────────────────────────────────────
 func color_flash(color: Color) -> void:
-	# Create a ColorRect overlay for the flash effect
-	var flash_overlay: ColorRect = ColorRect.new()
-	flash_overlay.color = color
-	flash_overlay.color.a = 0.3  # Semi-transparent
-	flash_overlay.anchors_preset = 15  # Fill screen
-	flash_overlay.anchor_right = 1.0
-	flash_overlay.anchor_bottom = 1.0
-	
-	# Add to UILayer (parent of this script)
-	get_parent().add_child(flash_overlay)
-	
-	# Fade out the flash
-	var tween: Tween = create_tween()
+	var flash_overlay := ColorRect.new()
+	flash_overlay.color = Color(color.r, color.g, color.b, 0.3)
+	flash_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	flash_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(flash_overlay)
+	var tween := create_tween()
 	tween.tween_property(flash_overlay, "color:a", 0.0, flash_duration)
 	await tween.finished
-	
 	flash_overlay.queue_free()
 
-# Damage number popup
+# ─────────────────────────────────────────
+#  DAMAGE POPUP
+# ─────────────────────────────────────────
 func show_damage_popup(damage: int, color: Color) -> void:
-	var label: Label = Label.new()
+	var label := Label.new()
 	label.text = str(damage)
 	label.add_theme_font_size_override("font_size", 32)
 	label.modulate = color
 	label.z_index = 100
-	# Position at LineEdit location (bottom center area)
-	label.position = $LineEdit.position + Vector2(0,-50)
-	
-	# Add to UILayer (parent of this script)
-	get_parent().add_child(label)
-	
-	# Animate popup floating upward and fading out
-	var tween: Tween = create_tween()
-	tween.set_parallel(true)  # Run animations in parallel
-	tween.tween_property(label, "global_position:y", label.global_position.y - 50, 1.0)
+	add_child(label)
+
+	if line_edit:
+		label.global_position = line_edit.global_position + Vector2(0, -50)
+	else:
+		var vp := get_viewport().get_visible_rect().size
+		label.global_position = Vector2(vp.x / 2.0, vp.y / 2.0)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(label, "global_position:y", label.global_position.y - 80, 1.0)
 	tween.tween_property(label, "modulate:a", 0.0, 1.0)
-	
 	await tween.finished
 	label.queue_free()

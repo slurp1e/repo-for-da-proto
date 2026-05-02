@@ -27,7 +27,6 @@ fill_from = Vector2(0.5, 0.5)
 metadata/_snap_enabled = true
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5n0dv"]
-load_path = "res://.godot/imported/Play Left Icon.png-ddb2daa2e8f5bf2c4d3192e84b41df6b.ctex"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
 content_margin_left = 12.0
