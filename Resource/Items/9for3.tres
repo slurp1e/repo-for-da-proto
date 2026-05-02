@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://cbvulvychcbek"]
+
+[ext_resource type="Script" uid="uid://bm4qwgt7pul55" path="res://Script/ItemResourceBase.gd" id="1_1tne4"]
+
+[resource]
+script = ExtResource("1_1tne4")
+name = "3 for your 9"
+desc = "heal 3 hp every 9 seconds."
+mult = 1.0
+regen = 3
+regen_CD = 9.0
+metadata/_custom_type_script = "uid://bm4qwgt7pul55"

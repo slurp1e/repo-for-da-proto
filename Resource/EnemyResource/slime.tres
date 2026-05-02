@@ -1,22 +1,22 @@
 [gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://dcojlwtrj2m70"]
 
-[ext_resource type="Texture2D" uid="uid://dwt0ok8blex2c" path="res://Assets/sprites/slime_green.png" id="1_56kpw"]
-[ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="1_x5xrw"]
+[ext_resource type="Texture2D" uid="uid://dwt0ok8blex2c" path="res://Assets/sprites/slime_green.png" id="1_kuhjh"]
+[ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="2_yta7x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_56kpw"]
-atlas = ExtResource("1_56kpw")
+atlas = ExtResource("1_kuhjh")
 region = Rect2(0, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_01h65"]
-atlas = ExtResource("1_56kpw")
+atlas = ExtResource("1_kuhjh")
 region = Rect2(24, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c4b3v"]
-atlas = ExtResource("1_56kpw")
+atlas = ExtResource("1_kuhjh")
 region = Rect2(48, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0wqkk"]
-atlas = ExtResource("1_56kpw")
+atlas = ExtResource("1_kuhjh")
 region = Rect2(72, 24, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x5xrw"]
@@ -40,7 +40,7 @@ animations = [{
 }]
 
 [resource]
-script = ExtResource("1_x5xrw")
+script = ExtResource("2_yta7x")
 frames = SubResource("SpriteFrames_x5xrw")
 hp = 20
 speed = 50
