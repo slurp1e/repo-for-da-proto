@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://cvvies5pj0jcf"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_g3yfq"]
+
+[resource]
+script = ExtResource("1_g3yfq")
+name = "vampire"
+desc = "get 20% lifesteal, have 50% less hp"
+mult = 1.0
+lifesteal = 0.2
+metadata/_custom_type_script = "uid://dfjoeincg38br"

@@ -7,6 +7,6 @@ class_name ItemResource
 @export var desc: String
 @export var mult: float
 @export var flatDmg: int
-@export var lifesteal: int
+@export var lifesteal: float
 @export var regen: int
 @export var regen_CD: float

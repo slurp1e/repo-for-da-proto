@@ -11,7 +11,6 @@ var mult: float = 1.0
 var flat_dmg: int = 0
 var regen_CD:Dictionary= {}
 var lifesteal: float
-
 func load_items(path: String) -> void:
 	var dir := DirAccess.open(path)
 	
@@ -28,7 +27,7 @@ func load_items(path: String) -> void:
 			var item: ItemResource = load(full_path)
 			
 			if item:
-				get_item(item) # uses your existing system
+				get_item(item) 
 				print("Loaded:", item.name)
 		
 		file_name = dir.get_next()
@@ -54,7 +53,7 @@ func get_item(item: ItemResource) -> void:
 	mult *= item.mult
 	flat_dmg += item.flatDmg
 	regen_CD[item] = 0.0
-	lifesteal = item.lifesteal
+	lifesteal += item.lifesteal
 
 func modify_dmg(base_damage: int ) -> int:
 	return int(base_damage * mult) + flat_dmg
@@ -93,6 +92,9 @@ func attack(damage: int) -> int:
 		axis.look_at(enemy.global_position)
 		axis.rotation += PI / 2
 		enemy.take_dmg(final_damage)
+		if lifesteal >0:
+			var heal_amount= final_damage * lifesteal
+			heal(heal_amount)
 	print("shoot")
 	return final_damage
 func hurt(amount: int) -> void:

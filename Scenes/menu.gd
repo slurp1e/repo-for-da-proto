@@ -2,6 +2,7 @@ extends Control
 
 @export var pause_button: Button
 @export var pause_panel: Control
+signal game_pause (paused: bool)
 
 func resume():
 	get_tree().paused = false
@@ -18,6 +19,7 @@ func testEsc():
 		if pause_panel:
 			pause_panel.visible = false
 		resume()
+		
 
 func _ready() -> void:
 	# Connect the pause button if assigned

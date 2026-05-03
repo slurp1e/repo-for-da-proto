@@ -31,6 +31,11 @@ var shake_intensity  := 1.0
 # ─────────────────────────────────────────
 #  INIT
 # ─────────────────────────────────────────
+
+func _on_resume_focus():
+	await get_tree().process_frame
+	line_edit.grab_focus()
+
 func _ready() -> void:
 	load_words()
 	generate_words()
