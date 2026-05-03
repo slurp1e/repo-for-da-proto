@@ -182,8 +182,8 @@ func gain_xp(amount: float) -> void:
 		xp_changed.emit(current_xp, xp_to_next)
 
 func _calc_next_threshold() -> float:
-	# Each level needs 40% more XP than the last
-	return xp_to_next * 1.4
+	# Each level needs 90% more XP than the last
+	return xp_to_next * 1.9
 
 # ─────────────────────────────────────────
 #  APPLY UPGRADE — called by game.gd
