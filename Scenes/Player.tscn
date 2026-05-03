@@ -68,6 +68,3 @@ rotation = 1.5707964
 scale = Vector2(0.01, 0.01)
 texture = ExtResource("4_nn08x")
 script = ExtResource("5_52ee3")
-
-[node name="Timer" type="Timer" parent="." unique_id=1651613342]
-autostart = true

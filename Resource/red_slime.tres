@@ -1,38 +1,38 @@
 [gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://dctqlfqlgf1la"]
 
-[ext_resource type="Texture2D" uid="uid://6vftcae766p0" path="res://Assets/sprites/slime_purple.png" id="1_t2ibx"]
-[ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="2_dvdne"]
+[ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="1_ienxt"]
+[ext_resource type="Texture2D" uid="uid://6vftcae766p0" path="res://Assets/sprites/slime_purple.png" id="1_m2tic"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m2tic"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dfs75"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fhica"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l5sse"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4b8w0"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(0, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u7f5u"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(24, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ufdjd"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(48, 24, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7vdd5"]
-atlas = ExtResource("1_t2ibx")
+atlas = ExtResource("1_m2tic")
 region = Rect2(72, 24, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ienxt"]
@@ -68,7 +68,7 @@ animations = [{
 }]
 
 [resource]
-script = ExtResource("2_dvdne")
+script = ExtResource("1_ienxt")
 frames = SubResource("SpriteFrames_ienxt")
 hp = 15
 speed = 20
