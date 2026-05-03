@@ -21,9 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://cpyjskb75nrai" path="res://Assets/Icons/menu.png" id="12_iivbl"]
 [ext_resource type="StyleBox" uid="uid://bq40gw4m00kks" path="res://Assets/UI/Ui Button Resource/Normal Button.tres" id="17_7t8sx"]
 [ext_resource type="Texture2D" uid="uid://c5uj3ec6ap5p7" path="res://Assets/Icons/heart.png" id="17_mg4q0"]
-[ext_resource type="Script" uid="uid://cvmyxbp1kwgs0" path="res://Script/level_up_menu.gd" id="17_vm72l"]
-[ext_resource type="Resource" uid="uid://cbvulvychcbek" path="res://Resource/Items/9for3.tres" id="20_exi56"]
-[ext_resource type="Resource" uid="uid://bauc7io040g3t" path="res://Resource/Modular Upgrades/player_stats.tres" id="23_22asu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exi56"]
 bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
@@ -626,8 +623,9 @@ theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "EXIT GAME"
 
-[node name="LevelUpMenu" type="Control" parent="CanvasLayer" unique_id=1040411041 node_paths=PackedStringArray("level_label", "cards_container", "refresh_button", "color_rect")]
+[node name="LevelUpMenu" type="Control" parent="CanvasLayer" unique_id=1040411041]
 process_mode = 3
+visible = false
 z_index = 1
 layout_mode = 3
 anchors_preset = 15
@@ -635,11 +633,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("17_vm72l")
-level_label = NodePath("CenterContent/Title")
-cards_container = NodePath("CenterContent/CardsContainer")
-refresh_button = NodePath("CenterContent/RefreshBtn")
-color_rect = NodePath("Overlay")
 
 [node name="Overlay" type="ColorRect" parent="CanvasLayer/LevelUpMenu" unique_id=2136248678]
 layout_mode = 1
@@ -882,6 +875,8 @@ theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "↺   REFRESH SKILLS"
 
+[node name="world" type="Node2D" parent="." unique_id=75306009]
+
 [node name="TileMap" type="TileMap" parent="." unique_id=259648244]
 tile_set = SubResource("TileSet_wrm1d")
 format = 2
@@ -898,8 +893,6 @@ editor_draw_drag_margin = true
 unique_name_in_owner = true
 position = Vector2(0, -5)
 healthbar = NodePath("../CanvasLayer/Healthbar")
-starting_item = ExtResource("20_exi56")
-stats = ExtResource("23_22asu")
 
 [node name="damage" parent="." unique_id=1866181887 instance=ExtResource("2_i6g32")]
 z_index = 7
