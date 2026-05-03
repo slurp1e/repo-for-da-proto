@@ -20,23 +20,8 @@
 [ext_resource type="StyleBox" uid="uid://ur6jaodn2lo2" path="res://Assets/UI/Ui Button Resource/Hover.tres" id="10_iivbl"]
 [ext_resource type="PackedScene" uid="uid://cmer3pxh4awhv" path="res://Scenes/healthbar.tscn" id="11_nb51f"]
 [ext_resource type="Texture2D" uid="uid://cpyjskb75nrai" path="res://Assets/Icons/menu.png" id="12_iivbl"]
-<<<<<<< HEAD
 [ext_resource type="StyleBox" uid="uid://bq40gw4m00kks" path="res://Assets/UI/Ui Button Resource/Normal Button.tres" id="17_7t8sx"]
 [ext_resource type="Texture2D" uid="uid://c5uj3ec6ap5p7" path="res://Assets/Icons/heart.png" id="17_mg4q0"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exi56"]
-bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7t8sx"]
-bg_color = Color(0.9490196, 0.9490196, 0.9490196, 1)
-border_color = Color(0.5764706, 0.56078434, 0.6, 1)
-=======
->>>>>>> parent of 36ba6e4 (Merge pull request #3 from slurp1e/leveling_system)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v158k"]
 bg_color = Color(0.06666667, 0.09411765, 0.15294118, 1)
@@ -67,6 +52,28 @@ border_width_bottom = 2
 border_color = Color(0.050980393, 0.05490196, 0.101960786, 1)
 shadow_color = Color(1, 1, 1, 0.11764706)
 shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vm72l"]
+bg_color = Color(0.06666667, 0.09411765, 0.15294118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.050980393, 0.05490196, 0.101960786, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mg4q0"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.10980392, 0.14117648, 0.22352941, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22745098, 0.28235295, 0.42352942, 1)
+shadow_color = Color(0.54117647, 0.36078432, 1, 0.2)
+shadow_size = 8
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7nbq1"]
 shader = ExtResource("6_nb51f")
@@ -577,7 +584,13 @@ theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "EXIT GAME"
 
-<<<<<<< HEAD
+[node name="Healthbar" parent="CanvasLayer" unique_id=1234881885 instance=ExtResource("11_nb51f")]
+offset_left = 16.0
+offset_top = 31.000002
+offset_right = 256.0
+offset_bottom = 35.0
+scale = Vector2(2.144876, 4.9448757)
+
 [node name="LevelUpMenu" type="Control" parent="CanvasLayer" unique_id=1040411041]
 process_mode = 3
 visible = false
@@ -829,16 +842,18 @@ theme_override_styles/normal = ExtResource("17_7t8sx")
 theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "↺   REFRESH SKILLS"
-=======
-[node name="Healthbar" parent="CanvasLayer" unique_id=1234881885 instance=ExtResource("11_nb51f")]
-offset_left = 16.0
-offset_top = 31.000002
-offset_right = 256.0
-offset_bottom = 35.0
-scale = Vector2(2.144876, 4.9448757)
->>>>>>> parent of 36ba6e4 (Merge pull request #3 from slurp1e/leveling_system)
 
-[node name="world" type="Node2D" parent="." unique_id=75306009]
+[node name="ConfirmBtn" type="Button" parent="CanvasLayer/LevelUpMenu/CenterContent" unique_id=1651944603]
+custom_minimum_size = Vector2(400, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9098039, 0.8784314, 1, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("17_7t8sx")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "CONFIRM CHOICE"
 
 [node name="TileMap" type="TileMap" parent="." unique_id=259648244]
 tile_set = SubResource("TileSet_wrm1d")

@@ -9,6 +9,7 @@ var rounds: int = 1
 @onready var world: Node2D = $world
 var wave: int = 1
 var waving: bool = false
+
 func wave_up() -> void:
 	if waving:
 		return
