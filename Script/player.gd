@@ -6,8 +6,15 @@ var hp: int = 10000
 
 @onready var game: Node = $".."
 @onready var axis: Node2D = $Axis
-
+var mult: float = 1.0
+var flat_dmg: int = 0
+var regen_cd: int
+var lifesteal: float
+var regen: int
+var items: Array[ItemResource] = []
 func _ready() -> void:
+	var item: ItemResource = preload("res://Resource/Items/glascan.tres")
+	get_item(item)
 	hp = max_hp
 	if not healthbar:
 		healthbar = get_tree().root.find_child("Healthbar", true, false)
@@ -17,7 +24,22 @@ func _ready() -> void:
 		print("Healthbar initialized")
 	else:
 		print("Warning: Healthbar not found")
-
+#func load_resource(path: String) -> Array[ItemResource]:
+#	var resources: Array[ItemResource]= []
+#	var files:= DirAccess.get_files_at(path)
+#	for file_name in files:
+#		if file_name.ends_with(".tres"):
+#			var res= load(file_name)
+#			if res:
+#				resources.append(res)
+#	return resources
+func get_item(item: ItemResource)-> void:
+	items.append(item)
+	mult *= item.mult
+	flat_dmg = item.flat_dmg
+	lifesteal = item.lifesteal
+	regen = item.regen
+	regen_cd = item.regen_CD
 func closest_enemy() -> Node2D:
 	var enemies: Array = get_tree().get_nodes_in_group("enemies")
 	var closest: Node2D = null

@@ -172,8 +172,8 @@ func check_word() -> void:
 	if typed == word[current_index]:
 		perfect_words += 1
 		var damage := calculate_word_damage(word[current_index])
-		get_parent().get_node("Player").attack(damage)
-		play_success_feedback(damage)
+		var final_damage= get_parent().get_node("Player").attack(damage)
+		play_success_feedback(final_damage)
 	else:
 		get_parent().get_node("Player").hurt(5)
 		play_miss_feedback()

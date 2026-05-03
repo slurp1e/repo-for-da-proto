@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://c0eco55xmu8r6"]
+
+[ext_resource type="Script" uid="uid://c4v80ta0tsh6b" path="res://Script/ItemResourceBase.gd" id="1_0btjd"]
+
+[resource]
+script = ExtResource("1_0btjd")
+name = "glascan"
+desc = "4 for 4"
+mult = 4.0
+metadata/_custom_type_script = "uid://c4v80ta0tsh6b"
