@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var player: CharacterBody2D = %Player
 @onready var world: Node2D = $world
+@export var cam: Camera2D
 
 var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
 var Skele_boss: EnemyResource = preload("res://Resource/EnemyResource/Skele_boss.tres")
@@ -25,10 +26,8 @@ func _ready() -> void:
 	randomize()
 	_load_item_pool()
 	spawn_enemies()
-	# Connect player signals
 	player.level_up.connect(on_player_level_up)
 	player.xp_changed.connect(_on_xp_changed)
-	# Wire level up menu buttons
 	$CanvasLayer/LevelUpMenu/CenterContent/ConfirmBtn.pressed.connect(_on_confirm_btn_pressed)
 	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.pressed.connect(_on_refresh_btn_pressed)
 
@@ -58,6 +57,8 @@ func _load_item_pool() -> void:
 func _process(_delta: float) -> void:
 	wave_up()
 	round_up()
+	if cam:
+		cam.global_position = player.global_position
 
 # ─────────────────────────────────────────
 #  WAVE & ROUND MANAGEMENT
@@ -111,7 +112,7 @@ func spawn_boss() -> void:
 	)
 
 # ─────────────────────────────────────────
-#  XP BAR UI — driven by player signal
+#  XP BAR UI
 # ─────────────────────────────────────────
 func _on_xp_changed(current: float, needed: float) -> void:
 	var xpbar: ProgressBar = get_node_or_null("CanvasLayer/XPBar")
@@ -142,11 +143,9 @@ func _generate_upgrade_cards() -> void:
 	_selected_item = null
 	_pending_items.clear()
 
-	# Pick 3 random items from pool (no duplicates)
 	var shuffled: Array[ItemResource] = []
 	shuffled.assign(item_pool.duplicate())
 	shuffled.shuffle()
-	# Slice to max 3, however many are available
 	var count: int = mini(3, shuffled.size())
 	for i: int in range(count):
 		_pending_items.append(shuffled[i])
@@ -169,7 +168,6 @@ func _generate_upgrade_cards() -> void:
 			card.visible = true
 			btn.pressed.connect(_on_card_selected.bind(i))
 		else:
-			# Hide card if not enough items
 			card.visible = false
 
 func _build_item_desc(item: ItemResource) -> String:
@@ -217,10 +215,12 @@ func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
 
 func camera_size() -> Rect2:
-	var cam: Camera2D = get_viewport().get_camera_2d()
-	var camsize: Vector2 = get_viewport_rect().size * cam.zoom / 11
-	var top_left: Vector2 = cam.global_position - camsize / 2
-	return Rect2(top_left, camsize)
+	# Divide viewport size by zoom to get world-space size of what the camera sees
+	var zoom: Vector2 = cam.zoom if cam else Vector2.ONE
+	var viewport_size: Vector2 = get_viewport_rect().size
+	var world_size: Vector2 = viewport_size / zoom
+	var top_left: Vector2 = cam.global_position - world_size / 2.0
+	return Rect2(top_left, world_size)
 
 func quit() -> void:
 	get_tree().quit()
