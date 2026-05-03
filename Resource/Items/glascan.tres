@@ -1,9 +1,15 @@
 [gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://cskdsy14oudyk"]
 
 [ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_0btjd"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_0iqih"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhw44"]
+atlas = ExtResource("2_0iqih")
+region = Rect2(40, 2480, 680, 1080)
 
 [resource]
 script = ExtResource("1_0btjd")
+texture = SubResource("AtlasTexture_uhw44")
 name = "Glass canon"
 desc = "Get 4x mult, recieve 4x damage"
 mult = 4.0

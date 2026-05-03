@@ -1,9 +1,15 @@
 [gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://cbvulvychcbek"]
 
 [ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_1tne4"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_tmft1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5th8"]
+atlas = ExtResource("2_tmft1")
+region = Rect2(840, 40, 680, 1080)
 
 [resource]
 script = ExtResource("1_1tne4")
+texture = SubResource("AtlasTexture_p5th8")
 name = "3 for your 9"
 desc = "heal 3 hp every 9 seconds."
 mult = 1.0

@@ -696,6 +696,7 @@ layout_mode = 2
 [node name="IconFrame" type="TextureRect" parent="CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card1/VBoxContainer/IconFrame" unique_id=1192777898]
 layout_mode = 2
 texture = ExtResource("17_mg4q0")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="UpgradeName" type="Label" parent="CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card1/VBoxContainer" unique_id=1439766239]
@@ -758,6 +759,7 @@ layout_mode = 2
 [node name="IconFrame" type="TextureRect" parent="CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card2/VBoxContainer/IconFrame" unique_id=682511954]
 layout_mode = 2
 texture = ExtResource("17_mg4q0")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="UpgradeName" type="Label" parent="CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card2/VBoxContainer" unique_id=1455846178]
@@ -820,6 +822,7 @@ layout_mode = 2
 [node name="IconFrame" type="TextureRect" parent="CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card3/VBoxContainer/IconFrame" unique_id=2021915965]
 layout_mode = 2
 texture = ExtResource("17_mg4q0")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="UpgradeName" type="Label" parent="CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card3/VBoxContainer" unique_id=662538085]

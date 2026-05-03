@@ -18,8 +18,8 @@ signal died
 # ─────────────────────────────────────────
 #  HP
 # ─────────────────────────────────────────
-var max_hp: int = 10000
-var hp: int     = 10000
+var max_hp: int = 200
+var hp: int     = 200
 
 # ─────────────────────────────────────────
 #  ITEM SYSTEM (your friend's code, untouched)
@@ -51,7 +51,6 @@ var life_regen: float       = 0.0
 # ─────────────────────────────────────────
 func _ready() -> void:
 	regen_timer.timeout.connect(_on_regen_timeout)
-	load_items("res://Resource/Items")
 
 	hp = max_hp
 	if not healthbar:

@@ -163,7 +163,9 @@ func _generate_upgrade_cards() -> void:
 		if i < _pending_items.size():
 			var item: ItemResource = _pending_items[i]
 			card.get_node("VBoxContainer/UpgradeName").text = item.name
-			card.get_node("VBoxContainer/Description").text = _build_item_desc(item)
+			card.get_node("VBoxContainer/Description").text = _build_item_desc(item)+ "\n" + item.desc
+			var icon: TextureRect = card.get_node("VBoxContainer/IconFrame/IconFrame/")
+			icon.texture = item.texture
 			card.visible = true
 			btn.pressed.connect(_on_card_selected.bind(i))
 		else:
@@ -173,7 +175,7 @@ func _generate_upgrade_cards() -> void:
 func _build_item_desc(item: ItemResource) -> String:
 	var parts: Array[String] = []
 	if item.mult != 1.0:
-		parts.append("DMG x" + str(snappedf(item.mult, 0.01)))
+		parts.append("Mult x" + str(snappedf(item.mult, 0.01)))
 	if item.flatDmg != 0:
 		parts.append("+" + str(item.flatDmg) + " flat DMG")
 	if item.lifesteal != 0.0:
@@ -203,6 +205,7 @@ func _on_confirm_btn_pressed() -> void:
 		card.modulate = Color.WHITE
 		card.visible = true
 	get_tree().paused = false
+	$CanvasLayer/Line_Edit.grab_focus()
 
 func _on_refresh_btn_pressed() -> void:
 	_generate_upgrade_cards()

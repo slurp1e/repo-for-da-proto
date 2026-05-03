@@ -1,10 +1,17 @@
 [gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://csru2fndvti28"]
 
 [ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_xlyyt"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_3addt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3addt"]
+atlas = ExtResource("2_3addt")
+region = Rect2(2440, 1240, 680, 1080)
 
 [resource]
 script = ExtResource("1_xlyyt")
+texture = SubResource("AtlasTexture_3addt")
 name = "Scholar"
 desc = " 20 damage, nothing more nothing less"
+mult = 0.0
 flatDmg = 20
 metadata/_custom_type_script = "uid://dfjoeincg38br"

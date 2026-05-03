@@ -18,6 +18,7 @@ func testEsc():
 		if pause_panel:
 			pause_panel.visible = false
 		resume()
+		
 
 func _ready() -> void:
 	# Connect the pause button if assigned
