@@ -165,4 +165,5 @@ hp = 50
 speed = 60
 atk = 15
 resistance = 250
+xp_reward = 100.0
 metadata/_custom_type_script = "uid://wiax4ijfm8vp"

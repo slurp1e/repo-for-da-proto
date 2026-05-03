@@ -1,11 +1,11 @@
 extends CanvasLayer
 
-@onready var typed_label: Label = $WordContainer/WordBox/VBoxContainer/HBoxContainer/TypedLettersLabel
-@onready var remaining_label: Label = $WordContainer/WordBox/VBoxContainer/HBoxContainer/RemainingLetters
-@onready var line_edit: LineEdit = $WordContainer/WordBox/VBoxContainer/HBoxContainer/Line_Edit
-@onready var hit_sound: AudioStreamPlayer2D = $HitSound
-@onready var miss_sound: AudioStreamPlayer2D = $MissSound
-@onready var accuracy_label: Label = $WordContainer/WordBox/VBoxContainer/Accuracy
+@export var typed_label: Label
+@export var remaining_label: Label
+@export var line_edit: LineEdit
+@export var hit_sound: AudioStreamPlayer2D
+@export var miss_sound: AudioStreamPlayer2D
+@export var accuracy_label: Label
 
 var word_list: Array = []
 var word: Array = []
@@ -41,7 +41,6 @@ func _ready() -> void:
 		line_edit.text_changed.connect(highlight)
 		line_edit.grab_focus()
 
-	# Force labels visible and opaque
 	if typed_label:
 		typed_label.visible = true
 		typed_label.modulate = Color.WHITE
@@ -95,11 +94,6 @@ func _refill_words() -> void:
 
 # ─────────────────────────────────────────
 #  WORD DISPLAY
-# Since nodes are plain Label (not RichTextLabel),
-# we split display across typed_label and remaining_label:
-# typed_label  = what player typed (colored by correct/wrong)
-# remaining_label = untyped letters of current word + upcoming words
-# We swap label colors based on state rather than per-character
 # ─────────────────────────────────────────
 func render_words() -> void:
 	if word.is_empty() or current_index >= word.size():
@@ -111,27 +105,20 @@ func update_word_display(target_word: String, typed: String) -> void:
 		print("ERROR: labels still null at display time")
 		return
 
-	# ── typed_label: shows typed portion ──
-	# Color the whole label based on whether typing is correct so far
 	if typed.length() > 0:
 		var expected := target_word.left(typed.length())
 		if typed == expected:
-			# All correct so far
 			typed_label.add_theme_color_override("font_color", CORRECT)
 		else:
-			# Something wrong
 			typed_label.add_theme_color_override("font_color", WRONG)
 		typed_label.text = typed
 	else:
 		typed_label.text = ""
 		typed_label.add_theme_color_override("font_color", CORRECT)
 
-	# ── remaining_label: untyped letters + upcoming words ──
-	# Show remaining letters of current word
 	var remaining := target_word.right(target_word.length() - min(typed.length(), target_word.length()))
 	var display := remaining
 
-	# Append next 3 upcoming words dimmed with spaces
 	for i in range(1, 3):
 		var next_index := current_index + i
 		if next_index < word.size():
@@ -267,7 +254,7 @@ func show_damage_popup(damage: int, color: Color) -> void:
 		label.global_position = line_edit.global_position + Vector2(0, -50)
 	else:
 		var vp := get_viewport().get_visible_rect().size
-		label.global_position = Vector2(vp.x / 2.0, vp.y / 2.0)
+		label.global_positison = Vector2(vp.x / 2.0, vp.y / 2.0)
 
 	var tween := create_tween()
 	tween.set_parallel(true)

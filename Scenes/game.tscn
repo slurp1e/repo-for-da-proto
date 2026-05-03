@@ -64,17 +64,9 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpfill"]
 bg_color = Color(0.9490196, 0.9490196, 0.9490196, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mg4q0"]
 content_margin_left = 20.0
@@ -275,8 +267,14 @@ _data = {
 [node name="game" type="Node2D" unique_id=1159277670]
 script = ExtResource("1_wrm1d")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=716100530]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=716100530 node_paths=PackedStringArray("typed_label", "remaining_label", "line_edit", "hit_sound", "miss_sound", "accuracy_label")]
 script = ExtResource("6_h4fw4")
+typed_label = NodePath("WordContainer/WordBox/VBoxContainer/HBoxContainer/TypedLettersLabel")
+remaining_label = NodePath("WordContainer/WordBox/VBoxContainer/HBoxContainer/RemainingLetters")
+line_edit = NodePath("Line_Edit")
+hit_sound = NodePath("HitSound")
+miss_sound = NodePath("MissSound")
+accuracy_label = NodePath("WordContainer/WordBox/VBoxContainer/Accuracy")
 
 [node name="BottomNav" type="PanelContainer" parent="CanvasLayer" unique_id=1147704666]
 anchors_preset = 12
@@ -436,14 +434,6 @@ theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Line_Edit" type="LineEdit" parent="CanvasLayer/WordContainer/WordBox/VBoxContainer/HBoxContainer" unique_id=422010745]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0.9098039, 0.8784314, 1, 1)
-theme_override_fonts/font = ExtResource("7_7nbq1")
-theme_override_font_sizes/font_size = 40
-alignment = 2
-
 [node name="Accuracy" type="Label" parent="CanvasLayer/WordContainer/WordBox/VBoxContainer" unique_id=1868723273]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9098039, 0.8784314, 1, 1)
@@ -496,7 +486,17 @@ grow_vertical = 2
 process_mode = 3
 visible = false
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("5_1phco")
 pause_button = NodePath("../PauseMenuButton")
 pause_panel = NodePath(".")
@@ -600,27 +600,25 @@ offset_right = 256.0
 offset_bottom = 35.0
 scale = Vector2(2.144876, 4.9448757)
 
-[node name="XPBar" type="ProgressBar" parent="CanvasLayer" unique_id=2001234567]
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 14.0
-offset_top = 60.0
-offset_right = -618.0
-offset_bottom = 70.0
-grow_horizontal = 2
+[node name="XPBar" type="ProgressBar" parent="CanvasLayer" unique_id=1234881886]
+offset_left = 16.0
+offset_top = 62.0
+offset_right = 256.0
+offset_bottom = 66.0
+scale = Vector2(2.144876, 3)
 theme_override_styles/background = SubResource("StyleBoxFlat_xpbg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_xpfill")
-value = 70.0
 show_percentage = false
 
-[node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=2001234568]
+[node name="LevelLabel" type="Label" parent="CanvasLayer" unique_id=1234881887]
 offset_left = 16.0
-offset_top = 14.0
-offset_right = 120.0
-offset_bottom = 30.0
+offset_top = 10.0
+offset_right = 90.0
+offset_bottom = 28.0
+scale = Vector2(2.144876, 2)
 theme_override_colors/font_color = Color(0.9490196, 0.9490196, 0.9490196, 1)
 theme_override_fonts/font = ExtResource("7_nnt18")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 7
 text = "LV 1"
 
 [node name="LevelUpMenu" type="Control" parent="CanvasLayer" unique_id=1040411041]
@@ -887,6 +885,17 @@ theme_override_styles/pressed = ExtResource("9_85qyi")
 theme_override_styles/hover = ExtResource("10_iivbl")
 text = "CONFIRM CHOICE"
 
+[node name="Line_Edit" type="LineEdit" parent="CanvasLayer" unique_id=422010745]
+offset_left = 774.0
+offset_top = 462.0
+offset_right = 922.0
+offset_bottom = 522.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9098039, 0.8784314, 1, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 40
+alignment = 2
+
 [node name="TileMap" type="TileMap" parent="." unique_id=259648244]
 tile_set = SubResource("TileSet_wrm1d")
 format = 2
@@ -902,10 +911,9 @@ editor_draw_drag_margin = true
 [node name="world" parent="." unique_id=926810274 instance=ExtResource("3_wowpa")]
 position = Vector2(-34, 5)
 
-[node name="Player" parent="." unique_id=1751091898 node_paths=PackedStringArray("healthbar") instance=ExtResource("2_qxrlw")]
+[node name="Player" parent="." unique_id=1751091898 instance=ExtResource("2_qxrlw")]
 unique_name_in_owner = true
 position = Vector2(0, -5)
-healthbar = NodePath("../CanvasLayer/Healthbar")
 
 [node name="damage" parent="." unique_id=1866181887 instance=ExtResource("2_i6g32")]
 z_index = 7
