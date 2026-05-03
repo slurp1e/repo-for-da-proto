@@ -3,8 +3,8 @@ extends Node2D
 @onready var player: CharacterBody2D = %Player
 
 var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
-var Skele_boss: EnemyResource = preload("res://Resource/Skele_boss.tres")
-var slimes: Array[EnemyResource] = [preload("res://Resource/slime.tres"), preload("res://Resource/red_slime.tres")]
+var Skele_boss: EnemyResource = preload("res://Resource/EnemyResource/Skele_boss.tres") 
+var slimes: Array[EnemyResource] = [preload("res://Resource/EnemyResource/slime.tres"), preload("res://Resource/EnemyResource/red_slime.tres")]
 var rounds: int = 1
 @onready var world: Node2D = $world
 var wave: int = 1

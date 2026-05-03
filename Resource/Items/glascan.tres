@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://cskdsy14oudyk"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_0btjd"]
+
+[resource]
+script = ExtResource("1_0btjd")
+name = "Glass canon"
+desc = "Get 4x mult, recieve 4x damage"
+mult = 4.0
+metadata/_custom_type_script = "uid://dfjoeincg38br"

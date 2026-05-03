@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://csru2fndvti28"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_xlyyt"]
+
+[resource]
+script = ExtResource("1_xlyyt")
+name = "Scholar"
+desc = " 20 damage, nothing more nothing less"
+flatDmg = 20
+metadata/_custom_type_script = "uid://dfjoeincg38br"
