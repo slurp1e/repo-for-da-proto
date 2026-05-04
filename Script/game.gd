@@ -8,6 +8,11 @@ var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
 var Skele_boss: EnemyResource = preload("res://Resource/EnemyResource/Skele_boss.tres")
 var slimes: Array[EnemyResource] = [preload("res://Resource/EnemyResource/slime.tres"), preload("res://Resource/EnemyResource/red_slime.tres")]
 
+#Scores
+@export var final_score_label: Label
+@export var final_wpm_label: Label
+@export var typing: Node
+
 var rounds: int = 1
 var wave: int   = 1
 var waving: bool = false
@@ -70,10 +75,15 @@ func _load_item_pool() -> void:
 #  PROCESS
 # ─────────────────────────────────────────
 func _process(_delta: float) -> void:
+	if is_game_over:
+		return
+
 	wave_up()
 	round_up()
+
 	if cam:
 		cam.global_position = player.global_position
+
 
 # ─────────────────────────────────────────
 #  WAVE & ROUND MANAGEMENT
@@ -243,11 +253,26 @@ func _on_quit_pressed() -> void:
 
 
 func on_player_death() -> void:
-	is_game_over =  true
+	is_game_over = true
 	get_tree().paused = true
+
+	# Pull stats from typing.gd
+	if typing:
+		# SCORE
+		if final_score_label:
+			final_score_label.text = "Score: " + str(typing.score)
+
+		# WPM
+		if final_wpm_label and typing.has_method("get_wpm"):
+			final_wpm_label.text = "WPM: " + str(snapped(typing.get_wpm(), 0.1))
+
+	# Show UI
 	if game_over_panel:
 		game_over_panel.visible = true
+
 	$CanvasLayer/Game_Over.visible = true
+
+
 func camera_size() -> Rect2:
 	# Divide viewport size by zoom to get world-space size of what the camera sees
 	var zoom: Vector2 = cam.zoom if cam else Vector2.ONE
