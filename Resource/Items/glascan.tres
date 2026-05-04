@@ -14,4 +14,5 @@ name = "Glasscanon"
 desc = "big damage, become fragile."
 mult = 3.0
 max_stack = 2
+mult_thorn = 3.0
 metadata/_custom_type_script = "uid://dfjoeincg38br"

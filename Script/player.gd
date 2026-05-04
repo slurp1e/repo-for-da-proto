@@ -44,6 +44,7 @@ var regen_CD: Dictionary = {}
 var lifesteal: float = 0.0
 var retaliation: int
 var item_stacks: Dictionary = {}
+var mult_thorn: float
 # ─────────────────────────────────────────
 #  XP / LEVEL
 # ─────────────────────────────────────────
@@ -118,6 +119,7 @@ func get_item(item: ItemResource) -> void:
 	regen_CD[item] = 0.0
 	lifesteal += item.lifesteal
 	retaliation += item.retaliation
+	mult_thorn += item.mult_thorn
 	if item.name == "Echo":
 		start_echo(item)
 func _on_regen_timeout() -> void:
@@ -161,7 +163,7 @@ func trigger_echo(multiplier: float = 0.5) -> void:
 		fireball.setup(last_attack_enemy, echo_damage, lifesteal)
 func start_echo(item: ItemResource) -> void:
 	var t := Timer.new()
-	t.wait_time = 1.0
+	t.wait_time = 0.5
 	t.autostart = true
 	t.one_shot = false
 	add_child(t)
@@ -219,9 +221,13 @@ func _on_hit_enemy(enemy: Node2D) -> void:
 		enemy.take_dmg(retaliation)
 
 func hurt(amount: int) -> void:
-	hp -= amount
+	var final_hurt: float
+	if mult_thorn > 0:
+		final_hurt = int(amount *mult_thorn)
+	 
+	hp -= final_hurt
 	hp = clamp(hp, 0, max_hp)
-
+	
 	# ── HURT SOUND ──
 	if audio_player and hurt_sfx:
 		audio_player.stream = hurt_sfx

@@ -12,6 +12,6 @@ script = ExtResource("1_mxvgy")
 texture = SubResource("AtlasTexture_gqy36")
 name = "Echo"
 desc = "Try and find out."
-value = 0.5
+value = 0.3
 max_stack = 1
 metadata/_custom_type_script = "uid://dfjoeincg38br"

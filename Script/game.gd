@@ -167,13 +167,16 @@ func _get_cards() -> Array[PanelContainer]:
 func _generate_upgrade_cards() -> void:
 	_selected_item = null
 	_pending_items.clear()
-
-	var shuffled: Array[ItemResource] = []
-	shuffled.assign(item_pool.duplicate())
-	shuffled.shuffle()
-	var count: int = mini(3, shuffled.size())
+	var available: Array[ItemResource] = []
+	for item in item_pool:
+		var count: int = player.item_stacks.get(item.name, 0)
+		if count < item.max_stack:
+			available.append(item)
+	available.shuffle()
+	var count: int = int(min(3, available.size()))
+	
 	for i: int in range(count):
-		_pending_items.append(shuffled[i])
+		_pending_items.append(available[i])
 
 	var cards: Array[PanelContainer] = _get_cards()
 	for i: int in range(cards.size()):

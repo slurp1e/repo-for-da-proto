@@ -1,66 +1,21 @@
 [gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://dctqlfqlgf1la"]
 
-[ext_resource type="Texture2D" uid="uid://6vftcae766p0" path="res://Assets/sprites/slime_purple.png" id="1_t2ibx"]
+[ext_resource type="Texture2D" uid="uid://bhbllie07pjro" path="res://Assets/sprites/red slime png1.png" id="1_ux4b5"]
 [ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="2_dvdne"]
+[ext_resource type="Texture2D" uid="uid://c41f7yygvk810" path="res://Assets/sprites/red slime png2.png" id="2_ifbdo"]
+[ext_resource type="Texture2D" uid="uid://b3srhx34j3pk0" path="res://Assets/sprites/red slime png3.png" id="3_d18ja"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m2tic"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(0, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dfs75"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(24, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fhica"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(48, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l5sse"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(72, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4b8w0"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(0, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u7f5u"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(24, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ufdjd"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(48, 24, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7vdd5"]
-atlas = ExtResource("1_t2ibx")
-region = Rect2(72, 24, 24, 24)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ienxt"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_y3tid"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_m2tic")
+"texture": ExtResource("1_ux4b5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dfs75")
+"texture": ExtResource("2_ifbdo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fhica")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l5sse")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4b8w0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u7f5u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ufdjd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7vdd5")
+"texture": ExtResource("3_d18ja")
 }],
 "loop": true,
 "name": &"Idle",
@@ -69,7 +24,7 @@ animations = [{
 
 [resource]
 script = ExtResource("2_dvdne")
-frames = SubResource("SpriteFrames_ienxt")
+frames = SubResource("SpriteFrames_y3tid")
 hp = 15
 speed = 20
 atk = 10

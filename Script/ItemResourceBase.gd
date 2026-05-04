@@ -15,3 +15,4 @@ class_name ItemResource
 @export var retaliation: int
 @export var value: float
 @export var max_stack: int
+@export var mult_thorn: float

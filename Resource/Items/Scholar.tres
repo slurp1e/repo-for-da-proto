@@ -14,4 +14,5 @@ name = "Scholar"
 desc = " 20 damage, nothing more nothing less"
 mult = 0.0
 flatDmg = 20
+max_stack = 3
 metadata/_custom_type_script = "uid://dfjoeincg38br"
