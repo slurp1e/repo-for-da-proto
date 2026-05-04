@@ -1,7 +1,36 @@
 [gd_scene format=3 uid="uid://c4u2r7aaq8xce"]
 
 [ext_resource type="Script" uid="uid://dgq7nkgf6et4e" path="res://Assets/sprites/slime.gd" id="1_jokqx"]
+[ext_resource type="Shader" uid="uid://yb82stsfnuf" path="res://Assets/Shader Materials/blink.tres" id="1_paq7w"]
 [ext_resource type="Texture2D" uid="uid://dwt0ok8blex2c" path="res://Assets/sprites/slime_green.png" id="2_swwnm"]
+[ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="3_y26kt"]
+[ext_resource type="Shader" uid="uid://cwi001tpkw61d" path="res://Assets/Shader Materials/blink.gdshader" id="4_c7ij5"]
+[ext_resource type="Shader" uid="uid://c1a6yrsn3ro5d" path="res://Assets/Shader Materials/dissolve.gdshader" id="5_psnrq"]
+[ext_resource type="PackedScene" uid="uid://bwfrkhdsu1wnt" path="res://Scenes/Hitparticle.tscn" id="6_kh8cv"]
+[ext_resource type="AudioStream" uid="uid://bh4qpvwdyddhj" path="res://Assets/music/enemyhit.wav" id="7_555id"]
+[ext_resource type="AudioStream" uid="uid://eo405bc14bfd" path="res://Assets/music/enemy death.wav" id="8_xq7bh"]
+[ext_resource type="Shader" uid="uid://boidht1k6eree" path="res://Assets/Shader Materials/dissolve.tres" id="9_10642"]
+[ext_resource type="Script" uid="uid://cxmqllvb0t4xl" path="res://Scenes/healthbar.gd" id="11_c7ij5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_paq7w"]
+shader = ExtResource("1_paq7w")
+shader_parameter/flash_intensity = 1.0
+
+[sub_resource type="Resource" id="Resource_uu7bc"]
+script = ExtResource("3_y26kt")
+metadata/_custom_type_script = "uid://wiax4ijfm8vp"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5gljc"]
+shader = ExtResource("4_c7ij5")
+shader_parameter/flash_intensity = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gqvs5"]
+shader = ExtResource("5_psnrq")
+shader_parameter/dissolve_amount = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vblni"]
+shader = ExtResource("9_10642")
+shader_parameter/dissolve_amount = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aiwxb"]
 atlas = ExtResource("2_swwnm")
@@ -42,16 +71,37 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swwnm"]
 size = Vector2(6.53125, 5.5234375)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swwnm"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1v5t1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aiwxb"]
-bg_color = Color(0.65882355, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c7ij5"]
+bg_color = Color(0.7254902, 0.21568628, 0.23921569, 1)
 
-[node name="slime" type="Node2D" unique_id=1601816520]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lv041"]
+bg_color = Color(0.09411765, 0.09411765, 0.09411765, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27450982)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilck6"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="slime" type="Node2D" unique_id=1601816520 node_paths=PackedStringArray("healthbar", "hit_sfx", "death_sfx", "audio_player")]
+material = SubResource("ShaderMaterial_paq7w")
 script = ExtResource("1_jokqx")
+resource = SubResource("Resource_uu7bc")
+healthbar = NodePath("Healthbar")
+blink_material = SubResource("ShaderMaterial_5gljc")
+dissolve_material = SubResource("ShaderMaterial_gqvs5")
+hit_particle = ExtResource("6_kh8cv")
+hit_sfx = NodePath("hit")
+death_sfx = NodePath("enemydie")
+audio_player = NodePath("SFXPlayer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=336867363]
+material = SubResource("ShaderMaterial_vblni")
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_vblni")
 autoplay = "default"
@@ -62,13 +112,45 @@ frame_progress = 0.99015945
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AtkArea" unique_id=1583905419]
 shape = SubResource("RectangleShape2D_swwnm")
 
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1243890134]
+[node name="Timer" type="Timer" parent="." unique_id=388592653]
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1638282268]
+
+[node name="Healthbar" type="ProgressBar" parent="." unique_id=1234881885]
+z_index = 1
 offset_left = -10.0
-offset_top = -17.0
+offset_top = -16.0
 offset_right = 10.0
-offset_bottom = -9.0
-theme_override_styles/background = SubResource("StyleBoxFlat_swwnm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_aiwxb")
+offset_bottom = -12.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_1v5t1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_c7ij5")
+value = 60.0
+show_percentage = false
+script = ExtResource("11_c7ij5")
+
+[node name="DamageBar" type="ProgressBar" parent="Healthbar" unique_id=143158358]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_lv041")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ilck6")
+value = 80.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="." unique_id=388592653]
+[node name="Timer" type="Timer" parent="Healthbar" unique_id=319676703]
+wait_time = 0.4
+one_shot = true
+
+[node name="hit" type="AudioStreamPlayer2D" parent="." unique_id=1474602649]
+stream = ExtResource("7_555id")
+volume_db = -20.0
+
+[node name="enemydie" type="AudioStreamPlayer2D" parent="." unique_id=768925864]
+stream = ExtResource("8_xq7bh")
+volume_db = -20.0
+
+[connection signal="timeout" from="Healthbar/Timer" to="Healthbar/Timer" method="_on_timeout"]

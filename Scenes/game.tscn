@@ -8772,9 +8772,11 @@ vertical_alignment = 1
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=44429766]
 stream = ExtResource("7_v158k")
+volume_db = -20.0
 
 [node name="MissSound" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=1914364398]
 stream = ExtResource("8_h4fw4")
+volume_db = -15.0
 
 [node name="PauseMenuButton" type="Button" parent="CanvasLayer" unique_id=1970657793]
 anchors_preset = 1
