@@ -50,8 +50,9 @@ var life_regen: float       = 0.0
 #  READY
 # ─────────────────────────────────────────
 func _ready() -> void:
+	add_to_group("player")  # ← add this line, enemies use this to find you
+	
 	regen_timer.timeout.connect(_on_regen_timeout)
-
 	hp = max_hp
 	if not healthbar:
 		healthbar = get_tree().root.find_child("Healthbar", true, false)
@@ -61,9 +62,7 @@ func _ready() -> void:
 	else:
 		print("Warning: Healthbar not found")
 
-	# Emit initial XP state so XPBar starts at 0
 	xp_changed.emit(current_xp, xp_to_next)
-
 # ─────────────────────────────────────────
 #  PROCESS — upgrade life regen per frame
 # ─────────────────────────────────────────
