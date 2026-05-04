@@ -5,6 +5,7 @@ extends CharacterBody2D
 # ─────────────────────────────────────────
 signal level_up(new_level: int)
 signal xp_changed(current: float, needed: float)
+
 signal died()
 
 # ─────────────────────────────────────────
@@ -14,6 +15,10 @@ signal died()
 @export var hurt_sfx: AudioStream
 @export var audio_player: AudioStreamPlayer2D
 @export var fireball_scene: PackedScene
+
+
+
+signal on_hit_enemy(enemy:Node2D)
 
 # ─────────────────────────────────────────
 #  SCENE REFS
@@ -37,7 +42,7 @@ var mult: float = 1.0
 var flat_dmg: int = 0
 var regen_CD: Dictionary = {}
 var lifesteal: float = 0.0
-
+var retaliation: int
 # ─────────────────────────────────────────
 #  XP / LEVEL
 # ─────────────────────────────────────────
@@ -59,9 +64,8 @@ var life_regen: float = 0.0
 # ─────────────────────────────────────────
 func _ready() -> void:
 	add_to_group("player")
-
+	on_hit_enemy.connect(_on_hit_enemy)
 	regen_timer.timeout.connect(_on_regen_timeout)
-
 	hp = max_hp
 
 	if not healthbar:
@@ -102,10 +106,11 @@ func load_items(path: String) -> void:
 func get_item(item: ItemResource) -> void:
 	items.append(item)
 	mult *= item.mult
+	print("You got: ", item.name)
 	flat_dmg += item.flatDmg
 	regen_CD[item] = 0.0
 	lifesteal += item.lifesteal
-
+	retaliation += item.retaliation
 func _on_regen_timeout() -> void:
 	for item in items:
 		if item.regen > 0:
@@ -176,6 +181,10 @@ func heal(amount: float) -> void:
 
 	if healthbar:
 		healthbar.health = hp
+
+func _on_hit_enemy(enemy: Node2D) -> void:
+	if retaliation > 0:
+		enemy.take_dmg(retaliation)
 
 func hurt(amount: int) -> void:
 	hp -= amount

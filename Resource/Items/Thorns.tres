@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://bf6ory0csnps3"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_ej3eb"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_l1anl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lyje"]
+atlas = ExtResource("2_l1anl")
+region = Rect2(1640, 2480, 680, 1080)
+
+[resource]
+script = ExtResource("1_ej3eb")
+texture = SubResource("AtlasTexture_1lyje")
+name = "Thorns"
+desc = "Hurt enemeis on hit"
+retaliation = 15
+metadata/_custom_type_script = "uid://dfjoeincg38br"
