@@ -13,3 +13,5 @@ class_name ItemResource
 @export var regen_CD: float
 @export var max_hp: int
 @export var retaliation: int
+@export var value: float
+@export var max_stack: int

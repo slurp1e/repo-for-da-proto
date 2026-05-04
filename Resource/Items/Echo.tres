@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://dso15fxdbpfp6"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_mxvgy"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_67r7b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqy36"]
+atlas = ExtResource("2_67r7b")
+region = Rect2(4040, 2480, 680, 1080)
+
+[resource]
+script = ExtResource("1_mxvgy")
+texture = SubResource("AtlasTexture_gqy36")
+name = "Echo"
+desc = "Try and find out."
+value = 0.5
+max_stack = 1
+metadata/_custom_type_script = "uid://dfjoeincg38br"

@@ -5,7 +5,6 @@ extends CharacterBody2D
 # ─────────────────────────────────────────
 signal level_up(new_level: int)
 signal xp_changed(current: float, needed: float)
-
 signal died()
 
 # ─────────────────────────────────────────
@@ -27,7 +26,8 @@ signal on_hit_enemy(enemy:Node2D)
 @onready var axis: Node2D = $Axis
 @onready var game: Node = $".."
 @onready var regen_timer: Timer = $Timer
-
+var last_attack_damage: int = 0
+var last_attack_enemy: Node2D = null
 # ─────────────────────────────────────────
 #  HP
 # ─────────────────────────────────────────
@@ -43,6 +43,7 @@ var flat_dmg: int = 0
 var regen_CD: Dictionary = {}
 var lifesteal: float = 0.0
 var retaliation: int
+var item_stacks: Dictionary = {}
 # ─────────────────────────────────────────
 #  XP / LEVEL
 # ─────────────────────────────────────────
@@ -104,6 +105,12 @@ func load_items(path: String) -> void:
 	dir.list_dir_end()
 
 func get_item(item: ItemResource) -> void:
+	if not item_stacks.has(item.name):
+		item_stacks[item.name] = 0
+	if item_stacks[item.name] >= item.max_stack:
+		print("maxxed out bro", item.name)
+		return
+	item_stacks[item.name] += 1
 	items.append(item)
 	mult *= item.mult
 	print("You got: ", item.name)
@@ -111,6 +118,8 @@ func get_item(item: ItemResource) -> void:
 	regen_CD[item] = 0.0
 	lifesteal += item.lifesteal
 	retaliation += item.retaliation
+	if item.name == "Echo":
+		start_echo(item)
 func _on_regen_timeout() -> void:
 	for item in items:
 		if item.regen > 0:
@@ -139,10 +148,33 @@ func closest_enemy() -> Node2D:
 			closest = e
 
 	return closest
+func trigger_echo(multiplier: float = 0.5) -> void:
+	if not last_attack_enemy:
+		return
 
+	var echo_damage: int = int(last_attack_damage * multiplier)
+
+	if fireball_scene:
+		var fireball:  = fireball_scene.instantiate()
+		get_tree().current_scene.add_child(fireball)
+		fireball.global_position = global_position
+		fireball.setup(last_attack_enemy, echo_damage, lifesteal)
+func start_echo(item: ItemResource) -> void:
+	var t := Timer.new()
+	t.wait_time = 1.0
+	t.autostart = true
+	t.one_shot = false
+	add_child(t)
+
+	t.timeout.connect(func():
+		trigger_echo(item.value)
+	)
+	
 func attack(damage: int) -> int:
 	var final_damage := modify_dmg(damage)
 	var enemy := closest_enemy()
+	last_attack_damage = final_damage
+	last_attack_enemy = enemy
 
 	# SOUND
 	if audio_player and attack_sfx:
@@ -155,7 +187,7 @@ func attack(damage: int) -> int:
 		var fireball = fireball_scene.instantiate()
 		get_tree().current_scene.add_child(fireball)
 		fireball.global_position = global_position
-		fireball.setup(enemy, final_damage, life_steal)
+		fireball.setup(enemy, final_damage, lifesteal)
 
 		axis.look_at(enemy.global_position)
 		axis.rotation += PI / 2

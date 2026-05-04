@@ -12,5 +12,6 @@ script = ExtResource("1_0btjd")
 texture = SubResource("AtlasTexture_0iqih")
 name = "Glasscanon"
 desc = "big damage, become fragile."
-mult = 4.0
+mult = 3.0
+max_stack = 2
 metadata/_custom_type_script = "uid://dfjoeincg38br"

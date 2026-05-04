@@ -13,4 +13,5 @@ texture = SubResource("AtlasTexture_1lyje")
 name = "Thorns"
 desc = "Hurt enemeis on hit"
 retaliation = 15
+max_stack = 5
 metadata/_custom_type_script = "uid://dfjoeincg38br"

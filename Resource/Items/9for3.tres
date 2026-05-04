@@ -14,3 +14,4 @@ name = "3 for your 9"
 desc = "heal 3 hp every 9 seconds."
 regen = 3
 regen_CD = 9.0
+max_stack = 10

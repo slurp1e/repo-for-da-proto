@@ -13,4 +13,5 @@ texture = SubResource("AtlasTexture_7awtq")
 name = "Vampire"
 desc = "Heal on hit"
 lifesteal = 0.2
+max_stack = 3
 metadata/_custom_type_script = "uid://dfjoeincg38br"
