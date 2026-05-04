@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://r52axfgastdh" path="res://Script/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bgxmocdwfw7oj" path="res://Assets/sprites/knight.png" id="1_v0iea"]
+[ext_resource type="AudioStream" uid="uid://dufgm5o7e6cou" path="res://Assets/music/floraphonic-fireball-whoosh-1-179125.mp3" id="2_52ee3"]
 [ext_resource type="Script" uid="uid://e6snwg5yuog7" path="res://Scenes/axis.gd" id="3_5ixxa"]
+[ext_resource type="PackedScene" uid="uid://bf57nqec7iirg" path="res://Scenes/fireball.tscn" id="3_bhhdu"]
 [ext_resource type="Texture2D" uid="uid://begn0xwy0hocn" path="res://Assets/sprites/left-arrow.png" id="4_nn08x"]
 [ext_resource type="Script" uid="uid://10m4ekrb25tb" path="res://Scenes/sprite_2d.gd" id="5_52ee3"]
 
@@ -46,9 +48,12 @@ animations = [{
 radius = 5.0
 height = 18.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1751091898]
+[node name="Player" type="CharacterBody2D" unique_id=1751091898 node_paths=PackedStringArray("audio_player")]
 position = Vector2(0, -3)
 script = ExtResource("1_cvnsp")
+attack_sfx = ExtResource("2_52ee3")
+audio_player = NodePath("AudioStreamPlayer")
+fireball_scene = ExtResource("3_bhhdu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1384588390]
 sprite_frames = SubResource("SpriteFrames_x3wgy")
@@ -71,3 +76,5 @@ script = ExtResource("5_52ee3")
 
 [node name="Timer" type="Timer" parent="." unique_id=1878637764]
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1280321010]

@@ -55,7 +55,7 @@ func _init_healthbar() -> void:
 		healthbar.value = hp
 
 
-func _on_hit_player(body) -> void:
+func _on_hit_player(body: Node2D) -> void:
 	if not player or body != player or not can_attack or is_dying:
 		return
 	can_attack = false
@@ -99,7 +99,7 @@ func take_dmg(amount: int) -> void:
 		animated_sprite_2d.material = original
 
 	if hit_particle:
-		var p = hit_particle.instantiate()
+		var p: Node2D = hit_particle.instantiate()
 		get_parent().add_child(p)
 		p.global_position = global_position
 
