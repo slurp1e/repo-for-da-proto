@@ -1,43 +1,78 @@
 [gd_scene format=3 uid="uid://cvt7csfirfhuj"]
 
 [ext_resource type="Script" uid="uid://r52axfgastdh" path="res://Script/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://bgxmocdwfw7oj" path="res://Assets/sprites/knight.png" id="1_v0iea"]
 [ext_resource type="AudioStream" uid="uid://dufgm5o7e6cou" path="res://Assets/music/floraphonic-fireball-whoosh-1-179125.mp3" id="2_52ee3"]
 [ext_resource type="Script" uid="uid://e6snwg5yuog7" path="res://Scenes/axis.gd" id="3_5ixxa"]
 [ext_resource type="PackedScene" uid="uid://bf57nqec7iirg" path="res://Scenes/fireball.tscn" id="3_bhhdu"]
-[ext_resource type="Texture2D" uid="uid://begn0xwy0hocn" path="res://Assets/sprites/left-arrow.png" id="4_nn08x"]
+[ext_resource type="Texture2D" uid="uid://ctno7dpvxjo0g" path="res://Assets/sprites/Klavia (1).png" id="4_52ee3"]
 [ext_resource type="Script" uid="uid://10m4ekrb25tb" path="res://Scenes/sprite_2d.gd" id="5_52ee3"]
+[ext_resource type="Texture2D" uid="uid://85uoyfp6mv3f" path="res://Assets/sprites/negro-mancer's staff.png" id="6_52ee3"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cvnsp"]
-atlas = ExtResource("1_v0iea")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhhdu"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(0, 0, 240, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
-atlas = ExtResource("1_v0iea")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_megsn"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(240, 0, 240, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
-atlas = ExtResource("1_v0iea")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_yoq75"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(480, 0, 240, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fkybt"]
-atlas = ExtResource("1_v0iea")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksbbd"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(0, 240, 240, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glx4g"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(240, 240, 240, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_miouo"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(480, 240, 240, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3h8g"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(0, 480, 240, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1e7my"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(240, 480, 240, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arntx"]
+atlas = ExtResource("4_52ee3")
+region = Rect2(480, 480, 240, 240)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x3wgy"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cvnsp")
+"texture": SubResource("AtlasTexture_bhhdu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6t5aa")
+"texture": SubResource("AtlasTexture_megsn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vgqql")
+"texture": SubResource("AtlasTexture_yoq75")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fkybt")
+"texture": SubResource("AtlasTexture_ksbbd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glx4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_miouo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3h8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1e7my")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arntx")
 }],
 "loop": true,
 "name": &"default",
@@ -49,13 +84,16 @@ radius = 5.0
 height = 18.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1751091898 node_paths=PackedStringArray("audio_player")]
+z_index = 2
 position = Vector2(0, -3)
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_cvnsp")
 attack_sfx = ExtResource("2_52ee3")
 audio_player = NodePath("AudioStreamPlayer")
 fireball_scene = ExtResource("3_bhhdu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1384588390]
+scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
 autoplay = "default"
 
@@ -68,10 +106,12 @@ position = Vector2(0, 3)
 script = ExtResource("3_5ixxa")
 
 [node name="Sprite2D" type="Sprite2D" parent="Axis" unique_id=1736205570]
-position = Vector2(-5.684342e-14, -15.999999)
-rotation = 1.5707964
-scale = Vector2(0.01, 0.01)
-texture = ExtResource("4_nn08x")
+z_index = 1
+z_as_relative = false
+position = Vector2(-1, -22)
+rotation = 0.15533431
+scale = Vector2(0.129, 0.15)
+texture = ExtResource("6_52ee3")
 script = ExtResource("5_52ee3")
 
 [node name="Timer" type="Timer" parent="." unique_id=1878637764]

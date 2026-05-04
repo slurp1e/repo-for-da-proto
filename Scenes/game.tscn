@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://ni7jcuwr50to" path="res://Assets/TileSet/Tileset/Tiled_files/water_detilazation.png" id="27_ese38"]
 [ext_resource type="Texture2D" uid="uid://cof0bkv7c5fft" path="res://Assets/TileSet/Tileset/Tiled_files/water_detilazation_v2.png" id="28_oeip8"]
 [ext_resource type="AudioStream" uid="uid://b8lg8foeitiye" path="res://Assets/music/characterhurt.wav" id="33_xe308"]
+[ext_resource type="AudioStream" uid="uid://byoxv3wf3lda2" path="res://Assets/sounds/in game [Official] Celeste Original Soundtrack - 03 - Resurrections [1rwAvUvvQzQ] (mp3cut.net).mp3" id="35_d3cha"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v158k"]
 bg_color = Color(0.06666667, 0.09411765, 0.15294118, 1)
@@ -8816,7 +8817,7 @@ grow_vertical = 2
 [node name="Pause Menu" type="Control" parent="CanvasLayer" unique_id=1706872065 node_paths=PackedStringArray("pause_button", "pause_panel")]
 process_mode = 3
 visible = false
-z_index = 4
+z_index = 7
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -9232,7 +9233,7 @@ theme_override_font_sizes/font_size = 40
 alignment = 2
 
 [node name="PostProcessing" type="ColorRect" parent="CanvasLayer" unique_id=1988621781]
-z_index = 2
+z_index = 5
 material = SubResource("ShaderMaterial_oeip8")
 anchors_preset = 15
 anchor_right = 1.0
@@ -9429,6 +9430,13 @@ position = Vector2(0, 54)
 libraries/ = SubResource("AnimationLibrary_mg4q0")
 
 [node name="Background Music" type="AudioStreamPlayer2D" parent="." unique_id=158908085]
+
+[node name="In game music" type="AudioStreamPlayer2D" parent="." unique_id=1748449951]
+process_mode = 3
+stream = ExtResource("35_d3cha")
+volume_db = -18.909
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/Resume" to="CanvasLayer/Pause Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/Restart" to="CanvasLayer/Pause Menu" method="_on_restart_pressed"]

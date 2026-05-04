@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b1iphniooke0i" path="res://Assets/Icons/continue.png" id="10_mkpwh"]
 [ext_resource type="Texture2D" uid="uid://boriyhx4wwk1d" path="res://Assets/Icons/settings.png" id="11_4nkqq"]
 [ext_resource type="Texture2D" uid="uid://c7gddqqdvd6gr" path="res://Assets/Icons/Exit.png" id="12_ehtkc"]
+[ext_resource type="AudioStream" uid="uid://edugwvfsiohd" path="res://Assets/sounds/( main menu) [Official] Celeste Original Soundtrack - 03 - Resurrections [1rwAvUvvQzQ] (mp3cut.net).mp3" id="13_5egv6"]
 
 [sub_resource type="Gradient" id="Gradient_ce3w2"]
 interpolation_mode = 2
@@ -358,3 +359,9 @@ modulate = Color(0.5764706, 0.56078434, 0.6, 1)
 position = Vector2(50, 260)
 scale = Vector2(1.08, 1.08)
 texture = ExtResource("12_ehtkc")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1014707471]
+stream = ExtResource("13_5egv6")
+volume_db = -18.909
+autoplay = true
+parameters/looping = true

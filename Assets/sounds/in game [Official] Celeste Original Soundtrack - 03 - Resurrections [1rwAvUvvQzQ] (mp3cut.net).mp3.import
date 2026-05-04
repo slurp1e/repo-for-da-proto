@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://byoxv3wf3lda2"
+path="res://.godot/imported/in game [Official] Celeste Original Soundtrack - 03 - Resurrections [1rwAvUvvQzQ] (mp3cut.net).mp3-ee65a82e8af9572c887f359fdfb76eaa.mp3str"
+
+[deps]
+
+source_file="res://Assets/sounds/in game [Official] Celeste Original Soundtrack - 03 - Resurrections [1rwAvUvvQzQ] (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/in game [Official] Celeste Original Soundtrack - 03 - Resurrections [1rwAvUvvQzQ] (mp3cut.net).mp3-ee65a82e8af9572c887f359fdfb76eaa.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c41f7yygvk810" path="res://Assets/sprites/red slime png2.png" id="2_ifbdo"]
 [ext_resource type="Texture2D" uid="uid://b3srhx34j3pk0" path="res://Assets/sprites/red slime png3.png" id="3_d18ja"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_y3tid"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ux4b5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -24,7 +24,7 @@ animations = [{
 
 [resource]
 script = ExtResource("2_dvdne")
-frames = SubResource("SpriteFrames_y3tid")
+frames = SubResource("SpriteFrames_ux4b5")
 hp = 15
 speed = 20
 atk = 10
