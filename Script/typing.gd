@@ -14,7 +14,9 @@ var debuff: bool = false
 
 # Tracking stats
 var perfect_words: int = 0
-var total_words: int = 0
+var total_words: int   = 0
+var score: int         = 0
+var _start_time: float = 0.0   # set on first word typed, used for WPM
 
 # Colors
 const CORRECT  := Color(0x8A5CFFff)
@@ -146,7 +148,6 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			render_words()
 
-
 # ─────────────────────────────────────────
 #  WORD CHECK
 # ─────────────────────────────────────────
@@ -154,12 +155,17 @@ func check_word() -> void:
 	if not line_edit or word.is_empty() or current_index >= word.size():
 		return
 
+	# Start WPM timer on first word attempt
+	if total_words == 0:
+		_start_time = Time.get_ticks_msec() / 1000.0
+
 	var typed := line_edit.text.strip_edges()
 	total_words += 1
 
 	if typed == word[current_index]:
 		perfect_words += 1
 		var damage := calculate_word_damage(word[current_index])
+		score += damage
 		var final_damage = get_parent().get_node("Player").attack(damage)
 		play_success_feedback(final_damage)
 	else:
@@ -185,6 +191,15 @@ func get_accuracy() -> float:
 	if total_words == 0:
 		return 0.0
 	return float(perfect_words) / float(total_words) * 100.0
+
+# WPM = words typed / minutes elapsed
+func get_wpm() -> float:
+	if _start_time == 0.0 or total_words == 0:
+		return 0.0
+	var elapsed_minutes := (Time.get_ticks_msec() / 1000.0 - _start_time) / 60.0
+	if elapsed_minutes <= 0.0:
+		return 0.0
+	return total_words / elapsed_minutes
 
 func update_accuracy_label() -> void:
 	if accuracy_label:
@@ -255,7 +270,7 @@ func show_damage_popup(damage: int, color: Color) -> void:
 		label.global_position = line_edit.global_position + Vector2(0, -50)
 	else:
 		var vp := get_viewport().get_visible_rect().size
-		label.global_positison = Vector2(vp.x / 2.0, vp.y / 2.0)
+		label.global_position = Vector2(vp.x / 2.0, vp.y / 2.0)  # fixed typo: global_positison
 
 	var tween := create_tween()
 	tween.set_parallel(true)
