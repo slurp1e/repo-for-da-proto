@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://cpyjskb75nrai" path="res://Assets/Icons/menu.png" id="12_iivbl"]
 [ext_resource type="StyleBox" uid="uid://bq40gw4m00kks" path="res://Assets/UI/Ui Button Resource/Normal Button.tres" id="17_7t8sx"]
 [ext_resource type="Texture2D" uid="uid://c5uj3ec6ap5p7" path="res://Assets/Icons/heart.png" id="17_mg4q0"]
-[ext_resource type="Shader" path="res://Scenes/postprocess.gdshader" id="19_ese38"]
+[ext_resource type="Shader" uid="uid://bwn0awoa063rr" path="res://Scenes/postprocess.gdshader" id="19_ese38"]
 [ext_resource type="Texture2D" uid="uid://bubankuhrotmr" path="res://Assets/TileSet/Tileset/Tiled_files/Ground_rocks.png" id="20_22asu"]
 [ext_resource type="Texture2D" uid="uid://6t5lmauvj8i" path="res://Assets/Icons/witch-hat.png" id="20_oeip8"]
 [ext_resource type="Texture2D" uid="uid://cuq0u8l28nx2h" path="res://Assets/TileSet/Tileset/Tiled_files/details.png" id="21_fkdbe"]
@@ -8561,12 +8561,15 @@ _data = {
 &"blur animation": SubResource("Animation_7t8sx")
 }
 
-[node name="game" type="Node2D" unique_id=1159277670 node_paths=PackedStringArray("cam", "game_over_panel")]
+[node name="game" type="Node2D" unique_id=1159277670 node_paths=PackedStringArray("cam", "game_over_panel", "final_score_label", "final_wpm_label", "typing")]
 script = ExtResource("1_wrm1d")
 cam = NodePath("Player/Camera2D")
 game_over_panel = NodePath("CanvasLayer/Game_Over")
+final_score_label = NodePath("CanvasLayer/Game_Over/TextureRect/FinalScore")
+final_wpm_label = NodePath("CanvasLayer/Game_Over/TextureRect/WPM")
+typing = NodePath("CanvasLayer")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=716100530 node_paths=PackedStringArray("typed_label", "remaining_label", "line_edit", "hit_sound", "miss_sound", "accuracy_label")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=716100530 node_paths=PackedStringArray("typed_label", "remaining_label", "line_edit", "hit_sound", "miss_sound", "accuracy_label", "wpm_label", "score_label")]
 script = ExtResource("6_h4fw4")
 typed_label = NodePath("WordContainer/WordBox/VBoxContainer/HBoxContainer/TypedLettersLabel")
 remaining_label = NodePath("WordContainer/WordBox/VBoxContainer/HBoxContainer/RemainingLetters")
@@ -8574,6 +8577,28 @@ line_edit = NodePath("Line_Edit")
 hit_sound = NodePath("HitSound")
 miss_sound = NodePath("MissSound")
 accuracy_label = NodePath("WordContainer/WordBox/VBoxContainer/Accuracy")
+wpm_label = NodePath("HBoxContainer/IngameWPM")
+score_label = NodePath("HBoxContainer/Scores")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=866761938]
+offset_left = 22.0
+offset_top = 83.0
+offset_right = 144.0
+offset_bottom = 139.0
+
+[node name="IngameWPM" type="Label" parent="CanvasLayer/HBoxContainer" unique_id=1651104599]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.827451, 0.84313726, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 30
+text = "WPM: "
+
+[node name="Scores" type="Label" parent="CanvasLayer/HBoxContainer" unique_id=281477832]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.827451, 0.84313726, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+theme_override_font_sizes/font_size = 30
+text = "Score:"
 
 [node name="BottomNav" type="PanelContainer" parent="CanvasLayer" unique_id=1147704666]
 visible = false
@@ -9259,6 +9284,26 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.06666667, 0.09411765, 0.15294118, 1)
 
+[node name="FinalScore" type="Label" parent="CanvasLayer/Game_Over/TextureRect" unique_id=532804035]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 79.0
+offset_right = 275.0
+offset_bottom = 102.0
+theme_override_colors/font_color = Color(0.827451, 0.84313726, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+text = "Final Score:"
+
+[node name="WPM" type="Label" parent="CanvasLayer/Game_Over/TextureRect" unique_id=548936143]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 103.0
+offset_right = 275.0
+offset_bottom = 126.0
+theme_override_colors/font_color = Color(0.827451, 0.84313726, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("7_7nbq1")
+text = "WPM: "
+
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Game_Over/TextureRect" unique_id=203543143]
 layout_mode = 1
 anchors_preset = 8
@@ -9267,9 +9312,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -100.0
+offset_top = -64.0
 offset_right = 100.0
-offset_bottom = 100.0
+offset_bottom = 184.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25

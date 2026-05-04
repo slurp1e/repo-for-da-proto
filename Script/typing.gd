@@ -6,6 +6,8 @@ extends CanvasLayer
 @export var hit_sound: AudioStreamPlayer2D
 @export var miss_sound: AudioStreamPlayer2D
 @export var accuracy_label: Label
+@export var wpm_label: Label
+@export var score_label: Label
 
 var word_list: Array = []
 var word: Array = []
@@ -52,6 +54,13 @@ func _ready() -> void:
 
 	call_deferred("render_words")
 	print("✓ Typing system initialized")
+
+func _process(_delta: float) -> void:
+	if wpm_label:
+		wpm_label.text = "WPM: " + str(int(get_wpm()))
+
+	if score_label:
+		score_label.text = "Score: " + String.num_int64(score)
 
 # ─────────────────────────────────────────
 #  WORD LOADING
@@ -199,7 +208,8 @@ func get_wpm() -> float:
 	var elapsed_minutes := (Time.get_ticks_msec() / 1000.0 - _start_time) / 60.0
 	if elapsed_minutes <= 0.0:
 		return 0.0
-	return total_words / elapsed_minutes
+	return perfect_words / elapsed_minutes
+
 
 func update_accuracy_label() -> void:
 	if accuracy_label:
