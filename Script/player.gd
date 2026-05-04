@@ -124,6 +124,7 @@ func get_item(item: ItemResource) -> void:
 	lifesteal += item.lifesteal
 	retaliation += item.retaliation
 	mult_thorn += item.mult_thorn
+	max_hp *= item.max_hp
 	if item.name == "Echo":
 		start_echo(item)
 func _on_regen_timeout() -> void:

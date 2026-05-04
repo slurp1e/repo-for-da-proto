@@ -11,7 +11,7 @@ class_name ItemResource
 @export var lifesteal: float
 @export var regen: int
 @export var regen_CD: float
-@export var max_hp: int
+@export var max_hp: float
 @export var retaliation: int
 @export var value: float
 @export var max_stack: int
