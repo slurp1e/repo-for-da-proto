@@ -110,23 +110,33 @@ func has_item(name: String) -> bool:
 			return true
 	return false
 func get_item(item: ItemResource) -> void:
-	if not item_stacks.has(item.name):
-		item_stacks[item.name] = 0
-	if item_stacks[item.name] >= item.max_stack:
-		print("maxxed out bro", item.name)
-		return
-	item_stacks[item.name] += 1
 	items.append(item)
-	mult *= item.mult
-	print("You got: ", item.name)
-	flat_dmg += item.flatDmg
-	regen_CD[item] = 0.0
+
+	# Only apply mult if it's a valid non-zero value
+	if item.mult > 0.0:
+		mult *= item.mult
+
+	flat_dmg  += item.flatDmg
 	lifesteal += item.lifesteal
-	retaliation += item.retaliation
-	mult_thorn += item.mult_thorn
-	max_hp *= item.max_hp
-	if item.name == "Echo":
-		start_echo(item)
+	regen_CD[item] = 0.0
+
+	# Apply max_hp modifier from item (can be positive or negative e.g. Glasscanon)
+	if item.max_hp != 0.0:
+		var old_max := max_hp
+		max_hp = max(1, max_hp + int(item.max_hp))
+		# Scale current HP proportionally so you don't instantly die
+		# e.g. at 200/200 hp, Glasscanon sets max to 50 → you become 50/50 not 200/50
+		hp = max(1, int(float(hp) / float(old_max) * float(max_hp)))
+		if healthbar:
+			healthbar.init_health(max_hp)
+			healthbar.health = hp
+
+	# Safety clamp after all modifications
+	hp = clamp(hp, 1, max_hp)
+	if healthbar:
+		healthbar.init_health(max_hp)
+		healthbar.health = hp
+		
 func _on_regen_timeout() -> void:
 	for item in items:
 		if item.regen > 0:

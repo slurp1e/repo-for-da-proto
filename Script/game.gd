@@ -8,7 +8,7 @@ var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
 var Skele_boss: EnemyResource = preload("res://Resource/EnemyResource/Skele_boss.tres")
 var slimes: Array[EnemyResource] = [preload("res://Resource/EnemyResource/slime.tres"), preload("res://Resource/EnemyResource/red_slime.tres")]
 
-#Scores
+# Scores
 @export var final_score_label: Label
 @export var final_wpm_label: Label
 @export var typing: Node
@@ -17,12 +17,15 @@ var rounds: int = 1
 var wave: int   = 1
 var waving: bool = false
 var is_game_over: bool = false
+
 # ─────────────────────────────────────────
-#  ITEM POOL — loaded from res://Resource/Items/
+#  ITEM POOL
 # ─────────────────────────────────────────
 var item_pool: Array[ItemResource] = []
 var _pending_items: Array[ItemResource] = []
 var _selected_item: ItemResource = null
+var _refresh_used: bool = false  # ← one refresh per level up
+
 
 # ─────────────────────────────────────────
 #  READY
@@ -37,19 +40,18 @@ func _ready() -> void:
 	player.died.connect(on_player_death)
 	$CanvasLayer/LevelUpMenu/CenterContent/ConfirmBtn.pressed.connect(_on_confirm_btn_pressed)
 	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.pressed.connect(_on_refresh_btn_pressed)
-	
-	# Connect pause panel buttons if assigned
+
 	if game_over_panel:
 		var restart_btn: Button = game_over_panel.find_child("RestartButton", true, false)
 		var options_btn: Button = game_over_panel.find_child("OptionsButton", true, false)
-		var quit_btn: Button = game_over_panel.find_child("QuitButton", true, false)
-		
+		var quit_btn: Button    = game_over_panel.find_child("QuitButton", true, false)
 		if restart_btn:
 			restart_btn.pressed.connect(_on_restart_pressed)
 		if options_btn:
 			options_btn.pressed.connect(_on_options_pressed)
 		if quit_btn:
 			quit_btn.pressed.connect(_on_quit_pressed)
+
 
 # ─────────────────────────────────────────
 #  LOAD ITEMS FROM FOLDER
@@ -70,6 +72,7 @@ func _load_item_pool() -> void:
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	print("Total items in pool: ", item_pool.size())
+
 
 # ─────────────────────────────────────────
 #  PROCESS
@@ -136,6 +139,7 @@ func spawn_boss() -> void:
 		randf_range(rect.position.y - margin, rect.end.y + margin)
 	)
 
+
 # ─────────────────────────────────────────
 #  XP BAR UI
 # ─────────────────────────────────────────
@@ -148,33 +152,36 @@ func _on_xp_changed(current: float, needed: float) -> void:
 	if level_label:
 		level_label.text = "LV " + str(player.level)
 
+
 # ─────────────────────────────────────────
 #  LEVEL UP MENU
 # ─────────────────────────────────────────
 func on_player_level_up(_new_level: int) -> void:
 	get_tree().paused = true
+	_refresh_used = false  # ← reset refresh for this level up
+	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.modulate = Color.WHITE  # ← restore button
 	_generate_upgrade_cards()
 	$CanvasLayer/LevelUpMenu.visible = true
 
 func _get_cards() -> Array[PanelContainer]:
-	var cards: Array[PanelContainer] = [
+	return [
 		$CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card1,
 		$CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card2,
 		$CanvasLayer/LevelUpMenu/CenterContent/CardsContainer/Card3,
 	]
-	return cards
 
 func _generate_upgrade_cards() -> void:
 	_selected_item = null
 	_pending_items.clear()
+
 	var available: Array[ItemResource] = []
 	for item in item_pool:
 		var count: int = player.item_stacks.get(item.name, 0)
 		if count < item.max_stack:
 			available.append(item)
 	available.shuffle()
+
 	var count: int = int(min(3, available.size()))
-	
 	for i: int in range(count):
 		_pending_items.append(available[i])
 
@@ -190,7 +197,7 @@ func _generate_upgrade_cards() -> void:
 		if i < _pending_items.size():
 			var item: ItemResource = _pending_items[i]
 			card.get_node("VBoxContainer/UpgradeName").text = item.name
-			card.get_node("VBoxContainer/Description").text = _build_item_desc(item)+ "\n" + item.desc
+			card.get_node("VBoxContainer/Description").text = _build_item_desc(item) + "\n" + item.desc
 			var icon: TextureRect = card.get_node("VBoxContainer/IconFrame/IconFrame/")
 			icon.texture = item.texture
 			card.visible = true
@@ -218,8 +225,7 @@ func _on_card_selected(index: int) -> void:
 	_selected_item = _pending_items[index]
 	var cards: Array[PanelContainer] = _get_cards()
 	for i: int in range(cards.size()):
-		var card: PanelContainer = cards[i]
-		card.modulate = Color.WHITE if i == index else Color(0.5, 0.5, 0.5, 1.0)
+		cards[i].modulate = Color.WHITE if i == index else Color(0.5, 0.5, 0.5, 1.0)
 
 func _on_confirm_btn_pressed() -> void:
 	if _selected_item == null:
@@ -234,14 +240,52 @@ func _on_confirm_btn_pressed() -> void:
 	$CanvasLayer/Line_Edit.grab_focus()
 
 func _on_refresh_btn_pressed() -> void:
+	if _refresh_used:
+		return
+	_refresh_used = true
 	_generate_upgrade_cards()
+	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.modulate = Color(0.5, 0.5, 0.5, 1.0)
+
 
 # ─────────────────────────────────────────
 #  UTILITIES
 # ─────────────────────────────────────────
 func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
-	
+
+func camera_size() -> Rect2:
+	var zoom: Vector2 = cam.zoom if cam else Vector2.ONE
+	var viewport_size: Vector2 = get_viewport_rect().size
+	var world_size: Vector2 = viewport_size / zoom
+	var top_left: Vector2 = cam.global_position - world_size / 2.0
+	return Rect2(top_left, world_size)
+
+func quit() -> void:
+	get_tree().quit()
+
+
+# ─────────────────────────────────────────
+#  GAME OVER
+# ─────────────────────────────────────────
+func on_player_death() -> void:
+	is_game_over = true
+	get_tree().paused = true
+
+	if typing:
+		if final_score_label:
+			final_score_label.text = "Score: " + str(typing.score)
+		if final_wpm_label and typing.has_method("get_wpm"):
+			final_wpm_label.text = "WPM: " + str(snapped(typing.get_wpm(), 0.1))
+
+	if game_over_panel:
+		game_over_panel.visible = true
+
+	$CanvasLayer/Game_Over.visible = true
+
+
+# ─────────────────────────────────────────
+#  BUTTON HANDLERS
+# ─────────────────────────────────────────
 func _on_restart_pressed() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
@@ -253,44 +297,8 @@ func _on_quit_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 
-
-
-func on_player_death() -> void:
-	is_game_over = true
-	get_tree().paused = true
-
-	# Pull stats from typing.gd
-	if typing:
-		# SCORE
-		if final_score_label:
-			final_score_label.text = "Score: " + str(typing.score)
-
-		# WPM
-		if final_wpm_label and typing.has_method("get_wpm"):
-			final_wpm_label.text = "WPM: " + str(snapped(typing.get_wpm(), 0.1))
-
-	# Show UI
-	if game_over_panel:
-		game_over_panel.visible = true
-
-	$CanvasLayer/Game_Over.visible = true
-
-
-func camera_size() -> Rect2:
-	# Divide viewport size by zoom to get world-space size of what the camera sees
-	var zoom: Vector2 = cam.zoom if cam else Vector2.ONE
-	var viewport_size: Vector2 = get_viewport_rect().size
-	var world_size: Vector2 = viewport_size / zoom
-	var top_left: Vector2 = cam.global_position - world_size / 2.0
-	return Rect2(top_left, world_size)
-
-func quit() -> void:
-	get_tree().quit()
-
-
 func _on_menu_pressed() -> void:
-	pass # Replace with function body.
-
+	pass
 
 func _on_exit_game_pressed() -> void:
 	get_tree().paused = false

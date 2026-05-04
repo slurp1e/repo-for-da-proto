@@ -4,8 +4,8 @@
 [ext_resource type="Shader" uid="uid://yb82stsfnuf" path="res://Assets/Shader Materials/blink.tres" id="1_paq7w"]
 [ext_resource type="Texture2D" uid="uid://dwt0ok8blex2c" path="res://Assets/sprites/slime_green.png" id="2_swwnm"]
 [ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="3_y26kt"]
-[ext_resource type="Shader" path="res://Assets/Shader Materials/blink.gdshader" id="4_c7ij5"]
-[ext_resource type="Shader" path="res://Assets/Shader Materials/dissolve.gdshader" id="5_psnrq"]
+[ext_resource type="Shader" uid="uid://cwi001tpkw61d" path="res://Assets/Shader Materials/blink.gdshader" id="4_c7ij5"]
+[ext_resource type="Shader" uid="uid://c1a6yrsn3ro5d" path="res://Assets/Shader Materials/dissolve.gdshader" id="5_psnrq"]
 [ext_resource type="PackedScene" uid="uid://bwfrkhdsu1wnt" path="res://Scenes/Hitparticle.tscn" id="6_kh8cv"]
 [ext_resource type="AudioStream" uid="uid://bh4qpvwdyddhj" path="res://Assets/music/enemyhit.wav" id="7_555id"]
 [ext_resource type="AudioStream" uid="uid://eo405bc14bfd" path="res://Assets/music/enemy death.wav" id="8_xq7bh"]
@@ -88,7 +88,9 @@ shadow_offset = Vector2(0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilck6"]
 bg_color = Color(1, 1, 1, 1)
 
-[node name="slime" type="Node2D" unique_id=1601816520 node_paths=PackedStringArray("healthbar", "hit_sfx", "death_sfx", "audio_player")]
+[node name="slime" type="Node2D" unique_id=1601816520 node_paths=PackedStringArray("healthbar", "hit_sfx", "death_sfx")]
+z_index = 2
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_paq7w")
 script = ExtResource("1_jokqx")
 resource = SubResource("Resource_uu7bc")
@@ -98,7 +100,6 @@ dissolve_material = SubResource("ShaderMaterial_gqvs5")
 hit_particle = ExtResource("6_kh8cv")
 hit_sfx = NodePath("hit")
 death_sfx = NodePath("enemydie")
-audio_player = NodePath("SFXPlayer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=336867363]
 material = SubResource("ShaderMaterial_vblni")
