@@ -22,8 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://cpyjskb75nrai" path="res://Assets/Icons/menu.png" id="12_iivbl"]
 [ext_resource type="StyleBox" uid="uid://bq40gw4m00kks" path="res://Assets/UI/Ui Button Resource/Normal Button.tres" id="17_7t8sx"]
 [ext_resource type="Texture2D" uid="uid://c5uj3ec6ap5p7" path="res://Assets/Icons/heart.png" id="17_mg4q0"]
-[ext_resource type="Shader" uid="uid://bwn0awoa063rr" path="res://Scenes/postprocess.gdshader" id="19_ese38"]
+[ext_resource type="Shader" path="res://Scenes/postprocess.gdshader" id="19_ese38"]
 [ext_resource type="Texture2D" uid="uid://bubankuhrotmr" path="res://Assets/TileSet/Tileset/Tiled_files/Ground_rocks.png" id="20_22asu"]
+[ext_resource type="Texture2D" uid="uid://6t5lmauvj8i" path="res://Assets/Icons/witch-hat.png" id="20_oeip8"]
 [ext_resource type="Texture2D" uid="uid://cuq0u8l28nx2h" path="res://Assets/TileSet/Tileset/Tiled_files/details.png" id="21_fkdbe"]
 [ext_resource type="Texture2D" uid="uid://om6epv4n3t7" path="res://Assets/TileSet/Tileset/Tiled_files/Objects.png" id="22_81klo"]
 [ext_resource type="Texture2D" uid="uid://dalsdavr7vww1" path="res://Assets/TileSet/Tileset/Tiled_files/Objects_animated2.png" id="23_tgy6u"]
@@ -8560,9 +8561,10 @@ _data = {
 &"blur animation": SubResource("Animation_7t8sx")
 }
 
-[node name="game" type="Node2D" unique_id=1159277670 node_paths=PackedStringArray("cam")]
+[node name="game" type="Node2D" unique_id=1159277670 node_paths=PackedStringArray("cam", "game_over_panel")]
 script = ExtResource("1_wrm1d")
 cam = NodePath("Player/Camera2D")
+game_over_panel = NodePath("CanvasLayer/Game_Over")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=716100530 node_paths=PackedStringArray("typed_label", "remaining_label", "line_edit", "hit_sound", "miss_sound", "accuracy_label")]
 script = ExtResource("6_h4fw4")
@@ -8786,6 +8788,7 @@ grow_vertical = 2
 [node name="Pause Menu" type="Control" parent="CanvasLayer" unique_id=1706872065 node_paths=PackedStringArray("pause_button", "pause_panel")]
 process_mode = 3
 visible = false
+z_index = 4
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -9201,7 +9204,7 @@ theme_override_font_sizes/font_size = 40
 alignment = 2
 
 [node name="PostProcessing" type="ColorRect" parent="CanvasLayer" unique_id=1988621781]
-z_index = 1000
+z_index = 2
 material = SubResource("ShaderMaterial_oeip8")
 anchors_preset = 15
 anchor_right = 1.0
@@ -9210,6 +9213,132 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+
+[node name="Game_Over" type="Control" parent="CanvasLayer" unique_id=1758984335]
+process_mode = 3
+visible = false
+z_index = 4
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Blur" type="ColorRect" parent="CanvasLayer/Game_Over" unique_id=354079011]
+material = SubResource("ShaderMaterial_7nbq1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -556.0
+offset_top = -304.0
+offset_right = 556.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="ColorRect" parent="CanvasLayer/Game_Over" unique_id=891343036]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -200.0
+offset_right = 175.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.09411765, 0.15294118, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Game_Over/TextureRect" unique_id=203543143]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="Restart" type="Button" parent="CanvasLayer/Game_Over/TextureRect/VBoxContainer" unique_id=235003853]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_styles/normal = ExtResource("9_iivbl")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "RESTART
+"
+
+[node name="Menu" type="Button" parent="CanvasLayer/Game_Over/TextureRect/VBoxContainer" unique_id=2021347566]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_styles/normal = ExtResource("9_iivbl")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "OPTION"
+
+[node name="ExitGame" type="Button" parent="CanvasLayer/Game_Over/TextureRect/VBoxContainer" unique_id=1678912543]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_styles/normal = ExtResource("9_iivbl")
+theme_override_styles/pressed = ExtResource("9_85qyi")
+theme_override_styles/hover = ExtResource("10_iivbl")
+text = "GO TO MENU"
+
+[node name="Title" type="Label" parent="CanvasLayer/Game_Over" unique_id=1213286212]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -177.0
+offset_right = 176.0
+offset_bottom = -134.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5411765, 0.36078432, 1, 1)
+theme_override_colors/font_outline_color = Color(0.2901961, 0.2, 0.5019608, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("7_nnt18")
+theme_override_font_sizes/font_size = 32
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="WitchHat" type="Sprite2D" parent="CanvasLayer/Game_Over" unique_id=1579174235]
+modulate = Color(0.5411765, 0.36078432, 1, 1)
+position = Vector2(-102, -177)
+rotation = -0.24159291
+scale = Vector2(3.1599998, 3.1599998)
+texture = ExtResource("20_oeip8")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=259648244]
 tile_set = SubResource("TileSet_wrm1d")
@@ -9254,3 +9383,6 @@ libraries/ = SubResource("AnimationLibrary_mg4q0")
 [connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/Restart" to="CanvasLayer/Pause Menu" method="_on_restart_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/Menu" to="CanvasLayer/Pause Menu" method="_on_menu_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause Menu/TextureRect/VBoxContainer/ExitGame" to="CanvasLayer/Pause Menu" method="_on_exit_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/Game_Over/TextureRect/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Game_Over/TextureRect/VBoxContainer/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="CanvasLayer/Game_Over/TextureRect/VBoxContainer/ExitGame" to="." method="_on_exit_game_pressed"]

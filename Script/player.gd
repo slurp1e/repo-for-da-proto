@@ -5,7 +5,7 @@ extends CharacterBody2D
 # ─────────────────────────────────────────
 signal level_up(new_level: int)
 signal xp_changed(current: float, needed: float)
-signal died
+signal died ()
 
 # ─────────────────────────────────────────
 #  SCENE REFS
@@ -97,7 +97,7 @@ func get_item(item: ItemResource) -> void:
 	mult     *= item.mult
 	flat_dmg += item.flatDmg
 	regen_CD[item] = 0.0
-	lifesteal = item.lifesteal
+	lifesteal += item.lifesteal
 
 func _on_regen_timeout() -> void:
 	for item in items:
@@ -138,7 +138,7 @@ func attack(damage: int) -> int:
 		enemy.take_dmg(final_damage)
 		# Life steal from upgrade
 		if life_steal > 0:
-			heal(final_damage * life_steal)
+			heal(final_damage * lifesteal)
 	print("shoot")
 	return final_damage
 

@@ -3,7 +3,7 @@ extends Node2D
 @onready var player: CharacterBody2D = %Player
 @onready var world: Node2D = $world
 @export var cam: Camera2D
-
+@export var game_over_panel: Control
 var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
 var Skele_boss: EnemyResource = preload("res://Resource/EnemyResource/Skele_boss.tres")
 var slimes: Array[EnemyResource] = [preload("res://Resource/EnemyResource/slime.tres"), preload("res://Resource/EnemyResource/red_slime.tres")]
@@ -11,7 +11,7 @@ var slimes: Array[EnemyResource] = [preload("res://Resource/EnemyResource/slime.
 var rounds: int = 1
 var wave: int   = 1
 var waving: bool = false
-
+var is_game_over: bool = false
 # ─────────────────────────────────────────
 #  ITEM POOL — loaded from res://Resource/Items/
 # ─────────────────────────────────────────
@@ -23,13 +23,28 @@ var _selected_item: ItemResource = null
 #  READY
 # ─────────────────────────────────────────
 func _ready() -> void:
+	print("Game Over Panel:", game_over_panel)
 	randomize()
 	_load_item_pool()
 	spawn_enemies()
 	player.level_up.connect(on_player_level_up)
 	player.xp_changed.connect(_on_xp_changed)
+	player.died.connect(on_player_death)
 	$CanvasLayer/LevelUpMenu/CenterContent/ConfirmBtn.pressed.connect(_on_confirm_btn_pressed)
 	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.pressed.connect(_on_refresh_btn_pressed)
+	
+	# Connect pause panel buttons if assigned
+	if game_over_panel:
+		var restart_btn: Button = game_over_panel.find_child("RestartButton", true, false)
+		var options_btn: Button = game_over_panel.find_child("OptionsButton", true, false)
+		var quit_btn: Button = game_over_panel.find_child("QuitButton", true, false)
+		
+		if restart_btn:
+			restart_btn.pressed.connect(_on_restart_pressed)
+		if options_btn:
+			options_btn.pressed.connect(_on_options_pressed)
+		if quit_btn:
+			quit_btn.pressed.connect(_on_quit_pressed)
 
 # ─────────────────────────────────────────
 #  LOAD ITEMS FROM FOLDER
@@ -213,7 +228,26 @@ func _on_refresh_btn_pressed() -> void:
 # ─────────────────────────────────────────
 func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
+	
+func _on_restart_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
 
+func _on_options_pressed() -> void:
+	pass
+
+func _on_quit_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
+
+
+
+func on_player_death() -> void:
+	is_game_over =  true
+	get_tree().paused = true
+	if game_over_panel:
+		game_over_panel.visible = true
+	$CanvasLayer/Game_Over.visible = true
 func camera_size() -> Rect2:
 	# Divide viewport size by zoom to get world-space size of what the camera sees
 	var zoom: Vector2 = cam.zoom if cam else Vector2.ONE
@@ -224,3 +258,12 @@ func camera_size() -> Rect2:
 
 func quit() -> void:
 	get_tree().quit()
+
+
+func _on_menu_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_exit_game_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

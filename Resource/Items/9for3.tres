@@ -12,7 +12,5 @@ script = ExtResource("1_1tne4")
 texture = SubResource("AtlasTexture_p5th8")
 name = "3 for your 9"
 desc = "heal 3 hp every 9 seconds."
-mult = 1.0
 regen = 3
 regen_CD = 9.0
-metadata/_custom_type_script = "uid://bm4qwgt7pul55"

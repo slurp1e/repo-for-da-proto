@@ -3,15 +3,14 @@
 [ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_b0fio"]
 [ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_7awtq"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dorab"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7awtq"]
 atlas = ExtResource("2_7awtq")
 region = Rect2(4040, 40, 680, 1080)
 
 [resource]
 script = ExtResource("1_b0fio")
-texture = SubResource("AtlasTexture_dorab")
+texture = SubResource("AtlasTexture_7awtq")
 name = "Vampire"
-desc = "get 20% lifesteal, lose half of your hp"
+desc = "Heal on hit"
 lifesteal = 0.2
-max_hp = 50
 metadata/_custom_type_script = "uid://dfjoeincg38br"

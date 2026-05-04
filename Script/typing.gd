@@ -146,6 +146,7 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			render_words()
 
+
 # ─────────────────────────────────────────
 #  WORD CHECK
 # ─────────────────────────────────────────

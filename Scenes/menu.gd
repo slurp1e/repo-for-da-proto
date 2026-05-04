@@ -3,13 +3,14 @@ extends Control
 @export var pause_button: Button
 @export var pause_panel: Control
 
-func resume():
+func resume() -> void:
 	get_tree().paused = false
 
-func pause():
+func pause() -> void:
 	get_tree().paused = true
 
-func testEsc():
+	
+func testEsc() -> void:
 	if Input.is_action_just_pressed("Escape (Physical)") and get_tree().paused == false:
 		pause()
 		if pause_panel:
@@ -29,10 +30,10 @@ func _ready() -> void:
 	
 	# Connect pause panel buttons if assigned
 	if pause_panel:
-		var resume_btn = pause_panel.find_child("ResumeButton", true, false)
-		var restart_btn = pause_panel.find_child("RestartButton", true, false)
-		var options_btn = pause_panel.find_child("OptionsButton", true, false)
-		var quit_btn = pause_panel.find_child("QuitButton", true, false)
+		var resume_btn: Button  = pause_panel.find_child("ResumeButton", true, false)
+		var restart_btn: Button = pause_panel.find_child("RestartButton", true, false)
+		var options_btn: Button = pause_panel.find_child("OptionsButton", true, false)
+		var quit_btn: Button = pause_panel.find_child("QuitButton", true, false)
 		
 		if resume_btn:
 			resume_btn.pressed.connect(_on_resume_pressed)
@@ -49,19 +50,20 @@ func _on_pause_button_pressed() -> void:
 	if pause_panel:
 		pause_panel.visible = true
 
-func _on_resume_pressed():
+func _on_resume_pressed() -> void:
 	resume()
 	# Hide pause menu panel
 	if pause_panel:
 		pause_panel.visible = false
 
-func _on_restart_pressed():
+func _on_restart_pressed() -> void:
 	resume()
 	get_tree().reload_current_scene()
-func _on_options_pressed():
+
+func _on_options_pressed() -> void:
 	pass
 
-func _on_quit_pressed():
+func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 
