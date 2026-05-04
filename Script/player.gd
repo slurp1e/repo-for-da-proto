@@ -6,6 +6,12 @@ extends CharacterBody2D
 signal level_up(new_level: int)
 signal xp_changed(current: float, needed: float)
 signal died ()
+# ─────────────────────────────────────────
+#  ATTACK EFFECTS
+# ─────────────────────────────────────────
+@export var attack_sfx: AudioStream
+@export var audio_player: AudioStreamPlayer2D
+@export var fireball_scene: PackedScene
 
 # ─────────────────────────────────────────
 #  SCENE REFS
@@ -131,13 +137,27 @@ func closest_enemy() -> Node2D:
 func attack(damage: int) -> int:
 	var final_damage := modify_dmg(damage)
 	var enemy: Node2D = closest_enemy()
-	if enemy:
+
+	if audio_player and attack_sfx:
+		audio_player.stream = attack_sfx
+		audio_player.play()
+
+	if fireball_scene and enemy:
+		var fireball = fireball_scene.instantiate()
+		get_tree().current_scene.add_child(fireball)
+		fireball.global_position = global_position
+		fireball.setup(enemy, final_damage, life_steal)
+		# damage is dealt by the fireball on impact, not here
+		axis.look_at(enemy.global_position)
+		axis.rotation += PI / 2
+	elif enemy:
+		# fallback: instant damage if no fireball scene assigned
 		axis.look_at(enemy.global_position)
 		axis.rotation += PI / 2
 		enemy.take_dmg(final_damage)
-		# Life steal from upgrade
 		if life_steal > 0:
-			heal(final_damage * lifesteal)
+			heal(final_damage * life_steal)
+
 	print("shoot")
 	return final_damage
 
