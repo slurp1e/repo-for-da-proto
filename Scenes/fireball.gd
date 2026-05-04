@@ -44,7 +44,7 @@ func explode() -> void:
 	if particles:
 		particles.emitting = true
 		# Detach from scene so explosion plays out after fireball logic ends
-		var p = particles.duplicate()
+		var p: GPUParticles2D = particles.duplicate()
 		get_tree().current_scene.add_child(p)
 		p.global_position = global_position
 		p.emitting = true

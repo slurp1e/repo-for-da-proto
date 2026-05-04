@@ -33,7 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://d102exnfk5hyl" path="res://Assets/TileSet/Tileset/Tiled_files/water_coasts.png" id="26_8m3t6"]
 [ext_resource type="Texture2D" uid="uid://ni7jcuwr50to" path="res://Assets/TileSet/Tileset/Tiled_files/water_detilazation.png" id="27_ese38"]
 [ext_resource type="Texture2D" uid="uid://cof0bkv7c5fft" path="res://Assets/TileSet/Tileset/Tiled_files/water_detilazation_v2.png" id="28_oeip8"]
-[ext_resource type="PackedScene" uid="uid://bf57nqec7iirg" path="res://Scenes/fireball.tscn" id="33_xe308"]
+[ext_resource type="AudioStream" uid="uid://b8lg8foeitiye" path="res://Assets/music/characterhurt.wav" id="33_xe308"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v158k"]
 bg_color = Color(0.06666667, 0.09411765, 0.15294118, 1)
@@ -9410,8 +9410,8 @@ position = Vector2(-34, 5)
 [node name="Player" parent="." unique_id=1751091898 node_paths=PackedStringArray("audio_player", "healthbar") instance=ExtResource("2_qxrlw")]
 unique_name_in_owner = true
 position = Vector2(0, -5)
+hurt_sfx = ExtResource("33_xe308")
 audio_player = NodePath("../Background Music")
-fireball_scene = ExtResource("33_xe308")
 healthbar = NodePath("../CanvasLayer/Healthbar")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=360745161]
