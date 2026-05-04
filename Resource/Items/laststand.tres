@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://d4nqjcdde53yr"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_mtld3"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_6s1qg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0if4"]
+atlas = ExtResource("2_6s1qg")
+region = Rect2(3240, 3720, 680, 1080)
+
+[resource]
+script = ExtResource("1_mtld3")
+texture = SubResource("AtlasTexture_i0if4")
+name = "Last stand"
+desc = "Deal more damage when low hp"
+mult = 1.2
+max_stack = 1
+metadata/_custom_type_script = "uid://dfjoeincg38br"

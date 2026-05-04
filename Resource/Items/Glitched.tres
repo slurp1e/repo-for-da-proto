@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://bwuuvyemw4tq4"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_kg4gv"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_qg7e7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p28h"]
+atlas = ExtResource("2_qg7e7")
+region = Rect2(840, 1240, 680, 1080)
+
+[resource]
+script = ExtResource("1_kg4gv")
+texture = SubResource("AtlasTexture_6p28h")
+name = "Glitched"
+desc = "Your damage is random"
+max_stack = 1
+metadata/_custom_type_script = "uid://dfjoeincg38br"

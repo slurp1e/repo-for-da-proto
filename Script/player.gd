@@ -104,7 +104,11 @@ func load_items(path: String) -> void:
 		file_name = dir.get_next()
 
 	dir.list_dir_end()
-
+func has_item(name: String) -> bool:
+	for item in items:
+		if item.name == name:
+			return true
+	return false
 func get_item(item: ItemResource) -> void:
 	if not item_stacks.has(item.name):
 		item_stacks[item.name] = 0
@@ -175,6 +179,11 @@ func start_echo(item: ItemResource) -> void:
 func attack(damage: int) -> int:
 	var final_damage := modify_dmg(damage)
 	var enemy := closest_enemy()
+	if has_item("Last stand") and hp < max_hp * 0.3:
+		final_damage *= 1.5
+	elif has_item("Glitched"):
+		final_damage = (randi_range(1,35))
+	
 	last_attack_damage = final_damage
 	last_attack_enemy = enemy
 
@@ -224,7 +233,8 @@ func hurt(amount: int) -> void:
 	var final_hurt: float
 	if mult_thorn > 0:
 		final_hurt = int(amount *mult_thorn)
-	 
+	elif mult_thorn == 0:
+		final_hurt = amount 
 	hp -= final_hurt
 	hp = clamp(hp, 0, max_hp)
 	
