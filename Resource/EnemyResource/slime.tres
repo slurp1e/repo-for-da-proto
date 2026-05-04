@@ -1,8 +1,26 @@
 [gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://dcojlwtrj2m70"]
 
+[ext_resource type="Texture2D" uid="uid://dvdh6kihh85de" path="res://Assets/sprites/slime png1.png" id="1_1man5"]
+[ext_resource type="Texture2D" uid="uid://cfcc21552j8rp" path="res://Assets/sprites/slime png2.png" id="2_u14h6"]
 [ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="2_yta7x"]
+[ext_resource type="Texture2D" uid="uid://h1enhkppkkh7" path="res://Assets/sprites/slime png3.png" id="3_di54h"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5oirb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1man5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_u14h6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_di54h")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("2_yta7x")
