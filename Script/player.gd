@@ -110,16 +110,24 @@ func has_item(name: String) -> bool:
 			return true
 	return false
 func get_item(item: ItemResource) -> void:
+	if not item_stacks.has(item.name):
+		item_stacks[item.name] = 0
+	if item_stacks[item.name] >= item.max_stack:
+		return
+	item_stacks[item.name] += 1
 	items.append(item)
 
-	# Only apply mult if it's a valid non-zero value
-	if item.mult > 0.0:
-		mult *= item.mult
+	
+	mult *= item.mult
 
 	flat_dmg  += item.flatDmg
 	lifesteal += item.lifesteal
 	regen_CD[item] = 0.0
-
+	retaliation += item.retaliation
+	mult_thorn *= item.mult_thorn
+	if item.name == "Echo":
+		start_echo(item)
+	
 	# Apply max_hp modifier from item (can be positive or negative e.g. Glasscanon)
 	if item.max_hp != 0.0:
 		var old_max := max_hp
