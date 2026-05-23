@@ -28,6 +28,10 @@ shader_parameter/flash_intensity = 1.0
 shader = ExtResource("5_psnrq")
 shader_parameter/dissolve_amount = 0.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c7ij5"]
+radius = 3.0
+height = 12.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vblni"]
 shader = ExtResource("9_10642")
 shader_parameter/dissolve_amount = 0.0
@@ -69,7 +73,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swwnm"]
-size = Vector2(6.53125, 5.5234375)
+size = Vector2(10, 9)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1v5t1"]
 
@@ -88,10 +92,11 @@ shadow_offset = Vector2(0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilck6"]
 bg_color = Color(1, 1, 1, 1)
 
-[node name="slime" type="Node2D" unique_id=1601816520 node_paths=PackedStringArray("healthbar", "hit_sfx", "death_sfx")]
+[node name="slime" type="CharacterBody2D" unique_id=52185432 node_paths=PackedStringArray("healthbar", "hit_sfx", "death_sfx")]
 z_index = 2
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_paq7w")
+collision_mask = 3
 script = ExtResource("1_jokqx")
 resource = SubResource("Resource_uu7bc")
 healthbar = NodePath("Healthbar")
@@ -100,6 +105,9 @@ dissolve_material = SubResource("ShaderMaterial_gqvs5")
 hit_particle = ExtResource("6_kh8cv")
 hit_sfx = NodePath("hit")
 death_sfx = NodePath("enemydie")
+
+[node name="Pathing" type="CollisionShape2D" parent="." unique_id=2052624255]
+shape = SubResource("CapsuleShape2D_c7ij5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=336867363]
 material = SubResource("ShaderMaterial_vblni")
@@ -111,6 +119,7 @@ frame_progress = 0.99015945
 [node name="AtkArea" type="Area2D" parent="." unique_id=1365178048]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AtkArea" unique_id=1583905419]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_swwnm")
 
 [node name="Timer" type="Timer" parent="." unique_id=388592653]

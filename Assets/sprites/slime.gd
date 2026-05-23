@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 var player: CharacterBody2D
 
@@ -14,9 +14,9 @@ var is_dying: bool = false
 var speed: int
 var hp: int
 var attack: int
-var velocity: Vector2 = Vector2.ZERO
 var knockback: Vector2 = Vector2.ZERO
 var resistance: int
+
 
 @export var blink_material: ShaderMaterial
 @export var dissolve_material: ShaderMaterial
@@ -65,12 +65,13 @@ func _on_hit_player(body: Node2D) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
 	if not player or is_dying:
 		return
 
 	var direction := (player.global_position - global_position).normalized()
 	velocity = direction * speed + knockback
-	position += velocity * delta
+	move_and_slide()
 	knockback = knockback.lerp(Vector2.ZERO, 5 * delta)
 	animated_sprite_2d.flip_h = player.global_position.x > global_position.x
 
