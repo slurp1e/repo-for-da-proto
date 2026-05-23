@@ -229,7 +229,8 @@ func play_success_feedback(damage: int) -> void:
 		print("HitSound is null!")
 	screen_shake(1.0 + (streak*0.5))
 	color_flash(hit_flash_color)
-	show_damage_popup(damage, hit_flash_color)
+	var color: = get_damage_color(damage)
+	show_damage_popup(damage, color)
 	print("SUCCESS! Damage dealt: ", damage)
 
 func play_miss_feedback() -> void:
@@ -271,7 +272,13 @@ func color_flash(color: Color) -> void:
 	tween.tween_property(flash_overlay, "color:a", 0.0, flash_duration)
 	await tween.finished
 	flash_overlay.queue_free()
-
+func get_damage_color(damage: int) -> Color:
+	if damage >= 70:
+		return Color(1, 0.84, 0, 1) 
+	elif damage >= 40:
+		return Color(1, 0.3, 0.3, 1) 
+	else:
+		return Color.WHITE
 # ─────────────────────────────────────────
 #  DAMAGE POPUP
 # ─────────────────────────────────────────
