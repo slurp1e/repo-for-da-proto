@@ -13,7 +13,7 @@
 [ext_resource type="Shader" uid="uid://duk148sftkxf8" path="res://Assets/Shader Materials/blur.gdshader" id="6_nb51f"]
 [ext_resource type="FontFile" uid="uid://djen1id6wvhj7" path="res://Assets/fonts/SpaceGrotesk-VariableFont_wght.ttf" id="7_7nbq1"]
 [ext_resource type="FontFile" uid="uid://dtfvbwq2i8a1c" path="res://Assets/fonts/PressStart2P-Regular.ttf" id="7_nnt18"]
-[ext_resource type="AudioStream" uid="uid://btuhnuet6mima" path="res://Assets/music/HitSound.mp3" id="7_v158k"]
+[ext_resource type="AudioStream" uid="uid://bca6bgmkg8qvg" path="res://Assets/sounds/freesound_community-correct-6033.mp3" id="8_d3cha"]
 [ext_resource type="AudioStream" uid="uid://d2g65dmiac5ba" path="res://Assets/music/MissAttack.wav" id="8_h4fw4"]
 [ext_resource type="StyleBox" uid="uid://dik448saxw88i" path="res://Assets/UI/Ui Button Resource/Pressed Button.tres" id="9_85qyi"]
 [ext_resource type="StyleBox" uid="uid://c0tdxlnc5u2qm" path="res://Assets/UI/Ui Button Resource/WordBox.tres" id="9_iivbl"]
@@ -8847,8 +8847,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=44429766]
-stream = ExtResource("7_v158k")
-volume_db = -20.0
+stream = ExtResource("8_d3cha")
+volume_db = 0.411
 
 [node name="MissSound" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=1914364398]
 stream = ExtResource("8_h4fw4")

@@ -15,6 +15,8 @@ var current_index: int = 0
 var debuff: bool = false
 
 # Tracking stats
+var streak: int = 0
+var max_streak: int = 8
 var perfect_words: int = 0
 var total_words: int   = 0
 var score: int         = 0
@@ -173,6 +175,7 @@ func check_word() -> void:
 
 	if typed == word[current_index]:
 		perfect_words += 1
+		streak = min(streak + 1, max_streak)
 		var damage := calculate_word_damage(word[current_index])
 		score += damage
 		var final_damage = get_parent().get_node("Player").attack(damage)
@@ -220,15 +223,19 @@ func update_accuracy_label() -> void:
 # ─────────────────────────────────────────
 func play_success_feedback(damage: int) -> void:
 	if hit_sound:
+		hit_sound.pitch_scale = 1 + (streak * 0.05)
 		hit_sound.play()
 	else:
 		print("HitSound is null!")
-	screen_shake()
+	screen_shake(1.0 + (streak*0.5))
 	color_flash(hit_flash_color)
 	show_damage_popup(damage, hit_flash_color)
 	print("SUCCESS! Damage dealt: ", damage)
 
 func play_miss_feedback() -> void:
+	streak = 0
+	if hit_sound:
+		hit_sound.pitch_scale = 1
 	if miss_sound:
 		miss_sound.play()
 	screen_shake(0.5)

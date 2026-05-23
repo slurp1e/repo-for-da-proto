@@ -261,6 +261,7 @@ func hurt(amount: int) -> void:
 	if audio_player and hurt_sfx:
 		audio_player.stream = hurt_sfx
 		audio_player.pitch_scale = randf_range(0.95, 1.05)
+		audio_player.volume_db = -0.5
 		audio_player.play()
 
 	if healthbar:
