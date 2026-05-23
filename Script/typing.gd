@@ -223,7 +223,7 @@ func update_accuracy_label() -> void:
 # ─────────────────────────────────────────
 func play_success_feedback(damage: int) -> void:
 	if hit_sound:
-		hit_sound.pitch_scale = 1 + (streak * 0.05)
+		hit_sound.pitch_scale = 1.0 + (streak * 0.05)
 		hit_sound.play()
 	else:
 		print("HitSound is null!")
@@ -289,12 +289,16 @@ func show_damage_popup(damage: int, color: Color) -> void:
 	label.modulate = color
 	label.z_index = 100
 	add_child(label)
-
+	var base_pos: Vector2
 	if line_edit:
-		label.global_position = line_edit.global_position + Vector2(0, -50)
+		base_pos = line_edit.global_position
 	else:
 		var vp := get_viewport().get_visible_rect().size
-		label.global_position = Vector2(vp.x / 2.0, vp.y / 2.0)  # fixed typo: global_positison
+		base_pos = vp * 0.5
+
+	label.global_position = base_pos + Vector2(
+		randf_range(-50, 100),
+		randf_range(100, -20)) 
 
 	var tween := create_tween()
 	tween.set_parallel(true)

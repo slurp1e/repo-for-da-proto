@@ -292,7 +292,7 @@ func gain_xp(amount: float) -> void:
 		xp_changed.emit(current_xp, xp_to_next)
 
 func _calc_next_threshold() -> float:
-	return xp_to_next * 1.4
+	return xp_to_next * 2
 
 # ─────────────────────────────────────────
 #  UPGRADE SYSTEM
