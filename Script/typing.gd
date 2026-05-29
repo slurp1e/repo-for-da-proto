@@ -289,10 +289,12 @@ func color_flash(color: Color) -> void:
 	await tween.finished
 	flash_overlay.queue_free()
 func get_damage_color(damage: int) -> Color:
-	if damage >= 70:
-		return Color(1, 0.84, 0, 1) 
-	elif damage >= 40:
+	if damage >= 250:
 		return Color(1, 0.3, 0.3, 1) 
+	elif damage >= 120:
+		return Color(1.0, 0.549, 0.0, 1.0) 
+	elif damage >= 70:
+		return Color(0.576, 0.122, 0.988, 1.0) 	
 	else:
 		return Color.WHITE
 # ─────────────────────────────────────────

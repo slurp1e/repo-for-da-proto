@@ -39,6 +39,7 @@ var hp: int = 200
 # ─────────────────────────────────────────
 #  ITEM SYSTEM
 # ─────────────────────────────────────────
+var items_container: VBoxContainer
 var items: Array[ItemResource] = []
 var mult: float = 1.0
 var flat_dmg: int = 0
@@ -93,6 +94,20 @@ func _process(delta: float) -> void:
 # ─────────────────────────────────────────
 #  ITEM SYSTEM
 # ─────────────────────────────────────────
+func update_item_ui() -> void:
+	if not items_container:
+		return
+
+	for child in items_container.get_children():
+		child.queue_free()
+
+	for item in item_stacks.keys():
+		var count: int = item_stacks[item]
+
+		var label := Label.new()
+		label.text = item + ("" if count <= 1 else " x" + str(count))
+
+		items_container.add_child(label)
 func load_items(path: String) -> void:
 	var dir := DirAccess.open(path)
 	if dir == null:
@@ -150,7 +165,7 @@ func get_item(item: ItemResource) -> void:
 	if healthbar:
 		healthbar.init_health(max_hp)
 		healthbar.health = hp
-		
+	update_item_ui()	
 func _on_regen_timeout() -> void:
 	for item in items:
 		if item.regen > 0:

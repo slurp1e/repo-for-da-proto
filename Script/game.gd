@@ -41,7 +41,7 @@ func _ready() -> void:
 	player.died.connect(on_player_death)
 	$CanvasLayer/LevelUpMenu/CenterContent/ConfirmBtn.pressed.connect(_on_confirm_btn_pressed)
 	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.pressed.connect(_on_refresh_btn_pressed)
-
+	player.items_container = $CanvasLayer/ItemList/itemscontainer
 	if game_over_panel:
 		var restart_btn: Button = game_over_panel.find_child("RestartButton", true, false)
 		var options_btn: Button = game_over_panel.find_child("OptionsButton", true, false)
