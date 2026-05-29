@@ -17,7 +17,7 @@ var rounds: int = 1
 var wave: int   = 1
 var waving: bool = false
 var is_game_over: bool = false
-
+var rate_multiplier: float = 1.0
 # ─────────────────────────────────────────
 #  ITEM POOL
 # ─────────────────────────────────────────
@@ -111,7 +111,7 @@ func round_up() -> void:
 		print("wave:", wave, " - round: ", rounds)
 
 func spawn_rate() -> int:
-	return roundi(rounds * wave)
+	return roundi((rounds * wave) * rate_multiplier)
 
 func spawn_enemies() -> void:
 	var rect: Rect2 = camera_size()

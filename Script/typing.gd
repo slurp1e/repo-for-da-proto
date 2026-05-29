@@ -12,8 +12,11 @@ extends CanvasLayer
 var word_list: Array = []
 var word: Array = []
 var current_index: int = 0
-var debuff: bool = false
+var word_files: Dictionary = {
+	"normal": "res://Assets/COMMON WORDS LIB/WORD_LIB.txt",
+	"hard": "res://Assets/COMMON WORDS LIB/Difficult.txt"}
 
+var current_mode: String = "normal"
 # Tracking stats
 var streak: int = 0
 var max_streak: int = 8
@@ -37,8 +40,18 @@ var shake_intensity  := 1.0
 # ─────────────────────────────────────────
 #  INIT
 # ─────────────────────────────────────────
+func set_mode(mode: String) -> void:
+	if mode == current_mode:
+		return
+
+	current_mode = mode
+	load_words_from_current_mode()
+	generate_words()
+	render_words()
+	
 func _ready() -> void:
-	load_words()
+	add_to_group("typing")
+	load_words_from_current_mode()
 	generate_words()
 
 	if line_edit:
@@ -67,17 +80,28 @@ func _process(_delta: float) -> void:
 # ─────────────────────────────────────────
 #  WORD LOADING
 # ─────────────────────────────────────────
-func load_words() -> void:
-	var file = FileAccess.open("res://Assets/COMMON WORDS LIB/WORD_LIB.txt", FileAccess.READ)
+func load_words_from_current_mode() -> void:
+	word_list.clear()
+
+	var path = word_files[current_mode]
+
+	var file = FileAccess.open(path, FileAccess.READ)
 	if not file:
-		print("ERROR: Could not open word library file")
+		print("ERROR: Could not open file: ", path)
 		return
+
 	while not file.eof_reached():
 		var line = file.get_line().strip_edges()
-		if line != "":
-			word_list.append(line)
+		if line == "":
+			continue
+		match current_mode:
+			"normal":
+				if line.length() <= 6: 
+					word_list.append(line)	
+			"hard":
+				if line.length() >= 9:
+					word_list.append(line)
 	file.close()
-	print("file size: ", word_list.size())
 
 # ─────────────────────────────────────────
 #  WORD GENERATION
@@ -91,14 +115,6 @@ func generate_words() -> void:
 func _pick_word() -> String:
 	if word_list.is_empty():
 		return "error"
-	for i in range(50):
-		var w: String = word_list.pick_random()
-		if debuff:
-			if w.length() >= 5:
-				return w
-		else:
-			if w.length() <= 5:
-				return w
 	return word_list.pick_random()
 
 func _refill_words() -> void:

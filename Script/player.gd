@@ -22,12 +22,14 @@ signal on_hit_enemy(enemy:Node2D)
 # ─────────────────────────────────────────
 #  SCENE REFS
 # ─────────────────────────────────────────
+
 @export var healthbar: ProgressBar
 @onready var axis: Node2D = $Axis
 @onready var game: Node = $".."
 @onready var regen_timer: Timer = $Timer
 var last_attack_damage: int = 0
 var last_attack_enemy: Node2D = null
+var typing:Node 
 # ─────────────────────────────────────────
 #  HP
 # ─────────────────────────────────────────
@@ -66,6 +68,7 @@ var life_regen: float = 0.0
 # ─────────────────────────────────────────
 func _ready() -> void:
 	add_to_group("player")
+	typing = get_tree().get_first_node_in_group("typing")
 	on_hit_enemy.connect(_on_hit_enemy)
 	regen_timer.timeout.connect(_on_regen_timeout)
 	hp = max_hp
@@ -116,8 +119,6 @@ func get_item(item: ItemResource) -> void:
 		return
 	item_stacks[item.name] += 1
 	items.append(item)
-
-	
 	mult *= item.mult
 
 	flat_dmg  += item.flatDmg
@@ -128,16 +129,17 @@ func get_item(item: ItemResource) -> void:
 	if item.name == "Echo":
 		start_echo(item)
 	
-	# Apply max_hp modifier from item (can be positive or negative e.g. Glasscanon)
+
 	if item.max_hp != 0.0:
 		var old_max := max_hp
-		max_hp = max(1, max_hp + int(item.max_hp))
-		# Scale current HP proportionally so you don't instantly die
-		# e.g. at 200/200 hp, Glasscanon sets max to 50 → you become 50/50 not 200/50
+		max_hp = max(1, max_hp * int(item.max_hp))
 		hp = max(1, int(float(hp) / float(old_max) * float(max_hp)))
 		if healthbar:
 			healthbar.init_health(max_hp)
 			healthbar.health = hp
+	if has_item("Pact of Punishment"):
+		typing.set_mode("hard")
+		game.rate_multiplier = 2
 
 	# Safety clamp after all modifications
 	hp = clamp(hp, 1, max_hp)
@@ -295,37 +297,41 @@ func _calc_next_threshold() -> float:
 	return xp_to_next * 2
 
 # ─────────────────────────────────────────
-#  UPGRADE SYSTEM
+# LEGACY / OPTIONAL SYSTEM (NOT USED)
 # ─────────────────────────────────────────
-func apply_upgrade(upg: Dictionary) -> void:
-	if upg.has("flat"):
-		for stat in upg["flat"]:
-			var value = upg["flat"][stat]
-			match stat:
-				"max_hp":
-					max_hp += int(value)
-					hp = clamp(hp + int(value), 0, max_hp)
-				"attack":
-					bonus_attack_flat += int(value)
-				"xp_bonus":
-					xp_bonus += value
-				"life_steal":
-					life_steal += value
-				"life_regen":
-					life_regen += value
-
-	if upg.has("pct"):
-		for stat in upg["pct"]:
-			var value = upg["pct"][stat]
-			match stat:
-				"attack":
-					bonus_attack_pct += value
-				"xp_bonus":
-					xp_bonus += value
-				"life_steal":
-					life_steal += value
-				"life_regen":
-					life_regen += value
+## This was an alternative stat system using Dictionary-based upgrades.
+## Current game uses ItemResource system instead (see get_item()).
+## Kept here in case we ever wanted to make upgrades scalable
+## ─────────────────────────────────────────
+#func apply_upgrade(upg: Dictionary) -> void:
+#	if upg.has("flat"):
+#		for stat in upg["flat"]:
+#			var value = upg["flat"][stat]
+#			match stat:
+#				"max_hp":
+#					max_hp += int(value)
+#					hp = clamp(hp + int(value), 0, max_hp)
+#				"attack":
+#					bonus_attack_flat += int(value)
+#				"xp_bonus":
+#					xp_bonus += value
+#				"life_steal":
+#					life_steal += value
+#				"life_regen":
+#					life_regen += value
+#
+#	if upg.has("pct"):
+#		for stat in upg["pct"]:
+#			var value = upg["pct"][stat]
+#			match stat:
+#				"attack":
+#					bonus_attack_pct += value
+#				"xp_bonus":
+#					xp_bonus += value
+#				"life_steal":
+#					life_steal += value
+#				"life_regen":
+#					life_regen += value
 
 # ─────────────────────────────────────────
 #  LEGACY

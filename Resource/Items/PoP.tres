@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://2mdwx53gm02s"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_xmi0u"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_jpm3o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8sp0p"]
+atlas = ExtResource("2_jpm3o")
+region = Rect2(3240, 1240, 680, 1080)
+
+[resource]
+script = ExtResource("1_xmi0u")
+texture = SubResource("AtlasTexture_8sp0p")
+name = "Pact of Punishment"
+desc = "The Pinnacle of Items. Curse: makes the game harder."
+mult = 1.5
+flatDmg = 35
+lifesteal = 0.2
+regen = 5
+regen_CD = 5.0
+max_hp = 1.5
+retaliation = 20
+max_stack = 1
+metadata/_custom_type_script = "uid://dfjoeincg38br"
