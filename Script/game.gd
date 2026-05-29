@@ -25,7 +25,7 @@ var item_pool: Array[ItemResource] = []
 var _pending_items: Array[ItemResource] = []
 var _selected_item: ItemResource = null
 var refresh_count: int = 0
-var max_refresh: int = 600
+var max_refresh: int = 3
 
 
 # ─────────────────────────────────────────
@@ -144,6 +144,30 @@ func spawn_boss() -> void:
 # ─────────────────────────────────────────
 #  XP BAR UI
 # ─────────────────────────────────────────
+func spawn_popup_text(text: String, world_pos: Vector2, color := Color.WHITE) -> void:
+	var label := Label.new()
+	label.text = text
+	label.modulate = color
+	label.z_index = 100
+	label.add_theme_font_size_override("font_size", 14)
+	get_tree().current_scene.add_child(label)
+
+	# convert world → screen
+	var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+	label.global_position = Vector2(
+		randf_range(-50, 100),
+		randf_range(100, -20)) 
+
+	print("POPUP CALLED:", text)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+
+	tween.tween_property(label, "global_position:y", label.global_position.y - 40, 0.5)
+	tween.tween_property(label, "modulate:a", 0.0, 0.5)
+
+	await tween.finished
+	label.queue_free()
 func _on_xp_changed(current: float, needed: float) -> void:
 	var xpbar: ProgressBar = get_node_or_null("CanvasLayer/XPBar")
 	var level_label: Label = get_node_or_null("CanvasLayer/LevelLabel")

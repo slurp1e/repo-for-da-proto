@@ -5,7 +5,7 @@ extends Control
 @onready var continue_button: Button = $CanvasLayer/CenterContent/ContinueButtonButton
 @onready var settings_button: Button = $CanvasLayer/CenterContent/SettingsButton
 @onready var exit_button: Button = $CanvasLayer/CenterContent/QuitButton
-
+@onready var settings_image: TextureRect = $CanvasLayer/SettingsImage
 func _ready() -> void:
 	# Connect button signals
 	if play_button:
@@ -28,6 +28,13 @@ func continue_game() -> void:
 func open_settings() -> void:
 	# TODO: Implement settings menu
 	print("Settings button pressed - TODO: Open settings menu")
+	settings_image.visible = true
+
+func _input(event: InputEvent) -> void:
+	if settings_image.visible:
+		if event is InputEventKey and event.pressed:
+			if event.keycode == KEY_ESCAPE:
+				settings_image.visible = false
 
 func exit_game() -> void:
 	# Exit the game

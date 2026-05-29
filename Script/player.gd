@@ -307,7 +307,12 @@ func gain_xp(amount: float) -> void:
 	var actual := amount * (1.0 + xp_bonus)
 	current_xp += actual
 	xp_changed.emit(current_xp, xp_to_next)
-
+	print("ABOUT TO POPUP")
+	game.spawn_popup_text(
+	"+%d XP" % int(actual),
+	global_position + Vector2(0, -20),
+	Color.AQUA
+)
 	while current_xp >= xp_to_next:
 		current_xp -= xp_to_next
 		level += 1

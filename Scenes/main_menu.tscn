@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://boriyhx4wwk1d" path="res://Assets/Icons/settings.png" id="11_4nkqq"]
 [ext_resource type="Texture2D" uid="uid://c7gddqqdvd6gr" path="res://Assets/Icons/Exit.png" id="12_ehtkc"]
 [ext_resource type="AudioStream" uid="uid://edugwvfsiohd" path="res://Assets/sounds/( main menu) [Official] Celeste Original Soundtrack - 03 - Resurrections [1rwAvUvvQzQ] (mp3cut.net).mp3" id="13_5egv6"]
+[ext_resource type="Texture2D" uid="uid://cx8wwc3lc0e4j" path="res://Assets/sprites/construct.jpg" id="13_vtepg"]
 
 [sub_resource type="Gradient" id="Gradient_ce3w2"]
 interpolation_mode = 2
@@ -359,6 +360,15 @@ modulate = Color(0.5764706, 0.56078434, 0.6, 1)
 position = Vector2(50, 260)
 scale = Vector2(1.08, 1.08)
 texture = ExtResource("12_ehtkc")
+
+[node name="SettingsImage" type="TextureRect" parent="CanvasLayer" unique_id=1146069465]
+visible = false
+offset_left = 30.0
+offset_top = -2.0
+offset_right = 1137.0
+offset_bottom = 636.0
+texture = ExtResource("13_vtepg")
+stretch_mode = 5
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1014707471]
 stream = ExtResource("13_5egv6")
