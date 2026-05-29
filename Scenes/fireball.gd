@@ -6,14 +6,16 @@ var target_node: Node2D   # tracks the enemy node, not just position
 var damage: int = 0
 var lifesteal: float = 0.0
 var player: Node = null
+var bounces_left: int = 0
+var damage_mult: float = 1.0
 
-
-func setup(enemy: Node2D, dmg: int, ls: float) -> void:
+func setup(enemy: Node2D, dmg: int, ls: float, bounces: int = 0, mult: float = 1.0) -> void:
 	target_node = enemy
 	damage = dmg
 	lifesteal = ls
 	player = get_tree().get_first_node_in_group("player")
-
+	bounces_left = bounces
+	damage_mult = mult
 
 func _physics_process(delta: float) -> void:
 	# If enemy died mid-flight, self-destruct cleanly
@@ -38,6 +40,26 @@ func explode() -> void:
 		target_node.take_dmg(damage)
 		if player and lifesteal > 0 and player.has_method("heal"):
 			player.heal(damage * lifesteal)
+	if bounces_left > 0:
+		var next: Node2D = null
+		var enemies := get_tree().get_nodes_in_group("enemies")
+
+		var dist := INF
+		for e in enemies:
+			if e == target_node:
+				continue
+
+			var d := global_position.distance_to(e.global_position)
+			if d < dist:
+				dist = d
+				next = e
+
+		if next != null:
+			bounces_left -= 1
+			damage = int(damage * damage_mult)
+
+			target_node = next
+			return
 
 	# Trigger particles if you have them as a child
 	var particles := get_node_or_null("GPUParticles2D")

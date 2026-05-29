@@ -8590,7 +8590,8 @@ texture = ExtResource("28_oeip8")
 12:75/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_wrm1d"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_qxrlw")
 sources/1 = SubResource("TileSetAtlasSource_tgy6u")
 sources/2 = SubResource("TileSetAtlasSource_cwurv")
@@ -9462,6 +9463,10 @@ position = Vector2(-102, -177)
 rotation = -0.24159291
 scale = Vector2(3.1599998, 3.1599998)
 texture = ExtResource("20_oeip8")
+
+[node name="ItemList" type="VBoxContainer" parent="CanvasLayer" unique_id=989581215]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="TileMap" type="TileMap" parent="." unique_id=259648244]
 tile_set = SubResource("TileSet_wrm1d")

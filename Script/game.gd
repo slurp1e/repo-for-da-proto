@@ -24,7 +24,8 @@ var rate_multiplier: float = 1.0
 var item_pool: Array[ItemResource] = []
 var _pending_items: Array[ItemResource] = []
 var _selected_item: ItemResource = null
-var _refresh_used: bool = false  # ← one refresh per level up
+var refresh_count: int = 0
+var max_refresh: int = 600
 
 
 # ─────────────────────────────────────────
@@ -158,7 +159,7 @@ func _on_xp_changed(current: float, needed: float) -> void:
 # ─────────────────────────────────────────
 func on_player_level_up(_new_level: int) -> void:
 	get_tree().paused = true
-	_refresh_used = false  # ← reset refresh for this level up
+	refresh_count = 0
 	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.modulate = Color.WHITE  # ← restore button
 	_generate_upgrade_cards()
 	$CanvasLayer/LevelUpMenu.visible = true
@@ -240,11 +241,13 @@ func _on_confirm_btn_pressed() -> void:
 	$CanvasLayer/Line_Edit.grab_focus()
 
 func _on_refresh_btn_pressed() -> void:
-	if _refresh_used:
+	if refresh_count >= max_refresh:
 		return
-	_refresh_used = true
+	refresh_count += 1
 	_generate_upgrade_cards()
-	$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.modulate = Color(0.5, 0.5, 0.5, 1.0)
+	if refresh_count >= max_refresh:
+		$CanvasLayer/LevelUpMenu/CenterContent/RefreshBtn.modulate = Color(0.5, 0.5, 0.5, 1.0)
+	
 
 
 # ─────────────────────────────────────────

@@ -16,7 +16,8 @@ var hp: int
 var attack: int
 var knockback: Vector2 = Vector2.ZERO
 var resistance: int
-
+var stuck_time := 0.0
+var last_position := Vector2.ZERO
 
 @export var blink_material: ShaderMaterial
 @export var dissolve_material: ShaderMaterial
@@ -59,13 +60,22 @@ func _on_hit_player(body: Node2D) -> void:
 	if not player or body != player or not can_attack or is_dying:
 		return
 	can_attack = false
-	player.hurt(attack)
+	player.hurt(attack, self)
 	enemy_knockback(player.global_position, resistance)
 	can_attack = true
 
 
 func _physics_process(delta: float) -> void:
-	
+	var moved:= global_position.distance_to(last_position)
+	if moved < 2.0:
+		stuck_time += delta
+	else:
+		stuck_time = 0.0
+	last_position = global_position
+	if stuck_time > randf_range(3.0,6.0):
+		set_collision_mask_value(3, false)
+	if stuck_time <= 0.0:
+		set_collision_mask_value(3, true)
 	if not player or is_dying:
 		return
 

@@ -61,9 +61,9 @@ animations = [{
 [resource]
 script = ExtResource("2_m22kv")
 frames = SubResource("SpriteFrames_gvp4q")
-hp = 50
+hp = 100
 speed = 60
 atk = 15
 resistance = 250
-xp_reward = 100.0
+xp_reward = 150.0
 metadata/_custom_type_script = "uid://wiax4ijfm8vp"

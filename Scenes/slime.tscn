@@ -96,7 +96,8 @@ bg_color = Color(1, 1, 1, 1)
 z_index = 2
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_paq7w")
-collision_mask = 3
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_jokqx")
 resource = SubResource("Resource_uu7bc")
 healthbar = NodePath("Healthbar")
@@ -117,6 +118,7 @@ autoplay = "default"
 frame_progress = 0.99015945
 
 [node name="AtkArea" type="Area2D" parent="." unique_id=1365178048]
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AtkArea" unique_id=1583905419]
 position = Vector2(0, -0.5)

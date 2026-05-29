@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://bmpm7wbn3br5x"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_w0qym"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_618dg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1an5t"]
+atlas = ExtResource("2_618dg")
+region = Rect2(4040, 1240, 680, 1080)
+
+[resource]
+script = ExtResource("1_w0qym")
+texture = SubResource("AtlasTexture_1an5t")
+name = "Ricochet"
+desc = "Your attacks hit 2 more enemies"
+value = 0.7
+max_stack = 3
+bounce = 2
+metadata/_custom_type_script = "uid://dfjoeincg38br"

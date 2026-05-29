@@ -17,7 +17,7 @@ signal died()
 
 
 
-signal on_hit_enemy(enemy:Node2D)
+signal on_hit_enemy(amount: int, source: Node)
 
 # ─────────────────────────────────────────
 #  SCENE REFS
@@ -47,6 +47,8 @@ var lifesteal: float = 0.0
 var retaliation: int
 var item_stacks: Dictionary = {}
 var mult_thorn: float
+var bounces: int = 0
+var value: float = 0
 # ─────────────────────────────────────────
 #  XP / LEVEL
 # ─────────────────────────────────────────
@@ -126,13 +128,15 @@ func get_item(item: ItemResource) -> void:
 	regen_CD[item] = 0.0
 	retaliation += item.retaliation
 	mult_thorn *= item.mult_thorn
+	bounces += item.bounce
+	value += item.value
 	if item.name == "Echo":
 		start_echo(item)
 	
 
 	if item.max_hp != 0.0:
 		var old_max := max_hp
-		max_hp = max(1, max_hp * int(item.max_hp))
+		max_hp = max(1, max_hp * float(item.max_hp))
 		hp = max(1, int(float(hp) / float(old_max) * float(max_hp)))
 		if healthbar:
 			healthbar.init_health(max_hp)
@@ -175,6 +179,7 @@ func closest_enemy() -> Node2D:
 			closest = e
 
 	return closest
+
 func trigger_echo(multiplier: float = 0.5) -> void:
 	if not last_attack_enemy:
 		return
@@ -185,7 +190,7 @@ func trigger_echo(multiplier: float = 0.5) -> void:
 		var fireball:  = fireball_scene.instantiate()
 		get_tree().current_scene.add_child(fireball)
 		fireball.global_position = global_position
-		fireball.setup(last_attack_enemy, echo_damage, lifesteal)
+		fireball.setup(last_attack_enemy, echo_damage, lifesteal, bounces, value)
 func start_echo(item: ItemResource) -> void:
 	var t := Timer.new()
 	t.wait_time = 0.5
@@ -204,7 +209,7 @@ func attack(damage: int) -> int:
 		final_damage *= 1.5
 	elif has_item("Glitched"):
 		final_damage = (randi_range(1,35))
-	
+	on_hit_enemy.emit(enemy)
 	last_attack_damage = final_damage
 	last_attack_enemy = enemy
 
@@ -219,8 +224,9 @@ func attack(damage: int) -> int:
 		var fireball = fireball_scene.instantiate()
 		get_tree().current_scene.add_child(fireball)
 		fireball.global_position = global_position
-		fireball.setup(enemy, final_damage, lifesteal)
-
+		fireball.setup(enemy, final_damage, lifesteal, bounces, value)
+		fireball.bounces_left = bounces
+		fireball.damage_mult = value
 		axis.look_at(enemy.global_position)
 		axis.rotation += PI / 2
 
@@ -246,11 +252,11 @@ func heal(amount: float) -> void:
 	if healthbar:
 		healthbar.health = hp
 
-func _on_hit_enemy(enemy: Node2D) -> void:
-	if retaliation > 0:
-		enemy.take_dmg(retaliation)
+func _on_hit_enemy(enemy: Node2D, source: Node) -> void:
+	if retaliation > 0 and source:
+		source.take_dmg(retaliation)
 
-func hurt(amount: int) -> void:
+func hurt(amount: int, source: Node = null) -> void:
 	var final_hurt: float
 	if mult_thorn > 0:
 		final_hurt = int(amount *mult_thorn)
@@ -259,6 +265,7 @@ func hurt(amount: int) -> void:
 	hp -= final_hurt
 	hp = clamp(hp, 0, max_hp)
 	
+	on_hit_enemy.emit(self, source)
 	# ── HURT SOUND ──
 	if audio_player and hurt_sfx:
 		audio_player.stream = hurt_sfx

@@ -25,9 +25,9 @@ animations = [{
 [resource]
 script = ExtResource("2_dvdne")
 frames = SubResource("SpriteFrames_ux4b5")
-hp = 15
+hp = 50
 speed = 20
 atk = 10
 resistance = 100
-xp_reward = 30.0
+xp_reward = 50.0
 metadata/_custom_type_script = "uid://wiax4ijfm8vp"
