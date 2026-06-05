@@ -117,9 +117,16 @@ func take_dmg(amount: int) -> void:
 	if hp <= 0:
 		is_dying = true
 		die()
-
-
+func slow(duration: float) -> void:
+	if is_dying:
+		return
+	speed = resource.speed * 0.5
+	await get_tree().create_timer(duration).timeout
+	if is_inside_tree() and not is_dying:
+		speed = resource.speed
 func die() -> void:
+	if resource.name == "Ghost":
+		get_tree().call_group("enemies", "slow",5.0)
 	remove_from_group("enemies")
 
 	if player and player.has_method("gain_xp"):

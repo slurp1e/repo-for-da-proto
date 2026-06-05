@@ -17,3 +17,4 @@ class_name ItemResource
 @export var max_stack: int
 @export var mult_thorn: float
 @export var bounce: int
+@export var speed_mult: float = 1.0

@@ -61,6 +61,7 @@ animations = [{
 [resource]
 script = ExtResource("2_m22kv")
 frames = SubResource("SpriteFrames_gvp4q")
+name = "skeleton"
 hp = 100
 speed = 60
 atk = 15

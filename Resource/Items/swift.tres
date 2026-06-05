@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://b5iuivgkjua8y"]
+
+[ext_resource type="Script" uid="uid://dfjoeincg38br" path="res://Script/ItemResourceBase.gd" id="1_ekjgm"]
+[ext_resource type="Texture2D" uid="uid://dmvxc41a5we0i" path="res://Assets/sprites/hebrew alphabe diamond shaped png (2).png" id="2_uf2i2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4hc3"]
+atlas = ExtResource("2_uf2i2")
+region = Rect2(3240, 40, 680, 1080)
+
+[resource]
+script = ExtResource("1_ekjgm")
+texture = SubResource("AtlasTexture_g4hc3")
+name = "Haste"
+desc = "Your initial attacks hit 30% faster"
+max_stack = 5
+speed_mult = 1.3
+metadata/_custom_type_script = "uid://dfjoeincg38br"

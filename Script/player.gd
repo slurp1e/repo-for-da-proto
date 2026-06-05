@@ -50,6 +50,7 @@ var item_stacks: Dictionary = {}
 var mult_thorn: float
 var bounces: int = 0
 var value: float = 0
+var projectile_speed_mult: float = 1.0
 # ─────────────────────────────────────────
 #  XP / LEVEL
 # ─────────────────────────────────────────
@@ -145,6 +146,7 @@ func get_item(item: ItemResource) -> void:
 	mult_thorn *= item.mult_thorn
 	bounces += item.bounce
 	value += item.value
+	projectile_speed_mult *= item.speed_mult
 	if item.name == "Echo":
 		start_echo(item)
 	
@@ -239,9 +241,10 @@ func attack(damage: int) -> int:
 		var fireball = fireball_scene.instantiate()
 		get_tree().current_scene.add_child(fireball)
 		fireball.global_position = global_position
-		fireball.setup(enemy, final_damage, lifesteal, bounces, value)
+		fireball.setup(enemy, final_damage, lifesteal, bounces, value, projectile_speed_mult)
 		fireball.bounces_left = bounces
 		fireball.damage_mult = value
+		fireball.SpeedMod = projectile_speed_mult
 		axis.look_at(enemy.global_position)
 		axis.rotation += PI / 2
 

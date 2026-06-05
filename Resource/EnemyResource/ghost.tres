@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://d33rrwradsqb"]
+
+[ext_resource type="Texture2D" uid="uid://bj4qpvdgqhqj8" path="res://Assets/sprites/ghost_spritesheet.png" id="1_5jmbs"]
+[ext_resource type="Script" uid="uid://wiax4ijfm8vp" path="res://Script/EnemyResourceBase.gd" id="1_dky1a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jmbs"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hna81"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_manxf"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0es2"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cohat"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcfot"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_erosk"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckq7w"]
+atlas = ExtResource("1_5jmbs")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xcfot"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jmbs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hna81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_manxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0es2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cohat")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcfot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_erosk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckq7w")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 12.0
+}]
+
+[resource]
+script = ExtResource("1_dky1a")
+frames = SubResource("SpriteFrames_xcfot")
+name = "Ghost"
+hp = 1
+speed = 60
+xp_reward = 1.3
+metadata/_custom_type_script = "uid://wiax4ijfm8vp"

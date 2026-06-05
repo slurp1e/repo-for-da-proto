@@ -25,8 +25,9 @@ animations = [{
 [resource]
 script = ExtResource("2_dvdne")
 frames = SubResource("SpriteFrames_ux4b5")
+name = "Red slime"
 hp = 50
-speed = 20
+speed = 30
 atk = 10
 resistance = 100
 xp_reward = 50.0

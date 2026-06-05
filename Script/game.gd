@@ -6,8 +6,8 @@ extends Node2D
 @export var game_over_panel: Control
 var enemy_2D: PackedScene = preload("res://Scenes/slime.tscn")
 var Skele_boss: EnemyResource = preload("res://Resource/EnemyResource/Skele_boss.tres")
-var slimes: Array[EnemyResource] = [preload("res://Resource/EnemyResource/slime.tres"), preload("res://Resource/EnemyResource/red_slime.tres")]
-
+var slimes: Array[EnemyResource] = [preload("res://Resource/EnemyResource/slime.tres"), preload("res://Resource/EnemyResource/red_slime.tres"), ]
+var ghosty: EnemyResource = preload("res://Resource/EnemyResource/ghost.tres")
 # Scores
 @export var final_score_label: Label
 @export var final_wpm_label: Label
@@ -36,6 +36,7 @@ func _ready() -> void:
 	randomize()
 	_load_item_pool()
 	spawn_enemies()
+	
 	player.level_up.connect(on_player_level_up)
 	player.xp_changed.connect(_on_xp_changed)
 	player.died.connect(on_player_death)
@@ -103,6 +104,7 @@ func wave_up() -> void:
 			spawn_boss()
 		else:
 			spawn_enemies()
+			spawn_ghost()
 		waving = false
 
 func round_up() -> void:
@@ -113,7 +115,18 @@ func round_up() -> void:
 
 func spawn_rate() -> int:
 	return roundi((rounds * wave) * rate_multiplier)
+func spawn_ghost() -> void:
+	var rect: Rect2 = camera_size()
+	var margin: int = 100
+	var ghost: Node2D = enemy_2D.instantiate()
+	ghost.player = player
+	ghost.resource = ghosty
 
+	world.add_child(ghost)
+	ghost.global_position = player.global_position + Vector2(
+			randf_range(rect.position.x - margin, rect.end.x + margin),
+			randf_range(rect.position.y - margin, rect.end.y + margin)
+		)
 func spawn_enemies() -> void:
 	var rect: Rect2 = camera_size()
 	var margin: int = 100
