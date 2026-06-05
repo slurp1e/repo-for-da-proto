@@ -66,6 +66,7 @@ func _on_hit_player(body: Node2D) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
 	var moved:= global_position.distance_to(last_position)
 	if moved < 2.0:
 		stuck_time += delta
@@ -120,10 +121,12 @@ func take_dmg(amount: int) -> void:
 func slow(duration: float) -> void:
 	if is_dying:
 		return
+
 	speed = resource.speed * 0.5
 	await get_tree().create_timer(duration).timeout
-	if is_inside_tree() and not is_dying:
+	if not is_dying:
 		speed = resource.speed
+		
 func die() -> void:
 	if resource.name == "Ghost":
 		get_tree().call_group("enemies", "slow",5.0)
