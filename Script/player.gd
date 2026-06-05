@@ -130,6 +130,7 @@ func has_item(name: String) -> bool:
 		if item.name == name:
 			return true
 	return false
+
 func get_item(item: ItemResource) -> void:
 	if not item_stacks.has(item.name):
 		item_stacks[item.name] = 0

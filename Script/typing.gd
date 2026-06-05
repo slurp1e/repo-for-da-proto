@@ -213,7 +213,7 @@ func check_word() -> void:
 #  STATS
 # ─────────────────────────────────────────
 func calculate_word_damage(w: String) -> int:
-	return int(ceil(w.length() * 3.5))
+	return int(ceil(w.length() * 4.5))
 
 func get_accuracy() -> float:
 	if total_words == 0:

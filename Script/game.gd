@@ -12,7 +12,7 @@ var ghosty: EnemyResource = preload("res://Resource/EnemyResource/ghost.tres")
 @export var final_score_label: Label
 @export var final_wpm_label: Label
 @export var typing: Node
-
+var timer: float = 0.0
 var rounds: int = 1
 var wave: int   = 1
 var waving: bool = false
@@ -58,6 +58,7 @@ func _ready() -> void:
 # ─────────────────────────────────────────
 #  LOAD ITEMS FROM FOLDER
 # ─────────────────────────────────────────
+
 func _load_item_pool() -> void:
 	var dir := DirAccess.open("res://Resource/Items")
 	if dir == null:
@@ -79,13 +80,18 @@ func _load_item_pool() -> void:
 # ─────────────────────────────────────────
 #  PROCESS
 # ─────────────────────────────────────────
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	
 	if is_game_over:
 		return
 
 	wave_up()
 	round_up()
-
+	timer += delta
+	if timer > randf_range(10.0, 20.0):
+		timer = 0.0
+		if player.has_item("Third Eye"):
+			spawn_ghost()
 	if cam:
 		cam.global_position = player.global_position
 
@@ -104,7 +110,6 @@ func wave_up() -> void:
 			spawn_boss()
 		else:
 			spawn_enemies()
-			spawn_ghost()
 		waving = false
 
 func round_up() -> void:
