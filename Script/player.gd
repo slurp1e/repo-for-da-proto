@@ -150,7 +150,9 @@ func get_item(item: ItemResource) -> void:
 	if item.name == "Echo":
 		start_echo(item)
 	
-
+	if item.name == "Fast Learner":
+		xp_bonus += item.value
+		
 	if item.max_hp != 0.0:
 		var old_max := max_hp
 		max_hp = max(1, max_hp * float(item.max_hp))
